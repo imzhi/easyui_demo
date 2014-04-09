@@ -1,0 +1,14 @@
+# ThinkPHP
+imzhi.me_App/Runtime/
+
+# Vim EditPlus PhpStorm
+*.swp
+*.swo
+*.bak
+.idea/
+
+# zip rar others
+*.zip
+*.rar
+*.db
+.DS_Store
