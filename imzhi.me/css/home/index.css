@@ -1,0 +1,36 @@
+.main {
+    width: 100%;
+}
+
+.boxes {
+    width: 100%;
+}
+
+.box {
+    width: 20%;
+    float: left;
+    height: 200px;
+}
+
+.box .pro {
+    padding: 30px 10px 0;
+}
+
+.pro .title, .pro .desc, .pro .tags {
+    text-align: center;
+    margin: 10px 0;
+    color: #FFF;
+}
+
+.pro .title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.pro .desc {
+    font-size: 14px;
+}
+
+.pro a {
+    color: #FFF;
+}
