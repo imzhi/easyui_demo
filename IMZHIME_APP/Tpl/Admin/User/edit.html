@@ -1,0 +1,38 @@
+<script type="text/javascript">
+$(function() {
+    $('#combobox_user_type').combobox({
+        editable: false,
+        panelHeight: 'auto',
+        valueField: 'id',
+        textField: 'value',
+        url: '/index.php/Api/Status/combobox_user_type'
+    });
+
+    $('#combobox_user_status').combobox({
+        editable: false,
+        panelHeight: 'auto',
+        valueField: 'id',
+        textField: 'value',
+        url: '/index.php/Api/Status/combobox_user_status'
+    });
+});
+</script>
+<div id="user_edit">
+    <form method="post">
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <input type="hidden" name="user_id">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户名</td>
+                <td class="form_table_td"><input type="text" name="user_name" disabled></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户类型</td>
+                <td class="form_table_td"><input name="user_type" id="combobox_user_type"></select></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">状态</td>
+                <td class="form_table_td"><input name="status" id="combobox_user_status"></select></td>
+            </tr>
+        </table>
+    </form>
+</div>

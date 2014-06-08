@@ -1,10 +1,5 @@
-# Vim EditPlus
-*.swp
-*.swo
+.idea/
+IMZHIME_APP/Runtime/
 *.bak
-
-# zip rar others
-*.zip
-*.rar
-*.db
-.DS_Store
+.tags
+.tags_sorted_by_file

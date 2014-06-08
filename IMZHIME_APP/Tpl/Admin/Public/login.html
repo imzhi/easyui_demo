@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理-{$Think.config.SITE_TITLE}</title>
+    <css href="__PUBLIC__/js/common/jquery-easyui/themes/default/easyui.css"/>
+    <css href="__PUBLIC__/js/common/jquery-easyui/themes/icon.css"/>
+    <css href="__PUBLIC__/css/admin/common.css"/>
+    <js href="__PUBLIC__/js/common/jquery.1.8.3.min.js"/>
+    <js href="__PUBLIC__/js/common/jquery-easyui/jquery.easyui.min.js"/>
+    <js href="__PUBLIC__/js/common/jquery-easyui/locale/easyui-lang-zh_CN.js"/>
+    <script type="text/javascript">
+    </script>
+    <js href="__PUBLIC__/js/admin/common.js"/>
+    <js href="__PUBLIC__/js/admin/login.js"/>
+</head>
+<body style="marign:0;padding:0;">
+    <form id="form" method="post">
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户名：</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="username" data-options="required:true"></td>
+
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">密码：</td>
+                <td class="form_table_td"><input type="password" class="easyui-validatebox" name="password" data-options="required:true"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">验证码：</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="vcode" data-options="required:true,validType:'length[4,4]'" maxLength="4"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">&nbsp;</td>
+                <td class="form_table_td"><img id="vcode" src="{:U('Admin/Public/vcode')}" style="width:150px;height:30px;margin:0 0 0 2px;cursor:pointer;" title="点击刷新" onclick="LOGIN.refreshVcode()"/></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
