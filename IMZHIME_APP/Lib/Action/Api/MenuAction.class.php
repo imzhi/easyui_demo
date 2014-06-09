@@ -7,7 +7,7 @@ class MenuAction extends CommonAction {
     public function get_menus() {
         $where['status'] = '1';
         $field = array('menu_id' => 'id', 'title' => 'text','parent_id','cate_id','url','type');
-        $menus = M('Menu')->field($field)->where($where)->order('`order` ASC,`menu_id` ASC')->select();
+        $menus = M('Menu')->field($field)->where($where)->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
         $menus = $this->format_menus($menus);
         exit(json_encode($menus));
     }
@@ -17,28 +17,25 @@ class MenuAction extends CommonAction {
         $data = array();
         foreach ($menus as $k => $v) {
             if ($v['parent_id'] === '0') {
+                unset($v['parent_id'],$v['cate_id'],$v['cate_name'],$v['url'],$v['type']);
                 $data[] = $v;
             } else {
                 foreach ($data as $kk => $vv) {
-                    if (isset($vv['children'])) {
+                    if ($vv['id'] === $v['parent_id']) {
+                        unset($v['parent_id'],$v['cate_id'],$v['cate_name']);
+                        $data[$kk]['children'][] = $v;
+                    } else if (isset($vv['children'])) {
                         foreach ($vv['children'] as $key => $val) {
-                            $val['id'] === $v['parent_id'] && $data[$kk]['children'][$key]['children'][] = $v;
+                            if ($val['id'] === $v['parent_id']) {
+                                unset($data[$kk]['children'][$key]['url'],$data[$kk]['children'][$key]['type']);
+                                unset($v['parent_id'],$v['cate_id'],$v['cate_name']);
+                                $data[$kk]['children'][$key]['children'][] = $v;
+                            }
                         }
-                    } else {
-                        $vv['id'] === $v['parent_id'] && $data[$kk]['children'][] = $v;
                     }
                 }
             }
         }
-        var_dump($data);exit;
         return $data;
-    }
-
-    private function format(&$data) {
-        // 数据库 => tree json
-
-        foreach ($data as &$v) {
-
-        }
     }
 }
