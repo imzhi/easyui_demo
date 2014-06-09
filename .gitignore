@@ -1,5 +1,7 @@
 .idea/
-IMZHIME_APP/Runtime/
+*/Runtime/
+*/.tags
+*/.tags_sorted_by_file
 *.bak
 .tags
 .tags_sorted_by_file

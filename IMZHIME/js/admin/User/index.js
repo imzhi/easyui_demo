@@ -1,6 +1,8 @@
 var USER = {
     DLG_ID: '#user_dialog',
     DG_ID: '#user_datagrid',
+    TB_ID: '#user_datagrid_toolbar',
+    BTN_ID: '#search_button',
     edit: function() {
         var self = this;
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
@@ -56,10 +58,10 @@ var USER = {
 };
 
 $(function() {
-    $('#user_datagrid').datagrid({
+    $(USER.DG_ID).datagrid({
         title: '用户列表',
         fit: true,
-        toolbar: '#user_datagrid_toolbar',
+        toolbar: USER.TB_ID,
         rownumbers: true,
         border: false,
         singleSelect: true,
@@ -111,8 +113,8 @@ $(function() {
         ]
     });
 
-    $('#search_button').bind('click', function(e) {
+    $(USER.BTN_ID).bind('click', function(e) {
         var params = $('#search_form').serializeJSON();
-        $('#user_datagrid').datagrid('load', params);
+        $(USER.DG_ID).datagrid('load', params);
     });
 });
