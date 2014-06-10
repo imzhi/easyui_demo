@@ -26,7 +26,7 @@
             });
             return o;
         },
-        Destroy_Diaglog: function() {
+        Destroy_Dialog: function() {
             return this.dialog('destroy');
         },
         Center_Dialog: function() {
@@ -40,6 +40,12 @@
         },
         Unselect_All_Datagrid: function() {
             return this.datagrid('unselectAll');
+        },
+        Reload_Treegrid: function() {
+            return this.treegrid('reload');
+        },
+        Get_Selected_Treegrid: function() {
+            return this.treegrid('getSelected');
         }
     });
     $.extend($.fn.validatebox.defaults.rules, {

@@ -37,7 +37,7 @@ var AUTH_GROUP = {
                             var result = $.parseJSON(res);
                             if (result.status === 1) {
                                 $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Diaglog();
+                                $(self.DLG_ID).Destroy_Dialog();
                                 $(self.DG_ID).Reload_Datagrid();
                             } else {
                                 $.Show_Error(result.info);
@@ -49,7 +49,7 @@ var AUTH_GROUP = {
                 text: '关闭',
                 iconCls: 'icon-no',
                 handler: function() {
-                    $(self.DLG_ID).Destroy_Diaglog();
+                    $(self.DLG_ID).Destroy_Dialog();
                 }
             }]
         });
@@ -72,7 +72,7 @@ var AUTH_GROUP = {
                 },
                 onOpen: function() {},
                 onClose: function() {
-                    $(self.DLG_ID).Destroy_Diaglog();
+                    $(self.DLG_ID).Destroy_Dialog();
                 },
                 buttons: [{
                     text: '保存',
@@ -92,7 +92,7 @@ var AUTH_GROUP = {
                                 var result = $.parseJSON(res);
                                 if (result.status === 1) {
                                     $.Show_Warning(result.info);
-                                    $(self.DLG_ID).Destroy_Diaglog();
+                                    $(self.DLG_ID).Destroy_Dialog();
                                     $(self.DG_ID).Reload_Datagrid();
                                 } else {
                                     $.Show_Error(result.info);
@@ -104,7 +104,7 @@ var AUTH_GROUP = {
                     text: '关闭',
                     iconCls: 'icon-no',
                     handler: function() {
-                        $(self.DLG_ID).Destroy_Diaglog();
+                        $(self.DLG_ID).Destroy_Dialog();
                     }
                 }]
             });

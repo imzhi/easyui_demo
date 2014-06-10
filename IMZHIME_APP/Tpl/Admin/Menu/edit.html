@@ -1,0 +1,102 @@
+<script type="text/javascript">
+var EDIT_MENU = {
+    CB_STATUS_ID: '#combobox_status',
+    CB_STATE_ID: '#combobox_state',
+    CB_TYPE_ID: '#combobox_type',
+    // RAW_RULES_ID: '#raw_rules',
+    // RAW_STATUS_ID: '#raw_status'
+};
+
+$(function() {
+    $(EDIT_MENU.CB_STATUS_ID).combobox({
+        editable: false,
+        panelHeight: 'auto',
+        valueField: 'id',
+        textField: 'value',
+        url: '/index.php/Api/Status/combobox_menu_status',
+        // onLoadSuccess: function() {
+        //     $(EDIT_AUTH_GROUP.CB_STATUS_ID).combobox('setValue', $(EDIT_AUTH_GROUP.RAW_STATUS_ID).val());
+        // },
+        // onSelect: function(record) {
+        //     $(EDIT_AUTH_GROUP.RAW_STATUS_ID).val(record.id);
+        // }
+    });
+    $(EDIT_MENU.CB_STATE_ID).combobox({
+        editable: false,
+        panelHeight: 'auto',
+        valueField: 'id',
+        textField: 'value',
+        url: '/index.php/Api/Status/combobox_menu_state'
+    });
+    $(EDIT_MENU.CB_TYPE_ID).combobox({
+        editable: false,
+        panelHeight: 'auto',
+        valueField: 'id',
+        textField: 'value',
+        url: '/index.php/Api/Status/combobox_menu_type'
+    });
+    // $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid({
+    //     panelWidth: 450,
+    //     editable: false,
+    //     idField: 'id',
+    //     textField: 'id',
+    //     url: '/index.php/Api/Auth/get_auth_rule',
+    //     multiple: true,
+    //     pagination: true,
+    //     pageList: [10,20,30,40,50],
+    //     pageSize: 10,
+    //     columns: [[
+    //         {field: 'ck', checkbox: true},
+    //         {field: 'id', title: 'ID', width: 40},
+    //         {field: 'name', title: '规则名称', width: 100},
+    //         {field: 'title', title: '规则描述', width: 100},
+    //         {field: 'condition', title: '规则表达式', width: 100},
+    //         {field: 'status', title: '状态', width: 60}
+    //     ]],
+    //     onLoadSuccess: function() {
+    //         $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid('setValues', $(EDIT_AUTH_GROUP.RAW_RULES_ID).val().split(','));
+    //     },
+    //     onChange: function(newVal, oldVal) {
+    //         $(EDIT_AUTH_GROUP.RAW_RULES_ID).val(newVal);
+    //     }
+    // });
+});
+</script>
+<div id="auth_group_form">
+    <form method="post">
+        <input type="hidden" name="menu_id"/>
+        <!-- <input type="hidden" name="rules" id="raw_rules"/>
+        <input type="hidden" name="status" id="raw_status"/> -->
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">菜单中文名</td>
+                <td class="form_table_td"><input type="text" name="title"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">菜单英文名</td>
+                <td class="form_table_td"><input type="text" name="name"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">URL</td>
+                <td class="form_table_td"><input type="text" name="url"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">排序</td>
+                <td class="form_table_td"><input type="text" name="order"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">类型</td>
+                <td class="form_table_td"><input name="type" id="combobox_type"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">节点状态</td>
+                <td class="form_table_td"><input name="state" id="combobox_state"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">状态</td>
+                <td class="form_table_td"><input name="status" id="combobox_status"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

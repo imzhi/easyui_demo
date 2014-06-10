@@ -11,7 +11,9 @@ $(function() {
             return data;
         },
         onClick: function(node) {
-            if (node.attributes) {
+            if (!$(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target)) {
+                $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
+            } else if (node.attributes) {
                 if (node.attributes.type === 'tab') {
                     $index_tabs = $('#index_tabs');
                     if ($index_tabs.tabs('exists', node.text)) {
@@ -24,6 +26,9 @@ $(function() {
                             closable: true,
                         });
                     }
+                } else if (node.attributes.type === 'dialog') {
+                }
+                else if (node.attributes.type === 'iframe') {
                 }
             }
         }

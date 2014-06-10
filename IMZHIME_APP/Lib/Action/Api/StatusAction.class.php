@@ -30,4 +30,21 @@ class StatusAction extends CommonAction {
     public function combobox_auth_group_status() {
         combobox_return(array('禁用', '启用'));
     }
+
+    public function combobox_menu_status() {
+        combobox_return(array('0', '1'));
+    }
+
+    public function combobox_menu_state() {
+        combobox_return(array('open' => 'open', 'closed' => 'closed'));
+    }
+
+    public function combobox_menu_type() {
+        combobox_return(array(
+            'null' => 'null',
+            'iframe' => 'iframe',
+            'tab' => 'tab',
+            'dialog' => 'dialog'
+        ));
+    }
 }

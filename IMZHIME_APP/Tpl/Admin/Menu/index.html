@@ -15,10 +15,12 @@
     <js href="__PUBLIC__/js/admin/Menu/index.js"/>
 </head>
 <body style="margin:0;padding:0;">
-    <table id="menu_datagrid"></table>
-    <div id="menu_datagrid_toolbar" style="padding:5px;">
+    <table id="menu_treegrid"></table>
+    <div id="menu_treegrid_toolbar" style="padding:5px;">
         <div>
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add()">添加</a>
             <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit()">编辑</a>
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete()">删除</a>
         </div>
     </div>
 </body>

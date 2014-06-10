@@ -38,7 +38,7 @@ var USER = {
                             },
                             success: function() {
                                 $.Close_Progress();
-                                $(self.DLG_ID).Destroy_Diaglog();
+                                $(self.DLG_ID).Destroy_Dialog();
                                 $(self.DG_ID).Reload_Datagrid();
                             }
                         });
@@ -47,7 +47,7 @@ var USER = {
                     text: '关闭',
                     iconCls: 'icon-no',
                     handler: function() {
-                        $(self.DLG_ID).Destroy_Diaglog();
+                        $(self.DLG_ID).Destroy_Dialog();
                     }
                 }]
             });
@@ -73,14 +73,14 @@ $(function() {
         method: 'post',
         columns: [[
             {field: 'user_id', title: 'ID', sortable: true, width: 40, align: 'center'},
-            {field: 'user_name', title: '用户名', sortable: true, width: 100, align: 'center'},
-            {field: 'email', title: '邮箱', sortable: true, width:120, align: 'center'},
-            {field: 'reg_time', title: '注册时间', sortable: true, width: 120, align: 'center'},
-            {field: 'reg_ip', title: '注册IP', sortable: true, width: 100, align: 'center'},
-            {field: 'last_login', title: '最后登陆时间', sortable: true, width: 120, align: 'center'},
+            {field: 'user_name', title: '用户名', sortable: true, width: 100},
+            {field: 'email', title: '邮箱', sortable: true, width:120},
+            {field: 'reg_time', title: '注册时间', sortable: true, width: 120},
+            {field: 'reg_ip', title: '注册IP', sortable: true, width: 100},
+            {field: 'last_login', title: '最后登陆时间', sortable: true, width: 120},
             {field: 'log_num', title: '登陆次数', sortable: true, width: 60, align: 'center'},
-            {field: 'user_type', title: '用户类型', sortable: true, width: 60, align: 'center'},
-            {field: 'status', title: '状态', sortable: true, width:60, align: 'center'},
+            {field: 'user_type', title: '用户类型', sortable: true, width: 60},
+            {field: 'status', title: '状态', sortable: true, width:60},
         ]]
     });
 
