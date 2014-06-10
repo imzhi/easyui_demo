@@ -64,10 +64,16 @@ var MENU = {
                                 }
                                 return isValid;
                             },
-                            success: function() {
+                            success: function(res) {
                                 $.Close_Progress();
-                                $(self.DLG_ID).Destroy_Dialog();
-                                $(self.TG_ID).Reload_Treegrid();
+                                var result = $.parseJSON(res);
+                                if (result.status === 1) {
+                                    $.Show_Warning(result.info);
+                                    $(self.DLG_ID).Destroy_Dialog();
+                                    $(self.TG_ID).Reload_Treegrid();
+                                } else {
+                                    $.Show_Error(result.info);
+                                }
                             }
                         });
                     }
@@ -116,9 +122,7 @@ $(function() {
             {field: 'order', title: '排序', width: 40, align: 'center'},
             {field: 'status', title: '状态', width: 40, align: 'center', styler: function(value, row, index) {
                 if (value === '0') {
-                    return 'background-color:#FFCAE1;';
-                } else if (value === '1') {
-                    return 'background-color:#C3FFCF;';
+                    return 'background-color:#D3D3D3;';
                 }
             }},
         ]],
