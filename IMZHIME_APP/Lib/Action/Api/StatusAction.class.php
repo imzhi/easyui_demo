@@ -32,11 +32,11 @@ class StatusAction extends CommonAction {
     }
 
     public function combobox_menu_status() {
-        combobox_return(array('0', '1'));
+        combobox_return(array('禁用', '启用'));
     }
 
     public function combobox_menu_state() {
-        combobox_return(array('open' => 'open', 'closed' => 'closed'));
+        combobox_return(array('open' => '展开', 'closed' => '折叠'));
     }
 
     public function combobox_menu_type() {

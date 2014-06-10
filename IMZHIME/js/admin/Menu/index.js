@@ -93,6 +93,25 @@ var MENU = {
         var self = this;
         var selected = $(self.TG_ID).Get_Selected_Treegrid();
         if (selected) {
+            // 简化逻辑。必须先删除下级元素
+            if (selected.children) {
+                $.Show_Warning('请先删除下级元素');
+            } else {
+                $.messager.confirm('提示', '确定删除吗？', function(r) {
+                    if (r) {
+                        $.post('/index.php/Api/Menu/del_menu', {id: selected.menu_id}, function(result) {
+                            $.Close_Progress();
+                            if (result.status === 1) {
+                                $.Show_Warning(result.info);
+                                $(self.TG_ID).Unselect_All_Treegrid(); // 取消选择
+                                $(self.TG_ID).Reload_Treegrid();
+                            } else {
+                                $.Show_Error(result.info);
+                            }
+                        }, 'json');
+                    }
+                });
+            }
         } else {
             $.Show_Warning('请先选择一项');
         }
@@ -118,23 +137,35 @@ $(function() {
             {field: 'name', title: '菜单英文名', width: 150},
             {field: 'url', title: 'URL', width: 300},
             {field: 'type', title: '类型', width: 50, align: 'center'},
-            {field: 'state', title: '节点状态', width: 60, align: 'center'},
             {field: 'order', title: '排序', width: 40, align: 'center'},
-            {field: 'status', title: '状态', width: 40, align: 'center', styler: function(value, row, index) {
-                if (value === '0') {
-                    return 'background-color:#D3D3D3;';
+            {
+                field: 'state', title: '节点状态', width: 60, align: 'center',
+                formatter: function(value, row) {
+                    if (value === 'open') {
+                        return '展开';
+                    }
+                    return '折叠';
                 }
-            }},
+            },
+            {
+                field: 'status', title: '状态', width: 40, align: 'center',
+                styler: function(value, row, index) {
+                    if (value === '0') {
+                        return 'background-color:#D3D3D3;';
+                    }
+                },
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            },
         ]],
         onLoadSuccess: function(row, data) {
             // $(MENU.TG_ID).treegrid('collapseAll');
         },
         rowStyler: function(row) {
-            // if (row.status === '0') {
-            //     return 'background-color:#FAD6D6;';
-            // } else if (row.status === '1') {
-            //     return 'background-color:#FAD6D6;';
-            // }
         }
     });
 });

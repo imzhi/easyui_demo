@@ -16,7 +16,9 @@ class MenuAction extends CommonAction {
             $this->format_tree_menus($parents, $c);
         }
         $this->unset_unused_item($parents);
-        // var_dump($parents);exit;
+        I('get.type') === 'EXTRA_ROOT' && array_unshift($parents, array(
+            'id' => 0, 'text' => '根结点', 'iconCls' => 'icon-help'
+        ));
         header('Content-Type:application/json; charset=utf-8');
         exit(json_encode($parents));
     }
@@ -84,6 +86,7 @@ class MenuAction extends CommonAction {
 
     public function do_edit() {
         $menu_id = I('post.menu_id', 0, 'intval');
+        $parent_id = I('post.parent_id', 0, 'intval');
         $title = I('post.title', '', 'trim');
         $name = I('post.name', '', 'trim');
         $url = I('post.url', '', 'trim');
@@ -94,6 +97,7 @@ class MenuAction extends CommonAction {
         }
 
         if (false !== $m->where('menu_id=%d', $menu_id)->save(array(
+            'parent_id' => $parent_id,
             'title' => $title,
             'name' => $name,
             'url' => $url,
@@ -105,6 +109,19 @@ class MenuAction extends CommonAction {
             $this->ajaxReturn(null, '编辑菜单项成功', 1);
         } else {
             $this->ajaxReturn(null, '编辑菜单项失败', 0);
+        }
+    }
+
+    public function del_menu() {
+        $menu_id = I('post.menu_id', 0, 'intval');
+
+        if ($menu_id <= 0) {
+            $this->ajaxReturn(null, '无此菜单项', 0);
+        }
+        if (!M('Menu')->where('menu_id=%d', $menu_id)->delete()) {
+            $this->ajaxReturn(null, '删除菜单项失败', 0);
+        } else {
+            $this->ajaxReturn(null, '删除菜单项成功', 1);
         }
     }
 }

@@ -4,37 +4,29 @@ var EDIT_MENU = {
     CB_STATE_ID: '#combobox_state',
     CB_TYPE_ID: '#combobox_type',
     CT_MENU_ID: '#combotree_menu'
-    // RAW_RULES_ID: '#raw_rules',
-    // RAW_STATUS_ID: '#raw_status'
 };
 
 $(function() {
-    $(EDIT_MENU.TREE_MENU_ID).combotree({
+    $(EDIT_MENU.CT_MENU_ID).combotree({
         animate: true,
         lines: true,
-        url: '/index.php/Api/Menu/get_tree_menus',
-        loadFilter: function(data) {
-            return data;
-        }
+        required: true,
+        url: '/index.php/Api/Menu/get_tree_menus?type=EXTRA_ROOT'
     });
     $(EDIT_MENU.CB_STATUS_ID).combobox({
         editable: false,
         panelHeight: 'auto',
         valueField: 'id',
         textField: 'value',
-        url: '/index.php/Api/Status/combobox_menu_status',
-        // onLoadSuccess: function() {
-        //     $(EDIT_AUTH_GROUP.CB_STATUS_ID).combobox('setValue', $(EDIT_AUTH_GROUP.RAW_STATUS_ID).val());
-        // },
-        // onSelect: function(record) {
-        //     $(EDIT_AUTH_GROUP.RAW_STATUS_ID).val(record.id);
-        // }
+        required: true,
+        url: '/index.php/Api/Status/combobox_menu_status'
     });
     $(EDIT_MENU.CB_STATE_ID).combobox({
         editable: false,
         panelHeight: 'auto',
         valueField: 'id',
         textField: 'value',
+        required: true,
         url: '/index.php/Api/Status/combobox_menu_state'
     });
     $(EDIT_MENU.CB_TYPE_ID).combobox({
@@ -42,40 +34,14 @@ $(function() {
         panelHeight: 'auto',
         valueField: 'id',
         textField: 'value',
+        required: true,
         url: '/index.php/Api/Status/combobox_menu_type'
     });
-    // $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid({
-    //     panelWidth: 450,
-    //     editable: false,
-    //     idField: 'id',
-    //     textField: 'id',
-    //     url: '/index.php/Api/Auth/get_auth_rule',
-    //     multiple: true,
-    //     pagination: true,
-    //     pageList: [10,20,30,40,50],
-    //     pageSize: 10,
-    //     columns: [[
-    //         {field: 'ck', checkbox: true},
-    //         {field: 'id', title: 'ID', width: 40},
-    //         {field: 'name', title: '规则名称', width: 100},
-    //         {field: 'title', title: '规则描述', width: 100},
-    //         {field: 'condition', title: '规则表达式', width: 100},
-    //         {field: 'status', title: '状态', width: 60}
-    //     ]],
-    //     onLoadSuccess: function() {
-    //         $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid('setValues', $(EDIT_AUTH_GROUP.RAW_RULES_ID).val().split(','));
-    //     },
-    //     onChange: function(newVal, oldVal) {
-    //         $(EDIT_AUTH_GROUP.RAW_RULES_ID).val(newVal);
-    //     }
-    // });
 });
 </script>
 <div id="auth_group_form">
     <form method="post">
         <input type="hidden" name="menu_id"/>
-        <!-- <input type="hidden" name="rules" id="raw_rules"/>
-        <input type="hidden" name="status" id="raw_status"/> -->
         <input type="hidden" name="ajax" value="1"/>
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
@@ -84,19 +50,19 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">菜单中文名</td>
-                <td class="form_table_td"><input type="text" name="title"/></td>
+                <td class="form_table_td"><input type="text" name="title" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">菜单英文名</td>
-                <td class="form_table_td"><input type="text" name="name"/></td>
+                <td class="form_table_td"><input type="text" name="name" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">URL</td>
-                <td class="form_table_td"><input type="text" name="url"/></td>
+                <td class="form_table_td"><input type="text" name="url" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">排序</td>
-                <td class="form_table_td"><input type="text" name="order"/></td>
+                <td class="form_table_td"><input type="text" name="order" value="0" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">类型</td>

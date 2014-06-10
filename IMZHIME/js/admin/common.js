@@ -46,6 +46,9 @@
         },
         Get_Selected_Treegrid: function() {
             return this.treegrid('getSelected');
+        },
+        Unselect_All_Treegrid: function() {
+            return this.treegrid('unselectAll');
         }
     });
     $.extend($.fn.validatebox.defaults.rules, {
