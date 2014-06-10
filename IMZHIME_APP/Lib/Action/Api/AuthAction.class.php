@@ -58,9 +58,6 @@ class AuthAction extends CommonAction {
                 ->order("$sort $order")
                 ->limit(($page-1)*$rows, $rows)
                 ->select();
-            foreach ($rules as $k => $v) {
-                $rules[$k]['status'] = self::$auth_group_status[$v['status']];
-            }
         }
         datagrid_return($rules, $count);
     }

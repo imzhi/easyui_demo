@@ -136,12 +136,11 @@ var AUTH_RULE = {
     }
 };
 $(function() {
-    var dg_id = AUTH_RULE.DG_ID;
-    var tb_id = AUTH_RULE.TB_ID;
-    $(dg_id).datagrid({
+    $(AUTH_RULE.DG_ID).datagrid({
         title: '权限规则',
+        iconCls: 'icon-help',
         fit: true,
-        toolbar: tb_id,
+        toolbar: AUTH_RULE.TB_ID,
         rownumbers: true,
         border: false,
         singleSelect: true,
@@ -153,13 +152,18 @@ $(function() {
         method: 'post',
         columns: [[
             {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
-            {field: 'name', title: '规则名称', sortable: true, width: 250, align: 'center'},
-            {field: 'title', title: '规则描述', sortable: true, width: 150, align: 'center'},
-            {field: 'condition', title: '规则表达式', sortable: true, width: 200, align: 'center'},
-            {field: 'status', title: '状态', sortable: true, width: 50, align: 'center'}
-        ]],
-        onDblClickRow: function(rowIndex, rowData) {
-            AUTH_RULE.edit();
-        }
+            {field: 'name', title: '规则名称', sortable: true, width: 250},
+            {field: 'title', title: '规则描述', sortable: true, width: 150},
+            {field: 'condition', title: '规则表达式', sortable: true, width: 200},
+            {
+                field: 'status', title: '状态', sortable: true, width: 50, align: 'center',
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            }
+        ]]
     });
 });
