@@ -13,9 +13,9 @@ class MenuAction extends CommonAction {
             $this->format_tree_menus($parents, $c);
         }
         $this->unset_unused_item($parents);
-        // ä¾›ç¼–è¾‘èœå•åˆ—è¡¨çš„combotreeä½¿ç”¨
+        // ¹©±à¼­²Ëµ¥ÁÐ±íµÄcombotreeÊ¹ÓÃ
         I('get.type') === 'EXTRA_ROOT' && array_unshift($parents, array(
-            'id' => 0, 'text' => 'æ ¹ç»“ç‚¹', 'iconCls' => 'icon-help'
+            'id' => 0, 'text' => '¸ù½áµã', 'iconCls' => 'icon-help'
         ));
         header('Content-Type:application/json; charset=utf-8');
         exit(json_encode($parents));
@@ -33,7 +33,7 @@ class MenuAction extends CommonAction {
     }
 
     /**
-     * åŽ»æŽ‰tree jsonæ•°æ®ä¸­ä¸éœ€è¦çš„cate_id,parent_id...å±žæ€§ï¼ŒåŠ å…¥attributeså±žæ€§
+     * È¥µôtree jsonÊý¾ÝÖÐ²»ÐèÒªµÄcate_id,parent_id...ÊôÐÔ£¬¼ÓÈëattributesÊôÐÔ
      */
     private function unset_unused_item(&$data) {
         foreach ($data as $k => &$v) {
@@ -59,7 +59,7 @@ class MenuAction extends CommonAction {
         exit(json_encode($parents));
     }
 
-    // è¿”å›žarray(èœå•çš„æ ¹ç»“ç‚¹,å­ç»“ç‚¹)
+    // ·µ»Øarray(²Ëµ¥µÄ¸ù½áµã,×Ó½áµã)
     private function get_parents_children($data) {
         $parents = array();
         foreach ($data as $k => $v) {
@@ -93,7 +93,7 @@ class MenuAction extends CommonAction {
 
         $m = M('Menu');
         if ($menu_id <= 0 || !$m->where('menu_id=%d', $menu_id)->count()) {
-            $this->ajaxReturn(null, 'æ— æ­¤èœå•é¡¹', 0);
+            $this->ajaxReturn(null, 'ÎÞ´Ë²Ëµ¥Ïî', 0);
         }
 
         if (false !== $m->where('menu_id=%d', $menu_id)->save(array(
@@ -106,9 +106,9 @@ class MenuAction extends CommonAction {
             'state' => I('post.state'),
             'status' => I('post.status'),
         ))) {
-            $this->ajaxReturn(null, 'ç¼–è¾‘èœå•é¡¹æˆåŠŸ', 1);
+            $this->ajaxReturn(null, '±à¼­²Ëµ¥Ïî³É¹¦', 1);
         } else {
-            $this->ajaxReturn(null, 'ç¼–è¾‘èœå•é¡¹å¤±è´¥', 0);
+            $this->ajaxReturn(null, '±à¼­²Ëµ¥ÏîÊ§°Ü', 0);
         }
     }
 
@@ -116,12 +116,60 @@ class MenuAction extends CommonAction {
         $menu_id = I('post.menu_id', 0, 'intval');
 
         if ($menu_id <= 0) {
-            $this->ajaxReturn(null, 'æ— æ­¤èœå•é¡¹', 0);
+            $this->ajaxReturn(null, 'ÎÞ´Ë²Ëµ¥Ïî', 0);
         }
         if (!M('Menu')->where('menu_id=%d', $menu_id)->delete()) {
-            $this->ajaxReturn(null, 'åˆ é™¤èœå•é¡¹å¤±è´¥', 0);
+            $this->ajaxReturn(null, 'É¾³ý²Ëµ¥ÏîÊ§°Ü', 0);
         } else {
-            $this->ajaxReturn(null, 'åˆ é™¤èœå•é¡¹æˆåŠŸ', 1);
+            $this->ajaxReturn(null, 'É¾³ý²Ëµ¥Ïî³É¹¦', 1);
         }
+    }
+
+    public function get_menu_auth() {
+        $menu_id = I('post.menu_id', 0, 'intval');
+
+        if ($menu_id <= 0) {
+            datagrid_return(array());
+        }
+
+        $auths = M()->table('z_menu_auth a')
+            ->join('z_auth_rule r on r.id=a.auth_id')
+            ->field('a.menu_id,a.auth_id,r.name,r.title')
+            ->where('menu_id=%d', $menu_id)->select();
+        $auths || $auths = array();
+        datagrid_return($auths);
+    }
+
+    public function do_add_menu_auth() {
+        $menu_id = I('post.menu_id', 0, 'intval');
+        $auth_id = I('post.auth_id', 0, 'intval');
+        $status = I('post.status', 1, 'intval');
+
+        if ($menu_id <= 0 || $auth_id <= 0) {
+            $this->ajaxReturn(null, 'not access', 0);
+        }
+
+        if (!M('MenuAuth')->add(array(
+            'menu_id' => $menu_id,
+            'auth_id' => $auth_id,
+            'status' => $status,
+        ))) {
+            $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥¶ÔÓ¦µÄÈ¨ÏÞÊ§°Ü', 0);
+        }
+        $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥¶ÔÓ¦µÄÈ¨ÏÞ³É¹¦', 1);
+    }
+
+    public function del_menu_auth() {
+        $menu_id = I('post.menu_id', 0, 'intval');
+        $auth_id = I('post.auth_id', 0, 'intval');
+
+        if ($menu_id <= 0 || $auth_id <= 0) {
+            $this->ajaxReturn(null, 'not access', 0);
+        }
+
+        if (!M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)->delete()) {
+            $this->ajaxReturn(null, 'É¾³ý²Ëµ¥¶ÔÓ¦µÄÈ¨ÏÞÊ§°Ü', 0);
+        }
+        $this->ajaxReturn(null, 'É¾³ý²Ëµ¥¶ÔÓ¦µÄÈ¨ÏÞ³É¹¦', 1);
     }
 }

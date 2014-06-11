@@ -118,6 +118,15 @@ var MENU = {
     }
 };
 
+var MENU_AUTH = {
+    DLG_ID: '#menu_auth_dialog',
+    DG_ID: '#menu_auth_datagrid',
+    TB_ID: '#menu_auth_datagrid_toolbar',
+    add: function() {},
+    edit: function() {},
+    delete: function() {}
+};
+
 $(function() {
     $(MENU.TG_ID).treegrid({
         title: '菜单列表',
@@ -172,7 +181,28 @@ $(function() {
         onLoadSuccess: function(row, data) {
             // $(MENU.TG_ID).treegrid('collapseAll');
         },
-        rowStyler: function(row) {
+        rowStyler: function(row) {},
+        onClickRow: function(row) {
+            console.log(row);
+            if (!row.children) {
+                $(MENU_AUTH.DG_ID).datagrid('load', {menu_id: row.menu_id});
+            }
         }
+    });
+
+    $(MENU_AUTH.DG_ID).datagrid({
+        iconCls: 'icon-help',
+        fit: true,
+        toolbar: MENU_AUTH.TB_ID,
+        rownumbers: true,
+        border: false,
+        singleSelect: true,
+        idField: 'id',
+        url: '/index.php/Api/Menu/get_menu_auth',
+        method: 'post',
+        columns: [[
+            {field: 'name', title: '规则名称', sortable: true, width: 250},
+            {field: 'title', title: '规则描述', sortable: true, width: 150}
+        ]]
     });
 });

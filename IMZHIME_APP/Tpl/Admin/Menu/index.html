@@ -1,9 +1,23 @@
 <js href="__PUBLIC__/js/admin/Menu/index.js"/>
-<table id="menu_treegrid"></table>
-<div id="menu_treegrid_toolbar" style="padding:5px;">
-    <div>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add()">添加</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit()">编辑</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete()">删除</a>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'center',border:false">
+        <table id="menu_treegrid"></table>
+        <div id="menu_treegrid_toolbar" style="padding:2px;">
+            <div>
+                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add()">添加</a>
+                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit()">编辑</a>
+                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete()">删除</a>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'south',split:true,collapsible:true,title:'拥有的权限',border:false" style="height:150px;">
+        <table id="menu_auth_datagrid"></table>
+        <div id="menu_auth_datagrid_toolbar" style="padding:2px;">
+            <div>
+                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.add()">添加</a>
+                <!-- <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.edit()">编辑</a> -->
+                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.delete()">删除</a>
+            </div>
+        </div>
     </div>
 </div>

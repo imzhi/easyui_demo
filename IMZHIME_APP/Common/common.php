@@ -59,9 +59,9 @@ function bootstrap_page($count, $list_rows = 15) {
 Admin 使用
 ************************/
 
-function datagrid_return($data, $count) {
+function datagrid_return($data, $count = 0) {
     // 防止 json 数据里出现 null，前台将报错
-    $data = $data ? $data : array();
+    $data || $data = array();
     header('Content-Type:application/json; charset=utf-8');
     exit(json_encode(array('total' => $count, 'rows' => $data)));
 }

@@ -12,11 +12,13 @@ $(function() {
             return data;
         },
         onClick: function(node) {
-            if (!$(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target)) {
-                $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
+            var $index_left_nav_tree = $(INDEX.LEFT_NAV_TREE_ID);
+            console.log($(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target));
+            if (!$index_left_nav_tree.tree('isLeaf', node.target)) {
+                $index_left_nav_tree.tree('toggle', node.target);
             } else if (node.attributes) {
                 if (node.attributes.type === 'tab') {
-                    $index_tabs = $(INDEX.TABS_ID);
+                    var $index_tabs = $(INDEX.TABS_ID);
                     if ($index_tabs.tabs('exists', node.text)) {
                         $index_tabs.tabs('select', node.text);
                     } else {
@@ -25,11 +27,15 @@ $(function() {
                             iconCls: 'icon-help',
                             href: node.attributes.url,
                             closable: true,
+                            tools: [{
+                                iconCls: 'icon-mini-refresh',
+                                handler: function() {
+                                    var curr_tab = $index_tabs.tabs('getTab', node.text).panel('refresh', node.attributes.url);
+                                    // console.log($index_tabs.tabs('getSelected'));
+                                }
+                            }]
                         });
                     }
-                } else if (node.attributes.type === 'dialog') {
-                }
-                else if (node.attributes.type === 'iframe') {
                 }
             }
         }
