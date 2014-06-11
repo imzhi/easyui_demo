@@ -1,5 +1,6 @@
 var INDEX = {
-    LEFT_NAV_TREE_ID: '#left_nav_tree'
+    LEFT_NAV_TREE_ID: '#left_nav_tree',
+    TABS_ID: '#index_tabs'
 };
 
 $(function() {
@@ -15,7 +16,7 @@ $(function() {
                 $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
             } else if (node.attributes) {
                 if (node.attributes.type === 'tab') {
-                    $index_tabs = $('#index_tabs');
+                    $index_tabs = $(INDEX.TABS_ID);
                     if ($index_tabs.tabs('exists', node.text)) {
                         $index_tabs.tabs('select', node.text);
                     } else {

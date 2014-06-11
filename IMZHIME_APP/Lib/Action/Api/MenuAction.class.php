@@ -9,13 +9,11 @@ class MenuAction extends CommonAction {
         $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id', 'cate_id', 'url', 'type', 'state');
         $data = M('Menu')->field($field)->where($where)->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
         list($parents, $children) = $this->get_parents_children($data);
-        foreach ($parents as &$v) {
-            unset($v['type'], $v['url'], $v['parent_id'], $v['cate_id']);
-        }
         foreach ($children as $c) {
             $this->format_tree_menus($parents, $c);
         }
         $this->unset_unused_item($parents);
+        // 供编辑菜单列表的combotree使用
         I('get.type') === 'EXTRA_ROOT' && array_unshift($parents, array(
             'id' => 0, 'text' => '根结点', 'iconCls' => 'icon-help'
         ));
@@ -34,18 +32,20 @@ class MenuAction extends CommonAction {
         }
     }
 
-    // 去掉tree json数据中不需要的cate_id,parent_id...属性，加入attributes属性
+    /**
+     * 去掉tree json数据中不需要的cate_id,parent_id...属性，加入attributes属性
+     */
     private function unset_unused_item(&$data) {
         foreach ($data as $k => &$v) {
             if (isset($v['children'])) {
-                unset($v['url'], $v['type'], $v['cate_id'], $v['parent_id']);
                 $this->unset_unused_item($v['children']);
             } else {
+                unset($v['state']);
                 if ('null' !== $v['type']) {
                     $v['attributes'] = array('url' => $v['url'], 'type' => $v['type']);
                 }
-                unset($v['url'], $v['type'], $v['cate_id'], $v['parent_id'], $v['state']);
             }
+            unset($v['url'], $v['type'], $v['cate_id'], $v['parent_id']);
         }
     }
 

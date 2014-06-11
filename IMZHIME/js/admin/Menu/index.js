@@ -136,7 +136,14 @@ $(function() {
             {field: 'title', title: '菜单中文名', width: 200},
             {field: 'name', title: '菜单英文名', width: 150},
             {field: 'url', title: 'URL', width: 300},
-            {field: 'type', title: '类型', width: 50, align: 'center'},
+            {
+                field: 'type', title: '类型', width: 50, align: 'center',
+                styler: function(value, row) {
+                    if (row.children && value !== 'null') {
+                        return 'color:#f00';
+                    }
+                }
+            },
             {field: 'order', title: '排序', width: 40, align: 'center'},
             {
                 field: 'state', title: '节点状态', width: 60, align: 'center',
@@ -149,7 +156,7 @@ $(function() {
             },
             {
                 field: 'status', title: '状态', width: 40, align: 'center',
-                styler: function(value, row, index) {
+                styler: function(value, row) {
                     if (value === '0') {
                         return 'background-color:#D3D3D3;';
                     }
