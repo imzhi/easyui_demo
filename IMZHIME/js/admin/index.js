@@ -1,6 +1,42 @@
 var INDEX = {
     LEFT_NAV_TREE_ID: '#left_nav_tree',
-    TABS_ID: '#index_tabs'
+    TABS_ID: '#index_tabs',
+    new_tab_view: function() {},
+    full_screen_view: function() {},
+    expand_view: function() {},
+    close_tab: function() {
+        var self = this;
+        var $index_tabs = $(INDEX.TABS_ID);
+        $index_tabs.tabs('close', $index_tabs.tabs('getTabIndex', $index_tabs.tabs('getSelected')));
+    },
+    close_other_tabs: function() {
+        var self = this;
+        var $index_tabs = $(INDEX.TABS_ID);
+
+        var all_tabs = $index_tabs.tabs('tabs');
+        var count = all_tabs.length;
+
+        var curr_tab = $index_tabs.tabs('getSelected');
+        var curr_index = $index_tabs.tabs('getTabIndex', curr_tab);
+        var curr_title = $index_tabs.tabs('getTab', curr_index).panel('options').title;
+        while (count--) {
+            if (count !== curr_index && $index_tabs.tabs('getTab', count).panel('options').closable) {
+                $index_tabs.tabs('close', count);
+            }
+        }
+        $index_tabs.tabs('select', curr_title);
+    },
+    close_all_tabs: function() {
+        var self = this;
+        var $index_tabs = $(INDEX.TABS_ID);
+        var all_tabs = $index_tabs.tabs('tabs');
+        var count = all_tabs.length;
+        while(count--) {
+            if ($index_tabs.tabs('getTab', count).panel('options').closable) {
+                $index_tabs.tabs('close', count);
+            }
+        }
+    }
 };
 
 $(function() {
@@ -13,7 +49,6 @@ $(function() {
         },
         onClick: function(node) {
             var $index_left_nav_tree = $(INDEX.LEFT_NAV_TREE_ID);
-            console.log($(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target));
             if (!$index_left_nav_tree.tree('isLeaf', node.target)) {
                 $index_left_nav_tree.tree('toggle', node.target);
             } else if (node.attributes) {

@@ -21,7 +21,29 @@ var MENU = {
             buttons: [{
                 text: '保存',
                 iconCls: 'icon-help',
-                handler: function() {}
+                handler: function() {
+                    $('form', self.DLG_ID).form('submit', {
+                        url: '/index.php/Api/Menu/do_add',
+                        onSubmit: function() {
+                            var isValid = $(this).form('validate');
+                            if (!isValid) {
+                                $.Close_Progress();
+                            }
+                            return isValid;
+                        },
+                        success: function(res) {
+                            $.Close_Progress();
+                            var result = $.parseJSON(res);
+                            if (result.status === 1) {
+                                $.Show_Warning(result.info);
+                                $(self.DLG_ID).Destroy_Dialog();
+                                $(self.TG_ID).Reload_Treegrid();
+                            } else {
+                                $.Show_Error(result.info);
+                            }
+                        }
+                    });
+                }
             }, {
                 text: '关闭',
                 iconCls: 'icon-no',
@@ -122,14 +144,40 @@ var MENU_AUTH = {
     DLG_ID: '#menu_auth_dialog',
     DG_ID: '#menu_auth_datagrid',
     TB_ID: '#menu_auth_datagrid_toolbar',
-    add: function() {},
-    edit: function() {},
+    add: function() {
+        var self = this;
+        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            title: '添加菜单拥有的权限',
+            width: 270,
+            cache: false,
+            modal: true,
+            iconCls: 'icon-help',
+            collapsible: true,
+            href: '/index.php/Admin/Menu/menu_auth_edit',
+            onLoad: function() {
+                $(self.DLG_ID).Center_Dialog();
+            },
+            onClose: function() {
+                $(self.DLG_ID).Destroy_Dialog();
+            },
+            buttons: [{
+                text: '保存',
+                iconCls: 'icon-help',
+                handler: function() {}
+            }, {
+                text: '关闭',
+                iconCls: 'icon-no',
+                handler: function() {
+                    $(self.DLG_ID).Destroy_Dialog();
+                }
+            }]
+        });
+    },
     delete: function() {}
 };
 
 $(function() {
     $(MENU.TG_ID).treegrid({
-        title: '菜单列表',
         fit: true,
         toolbar: MENU.TB_ID,
         rownumbers: true,
@@ -183,7 +231,7 @@ $(function() {
         },
         rowStyler: function(row) {},
         onClickRow: function(row) {
-            console.log(row);
+            // console.log(row);
             if (!row.children) {
                 $(MENU_AUTH.DG_ID).datagrid('load', {menu_id: row.menu_id});
             }

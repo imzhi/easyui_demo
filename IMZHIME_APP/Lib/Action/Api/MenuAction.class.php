@@ -13,9 +13,9 @@ class MenuAction extends CommonAction {
             $this->format_tree_menus($parents, $c);
         }
         $this->unset_unused_item($parents);
-        // ¹©±à¼­²Ëµ¥ÁĞ±íµÄcombotreeÊ¹ÓÃ
+        // ä¾›ç¼–è¾‘èœå•åˆ—è¡¨çš„combotreeä½¿ç”¨
         I('get.type') === 'EXTRA_ROOT' && array_unshift($parents, array(
-            'id' => 0, 'text' => '¸ù½áµã', 'iconCls' => 'icon-help'
+            'id' => 0, 'text' => 'æ ¹ç»“ç‚¹', 'iconCls' => 'icon-help'
         ));
         header('Content-Type:application/json; charset=utf-8');
         exit(json_encode($parents));
@@ -33,7 +33,7 @@ class MenuAction extends CommonAction {
     }
 
     /**
-     * È¥µôtree jsonÊı¾İÖĞ²»ĞèÒªµÄcate_id,parent_id...ÊôĞÔ£¬¼ÓÈëattributesÊôĞÔ
+     * å»æ‰tree jsonæ•°æ®ä¸­ä¸éœ€è¦çš„cate_id,parent_id...å±æ€§ï¼ŒåŠ å…¥attributeså±æ€§
      */
     private function unset_unused_item(&$data) {
         foreach ($data as $k => &$v) {
@@ -59,7 +59,7 @@ class MenuAction extends CommonAction {
         exit(json_encode($parents));
     }
 
-    // ·µ»Øarray(²Ëµ¥µÄ¸ù½áµã,×Ó½áµã)
+    // è¿”å›array(èœå•çš„æ ¹ç»“ç‚¹,å­ç»“ç‚¹)
     private function get_parents_children($data) {
         $parents = array();
         foreach ($data as $k => $v) {
@@ -93,7 +93,7 @@ class MenuAction extends CommonAction {
 
         $m = M('Menu');
         if ($menu_id <= 0 || !$m->where('menu_id=%d', $menu_id)->count()) {
-            $this->ajaxReturn(null, 'ÎŞ´Ë²Ëµ¥Ïî', 0);
+            $this->ajaxReturn(null, 'æ— æ­¤èœå•é¡¹', 0);
         }
 
         if (false !== $m->where('menu_id=%d', $menu_id)->save(array(
@@ -106,22 +106,44 @@ class MenuAction extends CommonAction {
             'state' => I('post.state'),
             'status' => I('post.status'),
         ))) {
-            $this->ajaxReturn(null, '±à¼­²Ëµ¥Ïî³É¹¦', 1);
+            $this->ajaxReturn(null, 'ç¼–è¾‘èœå•é¡¹æˆåŠŸ', 1);
         } else {
-            $this->ajaxReturn(null, '±à¼­²Ëµ¥ÏîÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'ç¼–è¾‘èœå•é¡¹å¤±è´¥', 0);
         }
+    }
+
+    public function do_add() {
+        $menu_id = I('post.menu_id', 0, 'intval');
+        $parent_id = I('post.parent_id', 0, 'intval');
+        $title = I('post.title', '', 'trim');
+        $name = I('post.name', '', 'trim');
+        $url = I('post.url', '', 'trim');
+
+        if (!M('Menu')->add(array(
+            'parent_id' => $parent_id,
+            'title' => $title,
+            'name' => $name,
+            'url' => $url,
+            'order' => I('post.order', 0, 'intval'),
+            'type' => I('post.type'),
+            'state' => I('post.state'),
+            'status' => I('post.status'),
+        ))) {
+            $this->ajaxReturn(null, 'æ·»åŠ èœå•é¡¹å¤±è´¥', 0);
+        }
+        $this->ajaxReturn(null, 'æ·»åŠ èœå•é¡¹æˆåŠŸ', 1);
     }
 
     public function del_menu() {
         $menu_id = I('post.menu_id', 0, 'intval');
 
         if ($menu_id <= 0) {
-            $this->ajaxReturn(null, 'ÎŞ´Ë²Ëµ¥Ïî', 0);
+            $this->ajaxReturn(null, 'æ— æ­¤èœå•é¡¹', 0);
         }
         if (!M('Menu')->where('menu_id=%d', $menu_id)->delete()) {
-            $this->ajaxReturn(null, 'É¾³ı²Ëµ¥ÏîÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'åˆ é™¤èœå•é¡¹å¤±è´¥', 0);
         } else {
-            $this->ajaxReturn(null, 'É¾³ı²Ëµ¥Ïî³É¹¦', 1);
+            $this->ajaxReturn(null, 'åˆ é™¤èœå•é¡¹æˆåŠŸ', 1);
         }
     }
 
@@ -154,9 +176,9 @@ class MenuAction extends CommonAction {
             'auth_id' => $auth_id,
             'status' => $status,
         ))) {
-            $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'æ·»åŠ èœå•å¯¹åº”çš„æƒé™å¤±è´¥', 0);
         }
-        $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞ³É¹¦', 1);
+        $this->ajaxReturn(null, 'æ·»åŠ èœå•å¯¹åº”çš„æƒé™æˆåŠŸ', 1);
     }
 
     public function del_menu_auth() {
@@ -168,8 +190,8 @@ class MenuAction extends CommonAction {
         }
 
         if (!M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)->delete()) {
-            $this->ajaxReturn(null, 'É¾³ı²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'åˆ é™¤èœå•å¯¹åº”çš„æƒé™å¤±è´¥', 0);
         }
-        $this->ajaxReturn(null, 'É¾³ı²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞ³É¹¦', 1);
+        $this->ajaxReturn(null, 'åˆ é™¤èœå•å¯¹åº”çš„æƒé™æˆåŠŸ', 1);
     }
 }

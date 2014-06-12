@@ -26,17 +26,17 @@
     </div>
     <div id="center_layout" data-options="region:'center',split:true,border:false" style="padding:0px;">
         <div class="easyui-tabs" id="index_tabs" data-options="fit:true,tools:'#index_tabs_tools'">
-            <div data-options="title:'欢迎光临',fit:true">
+            <div data-options="title:'欢迎光临',fit:true,closed:false">
                 <h1>欢迎光临</h1>
             </div>
         </div>
         <div id="index_tabs_tools">
-            <a class="easyui-linkbutton easyui-tooltip" title="在新窗口中单独打开此标签" data-options="plain:true,iconCls:'icon-help'">新标签</a>
-            <a class="easyui-linkbutton easyui-tooltip" title="全屏浏览站点" data-options="plain:true,iconCls:'icon-help'">全屏</a>
-            <a class="easyui-linkbutton easyui-tooltip" title="展开浏览站点" data-options="plain:true,iconCls:'icon-help'">展开</a>
-            <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'">关闭当前</a>
-            <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'">关闭其它</a>
-            <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'">关闭全部</a>
+            <a class="easyui-linkbutton easyui-tooltip" title="在新窗口中单独打开此标签" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.new_tab_view()">新标签</a>
+            <a class="easyui-linkbutton easyui-tooltip" title="全屏浏览站点" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.full_screen_view()">全屏</a>
+            <a class="easyui-linkbutton easyui-tooltip" title="展开浏览站点" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.expand_view()">展开</a>
+            <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_tab()">关闭当前</a>
+            <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_other_tabs()">关闭其它</a>
+            <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_all_tabs()">关闭全部</a>
         </div>
     </div>
 </body>

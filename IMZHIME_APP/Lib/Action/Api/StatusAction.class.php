@@ -47,4 +47,8 @@ class StatusAction extends CommonAction {
             'dialog' => 'dialog'
         ));
     }
+
+    public function combobox_menu_auth_status() {
+        combobox_return(array('禁用', '启用'));
+    }
 }

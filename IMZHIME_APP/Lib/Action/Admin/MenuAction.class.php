@@ -11,4 +11,8 @@ class MenuAction extends CommonAction {
     public function edit() {
         $this->display();
     }
+
+    public function menu_auth_edit() {
+        $this->display();
+    }
 }
