@@ -1,16 +1,16 @@
 var INDEX = {
     LEFT_NAV_TREE_ID: '#left_nav_tree',
     TABS_ID: '#index_tabs',
-    new_tab_view: function() {},
+    refresh_welcome: function() {
+        $(INDEX.TABS_ID).tabs('getTab', 0).panel('refresh');
+    },
     full_screen_view: function() {},
     expand_view: function() {},
     close_tab: function() {
-        var self = this;
         var $index_tabs = $(INDEX.TABS_ID);
         $index_tabs.tabs('close', $index_tabs.tabs('getTabIndex', $index_tabs.tabs('getSelected')));
     },
     close_other_tabs: function() {
-        var self = this;
         var $index_tabs = $(INDEX.TABS_ID);
 
         var all_tabs = $index_tabs.tabs('tabs');
@@ -27,7 +27,6 @@ var INDEX = {
         $index_tabs.tabs('select', curr_title);
     },
     close_all_tabs: function() {
-        var self = this;
         var $index_tabs = $(INDEX.TABS_ID);
         var all_tabs = $index_tabs.tabs('tabs');
         var count = all_tabs.length;

@@ -15,10 +15,10 @@
     <js href="__PUBLIC__/js/admin/index.js"/>
 </head>
 <body style="margin:0;padding:0;" class="easyui-layout">
-    <div id="north_layout" data-options="region:'north',border:false" style="height:35px;background:#B3DFDA;">
+    <div id="north_layout" data-options="region:'north',border:false" style="overflow:hidden;">
         <div class="header">{$Think.config.SITE_TITLE}</div>
     </div>
-    <div id="south_layout" data-options="region:'south',border:false" style="background:#B3DFDA;">
+    <div id="south_layout" data-options="region:'south',border:false,title:'关于',iconCls:'icon-help',collapsed:true" style="overflow:hidden;height:50px;">
         <div class="footer">it's me. imzhi. since 2014.</div>
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
@@ -26,14 +26,13 @@
     </div>
     <div id="center_layout" data-options="region:'center',split:true,border:false" style="padding:0px;">
         <div class="easyui-tabs" id="index_tabs" data-options="fit:true,tools:'#index_tabs_tools'">
-            <div data-options="title:'欢迎光临',fit:true,closed:false">
+            <div data-options="title:'欢迎光临',fit:true,closed:false,tools:[{iconCls: 'icon-mini-refresh', handler: function() {INDEX.refresh_welcome()}}]">
                 <h1>欢迎光临</h1>
             </div>
         </div>
         <div id="index_tabs_tools">
-            <a class="easyui-linkbutton easyui-tooltip" title="在新窗口中单独打开此标签" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.new_tab_view()">新标签</a>
-            <a class="easyui-linkbutton easyui-tooltip" title="全屏浏览站点" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.full_screen_view()">全屏</a>
             <a class="easyui-linkbutton easyui-tooltip" title="展开浏览站点" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.expand_view()">展开</a>
+            <a class="easyui-linkbutton easyui-tooltip" title="全屏浏览站点" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.full_screen_view()">全屏</a>
             <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_tab()">关闭当前</a>
             <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_other_tabs()">关闭其它</a>
             <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_all_tabs()">关闭全部</a>

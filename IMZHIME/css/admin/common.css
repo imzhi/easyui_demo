@@ -1,10 +1,16 @@
 .header {
     text-transform: uppercase;
-    /*font: bold 26px/26px Arial,Verdana,sans-serif;*/
     font-family: Arial,Verdana,sans-serif;
     font-size: 26px;
     line-height: 32px;
     font-weight: bold;
+}
+
+.footer {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 0;
 }
 
 /** Form 使用 **/
@@ -20,10 +26,4 @@
     border-style: dotted;
     border-color: #CCC;
     border-width: 0 1px 1px 0;
-}
-
-.footer {
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
 }

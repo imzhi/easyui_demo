@@ -14,7 +14,7 @@ class MenuAction extends CommonAction {
         }
         $this->unset_unused_item($parents);
         // 供编辑菜单列表的combotree使用
-        I('get.type') === 'EXTRA_ROOT' && array_unshift($parents, array(
+        'EXTRA_ROOT' === I('get.type') && array_unshift($parents, array(
             'id' => 0, 'text' => '根结点', 'iconCls' => 'icon-help'
         ));
         header('Content-Type:application/json; charset=utf-8');
