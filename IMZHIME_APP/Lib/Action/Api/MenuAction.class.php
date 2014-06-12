@@ -162,21 +162,29 @@ class MenuAction extends CommonAction {
         datagrid_return($auths);
     }
 
+    /**
+     * 批量添加菜单的权限。若有重复则不添加。
+     */
     public function do_add_menu_auth() {
         $menu_id = I('post.menu_id', 0, 'intval');
-        $auth_id = I('post.auth_id', 0, 'intval');
+        $auth_ids = I('post.auth_ids', '');
         $status = I('post.status', 1, 'intval');
 
-        if ($menu_id <= 0 || $auth_id <= 0) {
+        if ($menu_id <= 0 || !$auth_ids) {
             $this->ajaxReturn(null, 'not access', 0);
         }
 
-        if (!M('MenuAuth')->add(array(
-            'menu_id' => $menu_id,
-            'auth_id' => $auth_id,
-            'status' => $status,
-        ))) {
-            $this->ajaxReturn(null, '添加菜单对应的权限失败', 0);
+        $m = M('MenuAuth');
+        foreach ($auth_ids as $v) {
+            if (!$m->where('menu_id=%d AND auth_id=%d', $menu_id, $v)->count()) {
+                if (!$m->add(array(
+                    'menu_id' => $menu_id,
+                    'auth_id' => $v,
+                    'status' => $status,
+                ))) {
+                    $this->ajaxReturn(null, '添加菜单对应的权限失败', 0);
+                }
+            }
         }
         $this->ajaxReturn(null, '添加菜单对应的权限成功', 1);
     }

@@ -121,7 +121,9 @@ var MENU = {
             } else {
                 $.messager.confirm('提示', '确定删除吗？', function(r) {
                     if (r) {
-                        $.post('/index.php/Api/Menu/del_menu', {id: selected.menu_id}, function(result) {
+                        $.post('/index.php/Api/Menu/del_menu', {
+                            id: selected.menu_id
+                        }, function(result) {
                             $.Close_Progress();
                             if (result.status === 1) {
                                 $.Show_Warning(result.info);
@@ -146,34 +148,85 @@ var MENU_AUTH = {
     TB_ID: '#menu_auth_datagrid_toolbar',
     add: function() {
         var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
-            title: '添加菜单拥有的权限',
-            width: 270,
-            cache: false,
-            modal: true,
-            iconCls: 'icon-help',
-            collapsible: true,
-            href: '/index.php/Admin/Menu/menu_auth_edit',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
-            },
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '保存',
+        var selected = $(MENU.TG_ID).Get_Selected_Treegrid();
+        if (selected && !selected.children) {
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+                title: '添加菜单拥有的权限',
+                width: 270,
+                cache: false,
+                modal: true,
                 iconCls: 'icon-help',
-                handler: function() {}
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
+                collapsible: true,
+                href: '/index.php/Admin/Menu/menu_auth_edit',
+                onLoad: function() {
+                    $(self.DLG_ID).Center_Dialog();
+                    $('form', self.DLG_ID).form('load', selected);
+                },
+                onClose: function() {
                     $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
-        });
+                },
+                buttons: [{
+                    text: '保存',
+                    iconCls: 'icon-help',
+                    handler: function() {
+                        $('form', self.DLG_ID).form('submit', {
+                            url: '/index.php/Api/Menu/do_add_menu_auth',
+                            onSubmit: function() {
+                                var isValid = $(this).form('validate');
+                                if (!isValid) {
+                                    $.Close_Progress();
+                                }
+                                return isValid;
+                            },
+                            success: function(res) {
+                                $.Close_Progress();
+                                var result = $.parseJSON(res);
+                                if (result.status === 1) {
+                                    $.Show_Warning(result.info);
+                                    $(self.DLG_ID).Destroy_Dialog();
+                                    $(self.DG_ID).Reload_Datagrid();
+                                } else {
+                                    $.Show_Error(result.info);
+                                }
+                            }
+                        });
+                    }
+                }, {
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function() {
+                        $(self.DLG_ID).Destroy_Dialog();
+                    }
+                }]
+            });
+        } else {
+            $.Show_Warning('请先在菜单列表中选择一项子节点');
+        }
     },
-    delete: function() {}
+    delete: function() {
+        var self = this;
+        var selected = $(self.DG_ID).Get_Selected_Datagrid();
+        if (selected) {
+            $.messager.confirm('提示', '确定删除吗？', function(r) {
+                if (r) {
+                    $.post('/index.php/Api/Menu/del_menu_auth', {
+                        menu_id: selected.menu_id, auth_id: selected.auth_id
+                    }, function(result) {
+                        $.Close_Progress();
+                        if (result.status === 1) {
+                            $.Show_Warning(result.info);
+                            $(self.DG_ID).Unselect_All_Datagrid(); // 取消选择
+                            $(self.DG_ID).Reload_Datagrid();
+                        } else {
+                            $.Show_Error(result.info);
+                        }
+                    }, 'json');
+                }
+            });
+        } else {
+            $.Show_Warning('请先选择一项');
+        }
+    }
 };
 
 $(function() {
@@ -234,6 +287,9 @@ $(function() {
             // console.log(row);
             if (!row.children) {
                 $(MENU_AUTH.DG_ID).datagrid('load', {menu_id: row.menu_id});
+            } else {
+                // 选择了父菜单节点则，载入空数据
+                $(MENU_AUTH.DG_ID).datagrid('loadData', {total: 0, rows: []});
             }
         }
     });
@@ -249,7 +305,7 @@ $(function() {
         url: '/index.php/Api/Menu/get_menu_auth',
         method: 'post',
         columns: [[
-            {field: 'name', title: '规则名称', sortable: true, width: 250},
+            {field: 'name', title: '规则名称', sortable: true, width: 200},
             {field: 'title', title: '规则描述', sortable: true, width: 150}
         ]]
     });

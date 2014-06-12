@@ -23,10 +23,10 @@ $(function() {
     $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid({
         panelWidth: 450,
         editable: false,
+        multiple: true,
         idField: 'id',
         textField: 'id',
         url: '/index.php/Api/Auth/get_auth_rule',
-        multiple: true,
         pagination: true,
         pageList: [10,20,30,40,50],
         pageSize: 10,

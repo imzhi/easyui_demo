@@ -10,11 +10,37 @@ $(function() {
         panelHeight: 'auto',
         valueField: 'id',
         textField: 'value',
+        value: 1,
         required: true,
         url: '/index.php/Api/Status/combobox_menu_auth_status'
     });
     $(EDIT_MENU_AUTH.CG_AUTH_ID).combogrid({
+        panelWidth: 450,
+        editable: false,
         required: true,
+        multiple: true,
+        idField: 'id',
+        textField: 'title',
+        url: '/index.php/Api/Auth/get_auth_rule',
+        pagination: true,
+        pageList: [10,20,30,40,50],
+        pageSize: 10,
+        columns: [[
+            {field: 'ck', checkbox: true},
+            {field: 'id', title: 'ID', width: 30},
+            {field: 'name', title: '规则名称', width: 180},
+            {field: 'title', title: '规则描述', width: 100},
+            {field: 'condition', title: '规则表达式', width: 100},
+            {
+                field: 'status', title: '状态', width: 40,
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            }
+        ]]
     });
 });
 </script>
