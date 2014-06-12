@@ -78,12 +78,12 @@ function combobox_return($array) {
 // 检查权限
 function action_check_auth($class) {
     // echo strtr($class, array('Action' => ''));exit;
-    $rules = M('AuthRule')->field('name')->where('name like "'.strtr($class, array('Action' => '')).'%"')->select();
+    $rules = M('AuthRule')->field('name')->where('name LIKE "'.strtr($class, array('Action' => '')).'%"')->select();
     import('ORG.Util.Auth');
     $auth = new Auth();
     foreach ($rules as $r) {
-        if ($r['name'] === MODULE_NAME.'|'.ACTION_NAME
-            && !$auth->check(MODULE_NAME.'|'.ACTION_NAME, 1)) {
+        if ($r['name'] === MODULE_NAME.'/'.ACTION_NAME
+            && !$auth->check(MODULE_NAME.'/'.ACTION_NAME, 1)) {
             return false;
         }
     }
@@ -93,5 +93,5 @@ function action_check_auth($class) {
 function html_check_auth($class, $method) {
     import('ORG.Util.Auth');
     $auth = new Auth();
-    return $auth->check("{$class}|{$method}", 6);
+    return $auth->check("{$class}/{$method}", 1);
 }
