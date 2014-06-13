@@ -1,9 +1,6 @@
 <script type="text/javascript">
 var EDIT_AUTH_GROUP = {
     CB_STATUS_ID: '#combobox_status',
-    CB_RULES_ID: '#combobox_rules',
-    RAW_RULES_ID: '#raw_rules',
-    RAW_STATUS_ID: '#raw_status'
 };
 
 $(function() {
@@ -12,59 +9,22 @@ $(function() {
         panelHeight: 'auto',
         valueField: 'id',
         textField: 'value',
-        url: '/index.php/Api/Status/combobox_auth_group_status',
-        onLoadSuccess: function() {
-            $(EDIT_AUTH_GROUP.CB_STATUS_ID).combobox('setValue', $(EDIT_AUTH_GROUP.RAW_STATUS_ID).val());
-        },
-        onSelect: function(record) {
-            $(EDIT_AUTH_GROUP.RAW_STATUS_ID).val(record.id);
-        }
-    });
-    $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid({
-        panelWidth: 450,
-        editable: false,
-        multiple: true,
-        idField: 'id',
-        textField: 'id',
-        url: '/index.php/Api/Auth/get_auth_rule',
-        pagination: true,
-        pageList: [10,20,30,40,50],
-        pageSize: 10,
-        columns: [[
-            {field: 'ck', checkbox: true},
-            {field: 'id', title: 'ID', width: 40},
-            {field: 'name', title: '规则名称', width: 100},
-            {field: 'title', title: '规则描述', width: 100},
-            {field: 'condition', title: '规则表达式', width: 100},
-            {field: 'status', title: '状态', width: 60}
-        ]],
-        onLoadSuccess: function() {
-            $(EDIT_AUTH_GROUP.CB_RULES_ID).combogrid('setValues', $(EDIT_AUTH_GROUP.RAW_RULES_ID).val().split(','));
-        },
-        onChange: function(newVal, oldVal) {
-            $(EDIT_AUTH_GROUP.RAW_RULES_ID).val(newVal);
-        }
+        url: '/index.php/Api/Status/combobox_auth_group_status'
     });
 });
 </script>
 <div id="auth_group_form">
     <form method="post">
         <input type="hidden" name="id"/>
-        <input type="hidden" name="rules" id="raw_rules"/>
-        <input type="hidden" name="status" id="raw_status"/>
         <input type="hidden" name="ajax" value="1"/>
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
                 <td class="form_table_td">用户组</td>
-                <td class="form_table_td"><input type="text" name="title"/></td>
-            </tr>
-            <tr class="form_table_tr">
-                <td class="form_table_td">拥有规则</td>
-                <td class="form_table_td"><input id="combobox_rules"/></td>
+                <td class="form_table_td"><input type="text" name="title" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">状态</td>
-                <td class="form_table_td"><input id="combobox_status"/></td>
+                <td class="form_table_td"><input id="combobox_status" name="status" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
         </table>
     </form>

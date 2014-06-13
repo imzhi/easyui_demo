@@ -1,0 +1,59 @@
+<script type="text/javascript">
+var EDIT_NORMAL_AUTH = {
+    CG_ID: '#combogrid_normal_auth',
+    RAW_RULES_ID: '#raw_rules'
+};
+
+$(function() {
+    $(EDIT_NORMAL_AUTH.CG_ID).combogrid({
+        panelWidth: 450,
+        editable: false,
+        multiple: true,
+        idField: 'id',
+        textField: 'title',
+        url: '/index.php/Api/Auth/get_auth_rule',
+        pagination: true,
+        pageList: [10,20,30,40,50],
+        pageSize: 10,
+        columns: [[
+            {field: 'ck', checkbox: true},
+            {field: 'id', title: 'ID', width: 30},
+            {field: 'name', title: '规则名称', width: 100},
+            {field: 'title', title: '规则描述', width: 100},
+            {field: 'condition', title: '规则表达式', width: 100},
+            {
+                field: 'status', title: '状态', width: 40, align: 'center',
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            }
+        ]],
+        onLoadSuccess: function() {
+            $(EDIT_NORMAL_AUTH.CG_ID).combogrid('setValues', $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val().split(','));
+        },
+        onChange: function(newVal, oldVal) {
+            $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val(newVal.join(','));
+        }
+    });
+});
+</script>
+<div id="normal_auth_form">
+    <form method="post">
+        <input type="hidden" name="ajax" value="1"/>
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="rules" id="raw_rules"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户组</td>
+                <td class="form_table_td"><input type="text" name="title" disabled/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">普通权限</td>
+                <td class="form_table_td"><input id="combogrid_normal_auth"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

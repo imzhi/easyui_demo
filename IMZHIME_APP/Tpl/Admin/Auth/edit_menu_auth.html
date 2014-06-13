@@ -1,0 +1,33 @@
+<script type="text/javascript">
+var EDIT_MENU_AUTH = {
+    TREE_ID: '#tree_menu_auth',
+};
+
+$(function() {
+    $(EDIT_MENU_AUTH.TREE_ID).tree({
+        animate: true,
+        checkbox: true,
+        lines: true,
+        url: '/index.php/Api/Menu/get_tree_menus',
+        loadFilter: function(data) {
+            return data;
+        }
+    });
+});
+</script>
+<div id="menu_auth_form">
+    <form method="post">
+        <input type="hidden" name="ajax" value="1"/>
+        <input type="hidden" name="id"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户组</td>
+                <td class="form_table_td"><input type="text" name="title" disabled/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">菜单权限</td>
+                <td class="form_table_td"><input id="tree_menu_auth"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

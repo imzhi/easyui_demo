@@ -1,5 +1,7 @@
 var AUTH_GROUP = {
     DG_ID: '#auth_group_datagrid',
+    NA_DG_ID: '#normal_auth_datagrid',
+    MA_DG_ID: '#menu_auth_datagrid',
     TB_ID: '#auth_group_datagrid_toolbar',
     DLG_ID: '#auth_group_dialog',
     // 添加用户组
@@ -133,32 +135,205 @@ var AUTH_GROUP = {
         } else {
             $.Show_Warning('请先选择一项');
         }
+    },
+    edit_normal_auth: function() {
+        var self = this;
+        var selected = $(self.DG_ID).Get_Selected_Datagrid();
+        if (selected) {
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+                title: '编辑普通权限',
+                width: 280,
+                cache: false,
+                modal: true,
+                iconCls: 'icon-edit',
+                collapsible: true,
+                href: '/index.php/Admin/Auth/edit_normal_auth',
+                onLoad: function() {
+                    $('form', self.DLG_ID).form('load', selected);
+                    $(self.DLG_ID).Center_Dialog();
+                },
+                onOpen: function() {},
+                onClose: function() {
+                    $(self.DLG_ID).Destroy_Dialog();
+                },
+                buttons: [{
+                    text: '保存',
+                    iconCls: 'icon-help',
+                    handler: function() {
+                        $('form', self.DLG_ID).form('submit', {
+                            url: '/index.php/Api/Auth/do_edit_normal_auth',
+                            onSubmit: function() {
+                                var isValid = $(this).form('validate');
+                                if (!isValid) {
+                                    $.Close_Progress();
+                                }
+                                return isValid;
+                            },
+                            success: function(res) {
+                                $.Close_Progress();
+                                var result = $.parseJSON(res);
+                                if (result.status === 1) {
+                                    $.Show_Warning(result.info);
+                                    $(self.DLG_ID).Destroy_Dialog();
+                                    $(self.DG_ID).Reload_Datagrid();
+                                    $(self.NA_DG_ID).Reload_Datagrid();
+                                } else {
+                                    $.Show_Error(result.info);
+                                }
+                            }
+                        });
+                    }
+                }, {
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function() {
+                        $(self.DLG_ID).Destroy_Dialog();
+                    }
+                }]
+            });
+        } else {
+            $.Show_Warning('请先选择一项');
+        }
+    },
+    edit_menu_auth: function() {
+        var self = this;
+        var selected = $(self.DG_ID).Get_Selected_Datagrid();
+        if (selected) {
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+                title: '编辑菜单权限',
+                width: 280,
+                cache: false,
+                modal: true,
+                iconCls: 'icon-edit',
+                collapsible: true,
+                href: '/index.php/Admin/Auth/edit_menu_auth',
+                onLoad: function() {
+                    $('form', self.DLG_ID).form('load', selected);
+                    $(self.DLG_ID).Center_Dialog();
+                },
+                onOpen: function() {},
+                onClose: function() {
+                    $(self.DLG_ID).Destroy_Dialog();
+                },
+                buttons: [{
+                    text: '保存',
+                    iconCls: 'icon-help',
+                    handler: function() {
+                        $('form', self.DLG_ID).form('submit', {
+                            url: '/index.php/Api/Auth/do_edit_normal_auth',
+                            onSubmit: function() {
+                                var isValid = $(this).form('validate');
+                                if (!isValid) {
+                                    $.Close_Progress();
+                                }
+                                return isValid;
+                            },
+                            success: function(res) {
+                                $.Close_Progress();
+                                var result = $.parseJSON(res);
+                                if (result.status === 1) {
+                                    $.Show_Warning(result.info);
+                                    $(self.DLG_ID).Destroy_Dialog();
+                                    $(self.DG_ID).Reload_Datagrid();
+                                    $(self.MA_DG_ID).Reload_Datagrid();
+                                } else {
+                                    $.Show_Error(result.info);
+                                }
+                            }
+                        });
+                    }
+                }, {
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function() {
+                        $(self.DLG_ID).Destroy_Dialog();
+                    }
+                }]
+            });
+        } else {
+            $.Show_Warning('请先选择一项');
+        }
     }
 };
+
 $(function() {
-    var dg_id = AUTH_GROUP.DG_ID;
-    var tb_id = AUTH_GROUP.TB_ID;
-    $(dg_id).datagrid({
-        title: '用户组',
+    $(AUTH_GROUP.DG_ID).datagrid({
+        // title: '用户组',
         fit: true,
-        toolbar: tb_id,
+        toolbar: AUTH_GROUP.TB_ID,
         rownumbers: true,
         border: false,
         singleSelect: true,
         pagination: true,
-        pageList: [10,20,30,40,50],
-        pageSize: 10,
+        pageList: [20,50,100],
+        pageSize: 20,
         idField: 'id',
         url: '/index.php/Api/Auth/get_auth_group',
         method: 'post',
         columns: [[
             {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
             {field: 'title', title: '用户组', sortable: true, width: 100, align: 'center'},
-            {field: 'rules', title: '拥有规则', sortable: true, width: 100, align: 'center'},
-            {field: 'status_name', title: '状态', sortable: true, width: 50, align: 'center'}
+            {
+                field: 'status', title: '状态', sortable: true, width: 50, align: 'center',
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            }
         ]],
-        onDblClickRow: function(rowIndex, rowData) {
-            AUTH_GROUP.edit();
+        onSelect: function(rowIndex, rowData) {
+            var selected = $(AUTH_GROUP.DG_ID).Get_Selected_Datagrid();
+            $(AUTH_GROUP.NA_DG_ID).datagrid('load', {
+                id: selected.id
+            });
         }
+    });
+
+    $(AUTH_GROUP.NA_DG_ID).datagrid({
+        fit: true,
+        rownumbers: true,
+        border: false,
+        singleSelect: true,
+        url: '/index.php/Api/Auth/get_group_normal_auth',
+        method: 'post',
+        columns: [[
+            {field: 'name', title: '规则名称', width: 150},
+            {field: 'title', title: '规则描述', width: 150},
+            {field: 'condition', title: '规则表达式', width: 100},
+            {
+                field: 'status', title: '状态', width: 40, align: 'center',
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            }
+        ]]
+    });
+
+    $(AUTH_GROUP.MA_DG_ID).datagrid({
+        fit: true,
+        rownumbers: true,
+        border: false,
+        singleSelect: true,
+        url: '/index.php/Api/Auth/get_group_normal_auth',
+        method: 'post',
+        columns: [[
+            {field: 'name', title: '规则名称', width: 150},
+            {field: 'title', title: '规则描述', width: 150},
+            {field: 'condition', title: '规则表达式', width: 100},
+            {
+                field: 'status', title: '状态', width: 40, align: 'center',
+                formatter: function(value, row) {
+                    if (value === '1') {
+                        return '启用';
+                    }
+                    return '禁用';
+                }
+            }
+        ]]
     });
 });

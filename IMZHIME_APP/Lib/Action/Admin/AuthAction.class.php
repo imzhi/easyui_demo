@@ -23,4 +23,12 @@ class AuthAction extends CommonAction {
     public function edit_auth_group_access() {
         $this->display();
     }
+
+    public function edit_normal_auth() {
+        $this->display();
+    }
+
+    public function edit_menu_auth() {
+        $this->display();
+    }
 }

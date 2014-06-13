@@ -30,13 +30,11 @@ class AuthAction extends CommonAction {
 
         if ($count = M()->table('z_auth_group')->where($where)->count()) {
             $groups = M()->table('z_auth_group')
+                ->field('*')
                 ->where($where)
                 ->order("$sort $order")
                 ->limit(($page-1)*$rows, $rows)
                 ->select();
-            foreach ($groups as $k => $v) {
-                $groups[$k]['status_name'] = self::$auth_group_status[$v['status']];
-            }
         }
         datagrid_return($groups, $count);
     }
@@ -65,20 +63,18 @@ class AuthAction extends CommonAction {
     public function do_auth_group() {
         $id = I('post.id', 0, 'intval');
         $title = I('post.title');
-        $rules = I('post.rules');
         $status = I('post.status', 0, 'intval');
 
         if ($id > 0) {
-            $this->edit_auth_group($id, $title, $rules, $status);
+            $this->edit_auth_group($id, $title, $status);
         } else {
-            $this->add_auth_group($title, $rules, $status);
+            $this->add_auth_group($title, $status);
         }
     }
 
-    private function add_auth_group($title, $rules, $status) {
+    private function add_auth_group($title, $status) {
         if (M('AuthGroup')->add(array(
             'title' => $title,
-            'rules' => $rules,
             'status' => $status,
         ))) {
             $this->ajaxReturn(null, '新增用户组成功', 1);
@@ -87,10 +83,9 @@ class AuthAction extends CommonAction {
         }
     }
 
-    private function edit_auth_group($id, $title, $rules, $status) {
+    private function edit_auth_group($id, $title, $status) {
         if (false !== M('AuthGroup')->where('id=%d', $id)->save(array(
             'title' => $title,
-            'rules' => $rules,
             'status' => $status,
         ))) {
             $this->ajaxReturn(null, '编辑用户组成功', 1);
@@ -279,5 +274,32 @@ class AuthAction extends CommonAction {
         $exists = M('User')->where('user_name="%s"', $user_name)->count() ? true : false;
         header('Content-Type:application/json; charset=utf-8');
         exit(json_encode($exists));
+    }
+
+    // 获取用户组对应的普通权限
+    public function get_group_normal_auth() {
+        $id = I('id', 0, 'intval');
+        if ($id <= 0) {
+            datagrid_return(array());
+        }
+        $rules = M('AuthGroup')->where('id=%d', $id)->getField('rules');
+        $data = M('AuthRule')->field('*')->where("id IN (%s)", $rules)->select();
+        datagrid_return($data);
+    }
+
+    // 获取用户组对应的菜单权限
+    public function get_group_menu_auth() {
+    }
+
+    public function do_edit_normal_auth() {
+        $id = I('post.id', 0, 'intval');
+        $rules = I('post.rules');
+        if ($id <= 0) {
+            $this->ajaxReturn(null, 'not access', 0);
+        }
+        if (M('AuthGroup')->where('id=%d', $id)->setField('rules', $rules)) {
+            $this->ajaxReturn(null, '编辑普通权限成功', 1);
+        }
+        $this->ajaxReturn(null, '编辑普通权限失败', 0);
     }
 }
