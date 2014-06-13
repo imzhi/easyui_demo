@@ -6,6 +6,7 @@ var EDIT_AUTH_GROUP = {
 $(function() {
     $(EDIT_AUTH_GROUP.CB_STATUS_ID).combobox({
         editable: false,
+        required: true,
         panelHeight: 'auto',
         valueField: 'id',
         textField: 'value',
@@ -24,7 +25,7 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">状态</td>
-                <td class="form_table_td"><input id="combobox_status" name="status" class="easyui-validatebox" data-options="required:true"/></td>
+                <td class="form_table_td"><input id="combobox_status" name="status"/></td>
             </tr>
         </table>
     </form>

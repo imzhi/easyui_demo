@@ -5,7 +5,17 @@ var INDEX = {
         $(INDEX.TABS_ID).tabs('getTab', 0).panel('refresh');
     },
     full_screen_view: function() {},
-    expand_view: function() {},
+    expand_view: function() {
+        if ($('#left_layout').layout().panel('options').collapsed) {
+            $('body').layout('expand', 'south');
+            $('body').layout('expand', 'north');
+            $('body').layout('expand', 'west');
+        } else {
+            $('body').layout('collapse', 'south');
+            $('body').layout('collapse', 'north');
+            $('body').layout('collapse', 'west');
+        }
+    },
     close_tab: function() {
         var $index_tabs = $(INDEX.TABS_ID);
         $index_tabs.tabs('close', $index_tabs.tabs('getTabIndex', $index_tabs.tabs('getSelected')));

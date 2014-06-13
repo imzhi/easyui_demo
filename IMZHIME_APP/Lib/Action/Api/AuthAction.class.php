@@ -282,13 +282,55 @@ class AuthAction extends CommonAction {
         if ($id <= 0) {
             datagrid_return(array());
         }
+
+        $data = array();
         $rules = M('AuthGroup')->where('id=%d', $id)->getField('rules');
-        $data = M('AuthRule')->field('*')->where("id IN (%s)", $rules)->select();
+        $rules && $data = M('AuthRule')->field('*')->where("id IN (%s)", $rules)->select();
         datagrid_return($data);
     }
 
     // 获取用户组对应的菜单权限
     public function get_group_menu_auth() {
+        $id = I('post.menu_id', 0, 'intval');
+        $data = array();
+        if ($id <= 0) {
+            datagrid_return($data);
+        }
+
+        $menu_rules = M('AuthGroup')->where('id=%d', $id)->getField('menu_rules');
+        if ($menu_rules) {
+            $data = M('Menu')->field('menu_id,parent_id,title,url')->where("menu_id IN (%s)", $menu_rules)->select();
+            if ($data) {
+                list($data, $children) = $this->get_parents_children($data);
+                foreach ($children as $c) {
+                    $this->format($data, $c);
+                }
+            }
+        }
+        // var_dump($data);exit;
+        datagrid_return($data);
+    }
+
+    private function get_parents_children($data) {
+        $parents = array();
+        foreach ($data as $k => $v) {
+            if ($v['parent_id'] === '0') {
+                unset($data[$k]);
+                $parents[] = $v;
+            }
+        }
+        return array($parents, $data);
+    }
+
+    private function format(&$data, $new) {
+        foreach ($data as $k => &$v) {
+            if ($v['menu_id'] === $new['parent_id']) {
+                $data[$k]['children'][] = $new;
+                break;
+            } else if (isset($v['children'])) {
+                $this->format($v['children'], $new);
+            }
+        }
     }
 
     public function do_edit_normal_auth() {
@@ -301,5 +343,18 @@ class AuthAction extends CommonAction {
             $this->ajaxReturn(null, '编辑普通权限成功', 1);
         }
         $this->ajaxReturn(null, '编辑普通权限失败', 0);
+    }
+
+    public function do_edit_menu_auth() {
+        $id = I('post.id', 0, 'intval');
+        $menu_rules = I('post.menu_rules');
+        if ($id <= 0) {
+            $this->ajaxReturn(null, 'not access', 0);
+        }
+
+        if (M('AuthGroup')->where('id=%d', $id)->setField('menu_rules', $menu_rules)) {
+            $this->ajaxReturn(null, '编辑菜单权限成功', 1);
+        }
+        $this->ajaxReturn(null, '编辑菜单权限失败', 0);
     }
 }

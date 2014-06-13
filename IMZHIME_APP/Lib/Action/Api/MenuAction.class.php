@@ -66,8 +66,6 @@ class MenuAction extends CommonAction {
             if ($v['parent_id'] === '0') {
                 unset($data[$k]);
                 $parents[] = $v;
-            } else {
-                break;
             }
         }
         return array($parents, $data);

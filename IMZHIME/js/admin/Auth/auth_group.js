@@ -1,7 +1,7 @@
 var AUTH_GROUP = {
     DG_ID: '#auth_group_datagrid',
     NA_DG_ID: '#normal_auth_datagrid',
-    MA_DG_ID: '#menu_auth_datagrid',
+    MA_TG_ID: '#menu_auth_treegrid',
     TB_ID: '#auth_group_datagrid_toolbar',
     DLG_ID: '#auth_group_dialog',
     // 添加用户组
@@ -220,7 +220,7 @@ var AUTH_GROUP = {
                     iconCls: 'icon-help',
                     handler: function() {
                         $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/do_edit_normal_auth',
+                            url: '/index.php/Api/Auth/do_edit_menu_auth',
                             onSubmit: function() {
                                 var isValid = $(this).form('validate');
                                 if (!isValid) {
@@ -234,8 +234,7 @@ var AUTH_GROUP = {
                                 if (result.status === 1) {
                                     $.Show_Warning(result.info);
                                     $(self.DLG_ID).Destroy_Dialog();
-                                    $(self.DG_ID).Reload_Datagrid();
-                                    $(self.MA_DG_ID).Reload_Datagrid();
+                                    $(self.MA_TG_ID).Reload_Treegrid();
                                 } else {
                                     $.Show_Error(result.info);
                                 }
@@ -258,7 +257,6 @@ var AUTH_GROUP = {
 
 $(function() {
     $(AUTH_GROUP.DG_ID).datagrid({
-        // title: '用户组',
         fit: true,
         toolbar: AUTH_GROUP.TB_ID,
         rownumbers: true,
@@ -285,9 +283,9 @@ $(function() {
         ]],
         onSelect: function(rowIndex, rowData) {
             var selected = $(AUTH_GROUP.DG_ID).Get_Selected_Datagrid();
-            $(AUTH_GROUP.NA_DG_ID).datagrid('load', {
-                id: selected.id
-            });
+            $(AUTH_GROUP.NA_DG_ID).datagrid('load', { id: selected.id });
+            $(AUTH_GROUP.MA_TG_ID).treegrid('load', { menu_id: selected.id });
+            // $(AUTH_GROUP.MA_TG_ID).treegrid('loadData', {total: 0, rows: []});
         }
     });
 
@@ -314,26 +312,20 @@ $(function() {
         ]]
     });
 
-    $(AUTH_GROUP.MA_DG_ID).datagrid({
+    $(AUTH_GROUP.MA_TG_ID).treegrid({
         fit: true,
         rownumbers: true,
         border: false,
         singleSelect: true,
-        url: '/index.php/Api/Auth/get_group_normal_auth',
+        animate: true,
+        idField: 'menu_id',
+        treeField: 'title',
+        url: '/index.php/Api/Auth/get_group_menu_auth',
         method: 'post',
         columns: [[
-            {field: 'name', title: '规则名称', width: 150},
-            {field: 'title', title: '规则描述', width: 150},
-            {field: 'condition', title: '规则表达式', width: 100},
-            {
-                field: 'status', title: '状态', width: 40, align: 'center',
-                formatter: function(value, row) {
-                    if (value === '1') {
-                        return '启用';
-                    }
-                    return '禁用';
-                }
-            }
+            {field: 'menu_id', title: 'ID', width: 40, align: 'center'},
+            {field: 'title', title: '菜单中文名', width: 200},
+            {field: 'url', title: 'URL', width: 200}
         ]]
     });
 });

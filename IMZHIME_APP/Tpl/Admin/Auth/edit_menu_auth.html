@@ -1,16 +1,26 @@
 <script type="text/javascript">
 var EDIT_MENU_AUTH = {
-    TREE_ID: '#tree_menu_auth',
+    CT_ID: '#combotree_menu_auth',
+    RAW_MENU_RULES_ID: '#raw_menu_rules'
 };
 
 $(function() {
-    $(EDIT_MENU_AUTH.TREE_ID).tree({
+    $(EDIT_MENU_AUTH.CT_ID).combotree({
+        editable: false,
         animate: true,
-        checkbox: true,
+        multiple: true,
+        cascadeCheck: false,
+        // onlyLeafCheck: true,
         lines: true,
         url: '/index.php/Api/Menu/get_tree_menus',
         loadFilter: function(data) {
             return data;
+        },
+        onLoadSuccess: function() {
+            $(EDIT_MENU_AUTH.CT_ID).combotree('setValues', $(EDIT_MENU_AUTH.RAW_MENU_RULES_ID).val().split(','));
+        },
+        onChange: function(newVal, oldVal) {
+            $(EDIT_MENU_AUTH.RAW_MENU_RULES_ID).val(newVal.join(','));
         }
     });
 });
@@ -19,6 +29,7 @@ $(function() {
     <form method="post">
         <input type="hidden" name="ajax" value="1"/>
         <input type="hidden" name="id"/>
+        <input type="hidden" name="menu_rules" id="raw_menu_rules"/>
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
                 <td class="form_table_td">用户组</td>
@@ -26,7 +37,7 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">菜单权限</td>
-                <td class="form_table_td"><input id="tree_menu_auth"/></td>
+                <td class="form_table_td"><input id="combotree_menu_auth"/></td>
             </tr>
         </table>
     </form>
