@@ -231,6 +231,8 @@ var MENU_AUTH = {
 
 $(function() {
     $(MENU.TG_ID).treegrid({
+        title:'菜单列表',
+        iconCls:'icon-help',
         fit: true,
         toolbar: MENU.TB_ID,
         rownumbers: true,
@@ -295,12 +297,13 @@ $(function() {
     });
 
     $(MENU_AUTH.DG_ID).datagrid({
-        iconCls: 'icon-help',
-        fit: true,
-        toolbar: MENU_AUTH.TB_ID,
-        rownumbers: true,
+        title:'拥有的权限',
+        iconCls:'icon-help',
         border: false,
+        fit: true,
+        rownumbers: true,
         singleSelect: true,
+        toolbar: MENU_AUTH.TB_ID,
         idField: 'id',
         url: '/index.php/Api/Menu/get_menu_auth',
         method: 'post',

@@ -1,12 +1,7 @@
 <?php
 class AuthAction extends CommonAction {
-    public static $auth_group_status;
-    public static $auth_rule_status;
-
     public function _initialize() {
         parent::_initialize();
-        self::$auth_group_status = array('禁用', '启用');
-        self::$auth_rule_status = array('禁用', '启用');
 
         if (!action_check_auth(__CLASS__)) { // 检查权限
             if ($this->isAjax()) {
@@ -60,38 +55,35 @@ class AuthAction extends CommonAction {
         datagrid_return($rules, $count);
     }
 
-    public function do_auth_group() {
-        $id = I('post.id', 0, 'intval');
+    public function add_auth_group() {
         $title = I('post.title');
         $status = I('post.status', 0, 'intval');
 
-        if ($id > 0) {
-            $this->edit_auth_group($id, $title, $status);
-        } else {
-            $this->add_auth_group($title, $status);
-        }
-    }
-
-    private function add_auth_group($title, $status) {
         if (M('AuthGroup')->add(array(
             'title' => $title,
             'status' => $status,
         ))) {
             $this->ajaxReturn(null, '新增用户组成功', 1);
-        } else {
-            $this->ajaxReturn(null, '新增用户组失败', 0);
         }
+        $this->ajaxReturn(null, '新增用户组失败', 0);
     }
 
-    private function edit_auth_group($id, $title, $status) {
+    public function edit_auth_group() {
+        $id = I('post.id', 0, 'intval');
+        $title = I('post.title');
+        $status = I('post.status', 0, 'intval');
+
+        if ($id <= 0) {
+            $this->ajaxReturn(null, 'not access', 0);
+        }
+
         if (false !== M('AuthGroup')->where('id=%d', $id)->save(array(
             'title' => $title,
             'status' => $status,
         ))) {
             $this->ajaxReturn(null, '编辑用户组成功', 1);
-        } else {
-            $this->ajaxReturn(null, '编辑用户组失败', 0);
         }
+        $this->ajaxReturn(null, '编辑用户组失败', 0);
     }
 
     public function del_auth_group() {
@@ -259,14 +251,12 @@ class AuthAction extends CommonAction {
 
     public function combotree_auth_group() {
         $groups = M('AuthGroup')->field('id,title as text')->where('status<5')->select();
-        header('Content-Type:application/json; charset=utf-8');
-        exit(json_encode($groups));
+        json_return($groups);
     }
 
     public function combobox_user() {
         $users = M('User')->field()->where()->select();
-        header('Content-Type:application/json; charset=utf-8');
-        exit(json_encode($users));
+        json_return($users);
     }
 
     public function username_exists() {
@@ -333,26 +323,27 @@ class AuthAction extends CommonAction {
         }
     }
 
-    public function do_edit_normal_auth() {
+    public function edit_normal_auth() {
         $id = I('post.id', 0, 'intval');
         $rules = I('post.rules');
         if ($id <= 0) {
             $this->ajaxReturn(null, 'not access', 0);
         }
-        if (M('AuthGroup')->where('id=%d', $id)->setField('rules', $rules)) {
+        if (false !== M('AuthGroup')->where('id=%d', $id)
+            ->setField('rules', $rules)) {
             $this->ajaxReturn(null, '编辑普通权限成功', 1);
         }
         $this->ajaxReturn(null, '编辑普通权限失败', 0);
     }
 
-    public function do_edit_menu_auth() {
+    public function edit_menu_auth() {
         $id = I('post.id', 0, 'intval');
         $menu_rules = I('post.menu_rules');
         if ($id <= 0) {
             $this->ajaxReturn(null, 'not access', 0);
         }
-
-        if (M('AuthGroup')->where('id=%d', $id)->setField('menu_rules', $menu_rules)) {
+        if (false !== M('AuthGroup')->where('id=%d', $id)
+            ->setField('menu_rules', $menu_rules)) {
             $this->ajaxReturn(null, '编辑菜单权限成功', 1);
         }
         $this->ajaxReturn(null, '编辑菜单权限失败', 0);

@@ -52,11 +52,46 @@
         }
     });
     $.extend($.fn.validatebox.defaults.rules, {
+        equals: {
+            validator: function(value, param) {
+                return value == $(param[0]).val();
+            },
+            message: '数据不一致'
+        },
         minLength: {
             validator: function(value, param) {
                 return value.length >= param[0];
             },
             message: '请最少输入{0}个字符'
+        },
+        maxLength: {
+            validator: function(value, param) {
+                return value.length <= param[0];
+            },
+            message: '请最多输入{0}个字符'
+        },
+        equalLength: {
+            validator: function(value, param) {
+                return value.length == param[0];
+            },
+            message: '请输入{0}个字符'
+        },
+        isPassword: {
+            validator: function(value, param) {
+                return value.length >= 4 && value.length <= 20 && false !== value.indexOf(' ');
+            },
+            message: '密码在4-20位之间，且不能包含空格'
+        },
+        isUsername: {
+            validator: function(value, param) {
+                return /\w{2,20}/.test(value);
+            },
+            message: '用户名在2-20位之间，由字母或者数字组成'
         }
     });
 })(jQuery);
+
+window.CONSTANTS = {
+    PAGELIST: [10, 20,50,100],
+    PAGESIZE: 20,
+};

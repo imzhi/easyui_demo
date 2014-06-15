@@ -14,7 +14,7 @@ var AUTH_GROUP = {
             modal: true,
             iconCls: 'icon-help',
             collapsible: true,
-            href: '/index.php/Admin/Auth/edit_auth_group',
+            href: '/index.php/Auth/edit_auth_group',
             onLoad: function() {
                 $(self.DLG_ID).Center_Dialog();
             },
@@ -26,7 +26,7 @@ var AUTH_GROUP = {
                 iconCls: 'icon-help',
                 handler: function() {
                     $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/Auth/do_auth_group',
+                        url: '/index.php/Api/Auth/add_auth_group',
                         onSubmit: function() {
                             var isValid = $(this).form('validate');
                             if (!isValid) {
@@ -81,7 +81,7 @@ var AUTH_GROUP = {
                     iconCls: 'icon-help',
                     handler: function() {
                         $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/do_auth_group',
+                            url: '/index.php/Api/Auth/edit_auth_group',
                             onSubmit: function() {
                                 var isValid = $(this).form('validate');
                                 if (!isValid) {
@@ -161,7 +161,7 @@ var AUTH_GROUP = {
                     iconCls: 'icon-help',
                     handler: function() {
                         $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/do_edit_normal_auth',
+                            url: '/index.php/Api/Auth/edit_normal_auth',
                             onSubmit: function() {
                                 var isValid = $(this).form('validate');
                                 if (!isValid) {
@@ -220,7 +220,7 @@ var AUTH_GROUP = {
                     iconCls: 'icon-help',
                     handler: function() {
                         $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/do_edit_menu_auth',
+                            url: '/index.php/Api/Auth/edit_menu_auth',
                             onSubmit: function() {
                                 var isValid = $(this).form('validate');
                                 if (!isValid) {
@@ -257,14 +257,16 @@ var AUTH_GROUP = {
 
 $(function() {
     $(AUTH_GROUP.DG_ID).datagrid({
+        title:'用户组',
+        iconCls:'icon-help',
         fit: true,
         toolbar: AUTH_GROUP.TB_ID,
         rownumbers: true,
         border: false,
         singleSelect: true,
         pagination: true,
-        pageList: [20,50,100],
-        pageSize: 20,
+        pageList: CONSTANTS.PAGELIST,
+        pageSize: CONSTANTS.PAGESIZE,
         idField: 'id',
         url: '/index.php/Api/Auth/get_auth_group',
         method: 'post',
@@ -290,6 +292,8 @@ $(function() {
     });
 
     $(AUTH_GROUP.NA_DG_ID).datagrid({
+        title:'普通权限',
+        iconCls:'icon-help',
         fit: true,
         rownumbers: true,
         border: false,
@@ -313,6 +317,8 @@ $(function() {
     });
 
     $(AUTH_GROUP.MA_TG_ID).treegrid({
+        title:'菜单权限',
+        iconCls:'icon-help',
         fit: true,
         rownumbers: true,
         border: false,
@@ -323,7 +329,6 @@ $(function() {
         url: '/index.php/Api/Auth/get_group_menu_auth',
         method: 'post',
         columns: [[
-            {field: 'menu_id', title: 'ID', width: 40, align: 'center'},
             {field: 'title', title: '菜单中文名', width: 200},
             {field: 'url', title: 'URL', width: 200}
         ]]

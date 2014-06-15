@@ -69,8 +69,20 @@ function datagrid_return($data, $count = 0) {
 function combobox_return($array) {
     $data = array();
     while (list($key, $val) = each($array)) {
-        $data[] = array('id' => $key, 'value' => $val);
+        // 如果是分了组的combobox数据
+        if (is_array($val)) {
+            while (list($k, $v) = each($val)) {
+                $data[] = array('id' => $k, 'value' => $v, 'group' => $key);
+            }
+        } else {
+            $data[] = array('id' => $key, 'value' => $val);
+        }
     }
+    header('Content-Type:application/json; charset=utf-8');
+    exit(json_encode($data));
+}
+
+function json_return($data) {
     header('Content-Type:application/json; charset=utf-8');
     exit(json_encode($data));
 }
@@ -78,7 +90,8 @@ function combobox_return($array) {
 // 检查权限
 function action_check_auth($class) {
     // echo strtr($class, array('Action' => ''));exit;
-    $rules = M('AuthRule')->field('name')->where('name LIKE "'.strtr($class, array('Action' => '')).'%"')->select();
+    $rules = M('AuthRule')->field('name')
+        ->where('name LIKE "'.strtr($class, array('Action' => '')).'%"')->select();
     import('ORG.Util.Auth');
     $auth = new Auth();
     foreach ($rules as $r) {
@@ -94,4 +107,11 @@ function html_check_auth($class, $method) {
     import('ORG.Util.Auth');
     $auth = new Auth();
     return $auth->check("{$class}/{$method}", 1);
+}
+
+// 拥有的菜单权限
+function get_own_auths() {
+    $id = 1;
+    $auths = M('AuthGroup')->field('rules,menu_rules')->where('id=%d', $id)->find();
+    return $auths;
 }

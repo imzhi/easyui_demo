@@ -6,19 +6,24 @@ class MenuAction extends CommonAction {
 
     public function get_tree_menus() {
         $where['status'] = '1';
-        $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id', 'cate_id', 'url', 'type', 'state');
-        $data = M('Menu')->field($field)->where($where)->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
-        list($parents, $children) = $this->get_parents_children($data);
+        // $auths = get_own_auths();
+        // $where['menu_id'] = array('in', $auths['menu_rules']);
+
+        $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id',
+            'cate_id', 'url', 'type', 'state');
+        $data = M('Menu')->field($field)->where($where)
+            ->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
+        list($data, $children) = $this->get_parents_children($data);
         foreach ($children as $c) {
-            $this->format_tree_menus($parents, $c);
+            $this->format_tree_menus($data, $c);
         }
-        $this->unset_unused_item($parents);
+        $this->unset_unused_item($data);
+
         // 供编辑菜单列表的combotree使用
-        'EXTRA_ROOT' === I('get.type') && array_unshift($parents, array(
+        'EXTRA_ROOT' === I('get.type') && array_unshift($data, array(
             'id' => 0, 'text' => '根结点', 'iconCls' => 'icon-help'
         ));
-        header('Content-Type:application/json; charset=utf-8');
-        exit(json_encode($parents));
+        json_return($data);
     }
 
     private function format_tree_menus(&$data, $new) {
@@ -51,12 +56,11 @@ class MenuAction extends CommonAction {
 
     public function get_treegrid_menus() {
         $data = M('Menu')->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
-        list($parents, $children) = $this->get_parents_children($data);
+        list($data, $children) = $this->get_parents_children($data);
         foreach ($children as $c) {
-            $this->format_treegird_menus($parents, $c);
+            $this->format_treegird_menus($data, $c);
         }
-        header('Content-Type: application/json; charset: utf-8');
-        exit(json_encode($parents));
+        json_return($data);
     }
 
     // 返回array(菜单的根结点,子结点)
@@ -195,7 +199,8 @@ class MenuAction extends CommonAction {
             $this->ajaxReturn(null, 'not access', 0);
         }
 
-        if (!M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)->delete()) {
+        if (!M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)
+            ->delete()) {
             $this->ajaxReturn(null, '删除菜单对应的权限失败', 0);
         }
         $this->ajaxReturn(null, '删除菜单对应的权限成功', 1);

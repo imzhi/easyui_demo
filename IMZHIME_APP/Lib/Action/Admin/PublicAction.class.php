@@ -19,4 +19,16 @@ class PublicAction extends Action {
     public function edit() {
         $this->display();
     }
+
+    public function sign_up() {
+        $this->display();
+    }
+
+    public function sign_in() {
+        $this->display();
+    }
+
+    public function change_password() {
+        $this->display();
+    }
 }

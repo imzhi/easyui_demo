@@ -7,4 +7,8 @@ class UserAction extends CommonAction {
     public function edit() {
         $this->display();
     }
+
+    public function change_password() {
+        $this->display();
+    }
 }

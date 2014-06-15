@@ -46,4 +46,25 @@ class UserAction extends CommonAction {
             'status' => $status,
         ));
     }
+
+
+    public function change_password() {
+        $rawpassword = I('post.rawpassword');
+        $password = I('post.password');
+        $repassword = I('post.repassword');
+
+        if (md5($rawpassword) !=
+            M('User')->where('user_id=%d', self::$user['user_id'])
+            ->getField('password')) {
+            $this->ajaxReturn(null, '原密码不正确', 0);
+        }
+        if (!is_password($password)) {
+            $this->ajaxReturn(null, '密码在4-20位之间，且不能包含空格', 0);
+        }
+        if ($password != $repassword) {
+            $this->ajaxReturn(null, '重复密码不一致', 0);
+        }
+
+        M('User')->where('user_id=%d', self::$user['user_id'])->setField('password', md5($password));
+    }
 }

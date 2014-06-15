@@ -6,11 +6,27 @@
     font-weight: bold;
 }
 
+.top-toolbar {
+    height: 26px;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    position: relative;
+    padding: 0;
+}
+
 .footer {
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
     padding: 5px 0;
+}
+
+.clearfix:after {
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
 }
 
 /** Form 使用 **/
