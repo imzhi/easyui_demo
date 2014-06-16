@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本地
-Source Server Version : 50519
+Source Server Version : 50168
 Source Host           : 127.0.0.1:3306
 Source Database       : imzhime
 
 Target Server Type    : MYSQL
-Target Server Version : 50519
+Target Server Version : 50168
 File Encoding         : 65001
 
-Date: 2014-06-16 00:56:02
+Date: 2014-06-16 19:15:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -134,15 +134,15 @@ CREATE TABLE `z_menu` (
   `order` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序序号',
   `status` enum('1','0') NOT NULL DEFAULT '1' COMMENT '状态 1-启用 0-禁用',
   PRIMARY KEY (`menu_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_menu
 -- ----------------------------
 INSERT INTO `z_menu` VALUES ('1', '0', '0', '', '', '基本设置', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('2', '1', '0', '', '', '站点信息', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('3', '1', '0', '', '', '菜单列表', '/index.php/Admin/Menu/index', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('4', '1', '0', '', '', '关闭站点', '', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('2', '1', '0', '', 'site_info', '站点信息', 'js/admin/Site/info.js', '0', 'dialog', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('3', '1', '0', '', 'menu_list', '菜单列表', '/index.php/Menu/index', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('4', '1', '0', '', 'close_site', '关闭站点', 'js/admin/Site/close.js', '0', 'dialog', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('5', '0', '0', '', '', '权限管理', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('6', '5', '0', '', '', '权限规则', '/index.php/Admin/Auth/auth_rule', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('7', '5', '0', '', '', '用户组', '/index.php/Admin/Auth/auth_group', '0', 'tab', 'open', '0', '1');
@@ -156,6 +156,9 @@ INSERT INTO `z_menu` VALUES ('16', '15', '0', '', '', '缓存2_2', '', '0', 'tab
 INSERT INTO `z_menu` VALUES ('17', '14', '0', '', '', '缓存3', '', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('18', '15', '0', '', '', '缓存2_3', '', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('19', '16', '0', '', '', '缓存2_2_1', '', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('20', '0', '0', '', 'tool_site', '工具站点', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('21', '20', '0', '', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', '0', 'iframe', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('22', '20', '0', '', 'baidu', '百度', 'http://www.baidu.com/', '0', 'iframe', 'open', '0', '1');
 
 -- ----------------------------
 -- Table structure for `z_menu_auth`
@@ -197,7 +200,7 @@ CREATE TABLE `z_site_info` (
 -- ----------------------------
 -- Records of z_site_info
 -- ----------------------------
-INSERT INTO `z_site_info` VALUES ('1', 'IMZHI', 'IMZHI', 'IMZHI', 'default', '1', '0', '', '0', '0', '0');
+INSERT INTO `z_site_info` VALUES ('1', 'IMZHI.ME', 'IMZHI', 'IMZHI', 'bootstrap', '1', '0', '', '0', '1', '1');
 
 -- ----------------------------
 -- Table structure for `z_user`
@@ -205,8 +208,8 @@ INSERT INTO `z_site_info` VALUES ('1', 'IMZHI', 'IMZHI', 'IMZHI', 'default', '1'
 DROP TABLE IF EXISTS `z_user`;
 CREATE TABLE `z_user` (
   `user_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(20) NOT NULL COMMENT '用户名',
-  `password` char(32) NOT NULL COMMENT '密码',
+  `user_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户名',
+  `password` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密码',
   `reg_time` int(11) unsigned NOT NULL,
   `reg_ip` bigint(20) unsigned NOT NULL COMMENT '注册IP',
   `email` varchar(40) NOT NULL,
@@ -218,10 +221,11 @@ CREATE TABLE `z_user` (
   `user_type` enum('admin','moderator','user') NOT NULL DEFAULT 'user' COMMENT '用户类型，普通用户，版主，管理员',
   `status` enum('check','pass','fail','del','noaccess','nopost','lock') NOT NULL DEFAULT 'pass' COMMENT '待审核、未通过、通过、删除、禁止访问、禁止发言、锁定',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '67', '1400948027', '2130706433', 'metro-gray', 'user', 'lock');
-INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '1', '1400940410', '0', 'default', 'user', 'check');
+INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '68', '1400948027', '2130706433', 'metro-gray', 'user', 'lock');
+INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '2', '1400940410', '2130706433', 'black', 'user', 'check');
+INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', '0', '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
