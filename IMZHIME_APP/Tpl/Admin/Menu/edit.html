@@ -13,14 +13,6 @@ $(function() {
         required: true,
         url: '/index.php/Api/Menu/get_tree_menus?type=EXTRA_ROOT'
     });
-    $(EDIT_MENU.CB_STATUS_ID).combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
-        required: true,
-        url: '/index.php/Api/Status/combobox_menu_status'
-    });
     $(EDIT_MENU.CB_STATE_ID).combobox({
         editable: false,
         panelHeight: 'auto',
@@ -36,6 +28,17 @@ $(function() {
         textField: 'value',
         required: true,
         url: '/index.php/Api/Status/combobox_menu_type'
+    });
+    $(EDIT_MENU.CB_STATUS_ID).combobox({
+        editable: false,
+        panelHeight: 'auto',
+        valueField: 'id',
+        textField: 'value',
+        required: true,
+        url: '/index.php/Api/Status/combobox_menu_status',
+        onLoadSuccess: function() {
+            $(this).combobox('setValue', '1');
+        }
     });
 });
 </script>
@@ -58,7 +61,7 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">URL</td>
-                <td class="form_table_td"><input type="text" name="url" class="easyui-validatebox" data-options="required:true"/></td>
+                <td class="form_table_td"><input type="text" name="url" class="easyui-validatebox" data-options="validType:['url']"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">排序</td>

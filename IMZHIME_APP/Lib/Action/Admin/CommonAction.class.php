@@ -2,10 +2,17 @@
 class CommonAction extends Action {
     public static $user;
     public function _initialize() {
+        $user = session('user');
+
         // 检查站点是否关闭
         $site_info = M('SiteInfo')->field('id', true)->where('id=1')->find();
+        if (!$user['unlock'] && $site_info['site_status'] === '0') {
+            // $this->redirect();
+        }
         $save = array();
-        if ($site_info['site_status'] === '0' && $site_info['close_to_time'] <= time()) {
+        if (($site_info['site_status'] === '0' && $site_info['close_to_time'] <= time())
+            || ($site_info['site_status'] === '1' && ($site_info['close_to_time'])
+                || $site_info['close_reason'])) {
             $save = array(
                 'site_status' => '1',
                 'close_to_time' => 0,
@@ -15,8 +22,6 @@ class CommonAction extends Action {
         }
         $this->assign('site_info', array_merge($site_info, $save));
 
-
-        $user = session('user');
         $login_user = array();
         if ($user) {
             $login_user = M('user')->where('user_id=%d', $user['user_id'])->field('theme')->find();

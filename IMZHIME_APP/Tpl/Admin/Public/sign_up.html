@@ -1,0 +1,43 @@
+<script type="text/javascript">
+var SIGN_UP = {
+    refreshVcode: function() {
+        var src = $('#vcode').attr('src');
+        $('#vcode').attr('src', (src.indexOf('?') !== -1 ? src.substring(0, src.indexOf('?')) : src) + '?' + Math.random().toString().slice(-4));
+    }
+};
+</script>
+<div id="sign_up_form">
+    <form method="post">
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户名</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="user_name" data-options="required:true,validType:['isUsername','remote[\'/index.php/Api/User/user_name_not_exists\',\'user_name\']']"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">密码</td>
+                <td class="form_table_td"><input type="password" class="easyui-validatebox" name="password" data-options="required:true,validType:['isPassword','isSimplePassword']" id="password"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">重复密码</td>
+                <td class="form_table_td"><input type="password" class="easyui-validatebox" name="repassword" data-options="required:true,validType:['equals[\'#password\']']"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">电子邮箱</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="email" data-options="validType:['email']"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">生日</td>
+                <td class="form_table_td"><input type="text" class="easyui-datebox" name="birthday" data-options="validType:['isBirthday'],editable:false"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">验证码</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="vcode" data-options="required:true,validType:['equalLength[4]']"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">&nbsp;</td>
+                <td class="form_table_td"><img id="vcode" src="{:U('Admin/Public/vcode')}" style="width:150px;height:20px;margin:0 0 0 2px;cursor:pointer;" title="点击刷新" onclick="SIGN_UP.refreshVcode()"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

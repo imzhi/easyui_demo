@@ -115,7 +115,7 @@ class MenuAction extends CommonAction {
     }
 
     public function do_add() {
-        $menu_id = I('post.menu_id', 0, 'intval');
+        // $menu_id = I('post.menu_id', 0, 'intval');
         $parent_id = I('post.parent_id', 0, 'intval');
         $title = I('post.title', '', 'trim');
         $name = I('post.name', '', 'trim');
@@ -131,6 +131,7 @@ class MenuAction extends CommonAction {
             'state' => I('post.state'),
             'status' => I('post.status'),
         ))) {
+            echo M()->_sql();
             $this->ajaxReturn(null, '添加菜单项失败', 0);
         }
         $this->ajaxReturn(null, '添加菜单项成功', 1);

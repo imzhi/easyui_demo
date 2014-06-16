@@ -61,8 +61,31 @@ var INDEX = {
             }]
         });
     },
+    add_iframe_tab: function(title, url) {
+        var content = '<iframe scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
+        $(INDEX.TABS_ID).tabs('add', {
+            title: title,
+            content: content,
+            iconCls: 'icon-help',
+            closable: true,
+            tools: [{
+                iconCls: 'icon-mini-refresh',
+                handler: function() {
+                    INDEX.refresh_tab(title, url);
+                }
+            }]
+        });
+    },
     refresh_tab: function(title, url) {
-        $(INDEX.TABS_ID).tabs('select', title).tabs('getTab', title).panel('refresh', url);
+        var tab = $(INDEX.TABS_ID).tabs('select', title).tabs('getTab', title);
+        if (/^https?:\/\//.test(url)) {
+            $(INDEX.TABS_ID).tabs('update', {
+                tab: tab,
+                options: { content: tab.tabs().panel('options').content }
+            });
+        } else {
+            tab.panel('refresh', url);
+        }
     },
     sign_in: function() {
         var self = this;
@@ -117,7 +140,60 @@ var INDEX = {
             }]
         });
     },
-    sign_up: function() {},
+    sign_up: function() {
+        var self = this;
+        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            title: '注册',
+            width: 280,
+            cache: false,
+            modal: true,
+            iconCls: 'icon-help',
+            collapsible: true,
+            href: '/index.php/Public/sign_up',
+            onLoad: function() {
+                $(self.DLG_ID).Center_Dialog();
+            },
+            onClose: function() {
+                $(self.DLG_ID).Destroy_Dialog();
+            },
+            buttons: [{
+                text: '注册',
+                iconCls: 'icon-help',
+                handler: function() {
+                    $('form', self.DLG_ID).form('submit', {
+                        url: '/index.php/Api/Public/sign_up',
+                        onSubmit: function() {
+                            var isValid = $(this).form('validate');
+                            if (!isValid) {
+                                $.Close_Progress();
+                            }
+                            return isValid;
+                        },
+                        success: function(res) {
+                            $.Close_Progress();
+                            console.log(res);
+                            var result = $.parseJSON(res);
+                            if (1 === result.status) {
+                                // $.Show_Warning(result.info);
+                                $(self.DLG_ID).Destroy_Dialog();
+                                window.location = result.data;
+                            } else {
+                                SIGN_UP.refreshVcode();
+                                $.Show_Error(result.info);
+                            }
+                        }
+                    });
+                }
+            }, {
+                text: '关闭',
+                iconCls: 'icon-no',
+                handler: function() {
+                    console.log($(self.DLG_ID));
+                    $(self.DLG_ID).Destroy_Dialog();
+                }
+            }]
+        });
+    },
     change_password: function() {
         var self = this;
         $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
@@ -203,6 +279,14 @@ $(function() {
                         $(INDEX.TABS_ID).tabs('select', node.text);
                     } else {
                         INDEX.add_tab(node.text, node.attributes.url);
+                    }
+                } else if (node.attributes.type === 'dialog') {
+                    $.get(node.attributes.url + '?' + $.createRandNum(4));
+                } else if (node.attributes.type === 'iframe') {
+                    if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
+                        $(INDEX.TABS_ID).tabs('select', node.text);
+                    } else {
+                        INDEX.add_iframe_tab(node.text, node.attributes.url);
                     }
                 }
             }

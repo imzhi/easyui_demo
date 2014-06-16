@@ -62,8 +62,8 @@ Admin 使用
 function datagrid_return($data, $count = 0) {
     // 防止 json 数据里出现 null，前台将报错
     $data || $data = array();
-    header('Content-Type:application/json; charset=utf-8');
-    exit(json_encode(array('total' => $count, 'rows' => $data)));
+    $data = array('total' => $count, 'rows' => $data);
+    json_return($data);
 }
 
 function combobox_return($array) {
@@ -78,8 +78,7 @@ function combobox_return($array) {
             $data[] = array('id' => $key, 'value' => $val);
         }
     }
-    header('Content-Type:application/json; charset=utf-8');
-    exit(json_encode($data));
+    json_return($data);
 }
 
 function json_return($data) {
@@ -110,8 +109,17 @@ function html_check_auth($class, $method) {
 }
 
 // 拥有的菜单权限
-function get_own_auths() {
-    $id = 1;
+function get_own_auths($id = 1) {
     $auths = M('AuthGroup')->field('rules,menu_rules')->where('id=%d', $id)->find();
     return $auths;
+}
+
+function is_user_name($value) {
+    return preg_match('#[a-z0-9]{2,20}#i', $value);
+}
+
+function is_password($value) {
+    return strlen($value) <= 20
+        && strlen($value) >= 4
+        && false === strpos($value, ' ');
 }

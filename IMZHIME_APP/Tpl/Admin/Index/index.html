@@ -10,6 +10,7 @@
     <css href="__PUBLIC__/js/common/jquery-easyui/themes/icon-all-16x16.css"/>
     <css href="__PUBLIC__/css/admin/common.css"/>
     <js href="__PUBLIC__/js/common/jquery.1.8.3.min.js"/>
+    <!-- <js href="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"/> -->
     <js href="__PUBLIC__/js/common/jquery-easyui/jquery.easyui.min.js"/>
     <js href="__PUBLIC__/js/common/jquery-easyui/locale/easyui-lang-zh_CN.js"/>
     <script type="text/javascript">
@@ -21,9 +22,9 @@
     <js href="__PUBLIC__/js/admin/index.js"/>
 </head>
 <body style="margin:0;padding:0;" class="easyui-layout">
-    <eq name="site_info['site_status']" value="1">
+    <if condition="($site_info['site_status'] eq '1') OR ($Think.session.user.unlock eq 1)">
     <div id="north_layout" data-options="region:'north',border:false" style="overflow:hidden;">
-        <div class="header">{$Think.config.SITE_TITLE}</div>
+        <div class="header">{$site_info['site_title']}</div>
         <div class="panel-header panel-header-noborder top-toolbar" style="padding:2px;">
             <present name="Think.session.user.user_id">
             <div class="infobar" style="position:absolute;left:5px;line-height:26px;">
@@ -39,6 +40,7 @@
                 <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-status-weather-severe-alert-16x16'" onclick="INDEX.sign_in();">登陆</a>
                 <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-status-weather-severe-alert-16x16'" onclick="INDEX.sign_up();">注册</a>
                 </present>
+                <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.feedback();">留言</a>
             </div>
             <div style="position:absolute;right:5px;padding-top:2px;">
                 <input id="combobox_themes"/>
@@ -67,6 +69,6 @@
     </div>
     <else/>
     已关闭站点
-    </eq>
+    </if>
 </body>
 </html>

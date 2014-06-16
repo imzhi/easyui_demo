@@ -254,18 +254,6 @@ class AuthAction extends CommonAction {
         json_return($groups);
     }
 
-    public function combobox_user() {
-        $users = M('User')->field()->where()->select();
-        json_return($users);
-    }
-
-    public function username_exists() {
-        $user_name = I('post.user_name', '', 'trim');
-        $exists = M('User')->where('user_name="%s"', $user_name)->count() ? true : false;
-        header('Content-Type:application/json; charset=utf-8');
-        exit(json_encode($exists));
-    }
-
     // 获取用户组对应的普通权限
     public function get_group_normal_auth() {
         $id = I('id', 0, 'intval');

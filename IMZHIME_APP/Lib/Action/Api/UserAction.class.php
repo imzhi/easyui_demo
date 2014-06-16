@@ -67,4 +67,16 @@ class UserAction extends CommonAction {
 
         M('User')->where('user_id=%d', self::$user['user_id'])->setField('password', md5($password));
     }
+
+    public function user_name_exists($user_name = '') {
+        $user_name = $user_name ? $user_name : I('post.user_name', '');
+        $exists = M('User')->where('user_name="%s"', $user_name)->count() ? true : false;
+        json_return($exists);
+    }
+
+    public function user_name_not_exists($user_name = '') {
+        $user_name = $user_name ? $user_name : I('post.user_name', '');
+        $exists = M('User')->where('user_name="%s"', $user_name)->count() ? false : true;
+        json_return($exists);
+    }
 }

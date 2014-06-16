@@ -16,6 +16,9 @@
         },
         Open_Progress: function() {
             $.messager.progress();
+        },
+        createRandNum: function(num) {
+            return Math.random().toString().slice(-Math.abs(num));
         }
     });
     $.fn.extend({
@@ -51,6 +54,10 @@
             return this.treegrid('unselectAll');
         }
     });
+
+    /**
+     * validatebox规则扩展
+     */
     $.extend($.fn.validatebox.defaults.rules, {
         equals: {
             validator: function(value, param) {
@@ -82,11 +89,23 @@
             },
             message: '密码在4-20位之间，且不能包含空格'
         },
+        isSimplePassword: {
+            validator: function(value, param) {
+                return true;
+            },
+            message: '密码不能过于简单'
+        },
         isUsername: {
             validator: function(value, param) {
-                return /\w{2,20}/.test(value);
+                return /[a-z0-9]{2,20}/i.test(value);
             },
             message: '用户名在2-20位之间，由字母或者数字组成'
+        },
+        isBirthday: {
+            validator: function(value, param) {
+                return /\d{4}-\d{2}-\d{2}/.test(value)
+            },
+            message: '生日填写无效。填写格式为1990-05-11'
         }
     });
 })(jQuery);

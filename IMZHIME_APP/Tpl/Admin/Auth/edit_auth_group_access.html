@@ -5,7 +5,6 @@ var EDIT_AUTH_GROUP_ACCESS = {
     RAW_UID: '#raw_uid',
     RAW_USERNAME: '#raw_username',
     VB_UID: '#validatebox_uid',
-    VB_USERNAME: '#validatebox_username'
 };
 
 $(function() {
@@ -23,10 +22,6 @@ $(function() {
             $(EDIT_AUTH_GROUP_ACCESS.RAW_GROUP_IDS).val(newValue.join(','));
         }
     });
-    $(EDIT_AUTH_GROUP_ACCESS.VB_USERNAME).validatebox({
-        required: true,
-        validType: ['length[2,20]','remote["/index.php/Api/Auth/username_exists", "user_name"]']
-    });
 });
 </script>
 <div id="auth_group_access_form">
@@ -37,7 +32,7 @@ $(function() {
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
                 <td class="form_table_td">用户名</td>
-                <td class="form_table_td"><input name="user_name" id="validatebox_username" type="text"/></td>
+                <td class="form_table_td"><input name="user_name" id="validatebox_username" type="text" class="easyui-validatebox" data-options="required:true,validType:['length[2,20]','remote[\'/index.php/Api/User/user_name_exists\', \'user_name\']']"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">所属用户组</td>
