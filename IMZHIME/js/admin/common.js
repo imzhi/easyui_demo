@@ -52,6 +52,60 @@
         },
         Unselect_All_Treegrid: function() {
             return this.treegrid('unselectAll');
+        },
+        Dialog: function(settings) {
+            var defaults = {
+                title: '新窗口',
+                iconCls: 'icon-help',
+                width: 280,
+                cache: false,
+                modal: true,
+                collapsible: true,
+                onLoad: function() {
+                    $('form', $(this)).form('load', selected);
+                    $(this).Center_Dialog();
+                },
+                onOpen: function() {},
+                onClose: function() {
+                    $(this).Destroy_Dialog();
+                },
+                buttons: [{
+                    text: '保存',
+                    iconCls: 'icon-help',
+                    handler: function() {
+                        $('form', this).form('submit', {
+                            url: '/index.php/Api/Auth/edit_normal_auth',
+                            onSubmit: function() {
+                                var isValid = $(this).form('validate');
+                                if (!isValid) {
+                                    $.Close_Progress();
+                                }
+                                return isValid;
+                            },
+                            success: function(res) {
+                                $.Close_Progress();
+                                var result = $.parseJSON(res);
+                                if (result.status === 1) {
+                                    $.Show_Warning(result.info);
+                                    $(this).Destroy_Dialog();
+                                    $(self.DG_ID).Reload_Datagrid();
+                                    $(self.NA_DG_ID).Reload_Datagrid();
+                                } else {
+                                    $.Show_Error(result.info);
+                                }
+                            }
+                        });
+                    }
+                }, {
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function() {
+                        $(this).Destroy_Dialog();
+                    }
+                }]
+            };
+            var options = $.extend(true, {}, defaults, settings);
+            $(this).dialog(options);
         }
     });
 
@@ -111,6 +165,6 @@
 })(jQuery);
 
 window.CONSTANTS = {
-    PAGELIST: [10, 20,50,100],
+    PAGELIST: [10,20,50],
     PAGESIZE: 20,
 };
