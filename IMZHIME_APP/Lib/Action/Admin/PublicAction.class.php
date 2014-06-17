@@ -31,4 +31,9 @@ class PublicAction extends Action {
     public function change_password() {
         $this->display();
     }
+
+    public function guestbook() {
+        C('SHOW_PAGE_TRACE', false);
+        $this->display();
+    }
 }

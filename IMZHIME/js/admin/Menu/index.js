@@ -127,9 +127,21 @@ $(function() {
             {
                 field: 'type', title: '类型', width: 50, align: 'center',
                 styler: function(value, row) {
-                    if (row.children && value !== 'null') {
+                    if ((row.children && 'null' !== value) ||
+                        (/^https?:\/\//.test(row.url) && 'iframe' !== value) ||
+                        (/\.js$/.test(row.url) && 'dialog' !== value)) {
                         return 'color:#f00';
                     }
+                },
+                formatter: function(value, row) {
+                    var val;
+                    switch (value) {
+                        case 'iframe': val = '框架'; break;
+                        case 'dialog': val = '对话框'; break;
+                        case 'tab': val = '标签'; break;
+                        case 'null': val = '无'; break;
+                    }
+                    return val;
                 }
             },
             {field: 'order', title: '排序', width: 40, align: 'center'},
@@ -176,8 +188,8 @@ $(function() {
         toolbar: MENU_AUTH.TB_ID,
         url: '/index.php/Api/Menu/get_menu_auth',
         columns: [[
-            {field: 'name', title: '规则名称', sortable: true, width: 200},
-            {field: 'title', title: '规则描述', sortable: true, width: 150}
+            { field: 'name', title: '规则名称', sortable: true, width: 200 },
+            { field: 'title', title: '规则描述', sortable: true, width: 150 }
         ]]
     });
 });

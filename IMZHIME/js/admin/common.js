@@ -139,7 +139,7 @@
                     }
                 }]
             }, settings);
-            $(this).dialog(options);
+            $(self).dialog(options);
         },
         Tree: function(settings) {
             var self = this;
@@ -293,3 +293,12 @@ window.CONSTANTS = {
     PAGELIST: [10,20,50],
     PAGESIZE: 20,
 };
+
+
+// 按ESC键dialog响应关闭事件
+$(document).bind('keydown', function(e) {
+    var $dialog = $('.panel.window').find('.panel-body.panel-body-noborder.window-body');
+    if (e.keyCode === 27) {
+        $dialog.Destroy_Dialog();
+    }
+});

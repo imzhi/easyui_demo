@@ -1,5 +1,5 @@
 var SITE_CLOSE = {
-    DLG_ID: '#SITE_CLOSE_dialog'
+    DLG_ID: '#site_close_dialog'
 };
 
 $(function() {

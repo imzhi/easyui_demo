@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本地
-Source Server Version : 50168
+Source Server Version : 50519
 Source Host           : 127.0.0.1:3306
 Source Database       : imzhime
 
 Target Server Type    : MYSQL
-Target Server Version : 50168
+Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2014-06-17 19:37:35
+Date: 2014-06-18 01:56:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;

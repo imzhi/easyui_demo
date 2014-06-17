@@ -90,10 +90,8 @@ var INDEX = {
     sign_in: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '登陆',
-            iconCls: 'icon-help',
             href: '/index.php/Public/sign_in',
             buttonText: '登陆',
-            buttonIconCls: 'icon-help',
             buttonUrl: '/index.php/Api/Public/sign_in',
             submitSuccess: function(result) {
                 window.location = result.data;
@@ -106,10 +104,8 @@ var INDEX = {
     sign_up: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '注册',
-            iconCls: 'icon-help',
             href: '/index.php/Public/sign_up',
             buttonText: '注册',
-            buttonIconCls: 'icon-help',
             buttonUrl: '/index.php/Api/Public/sign_up',
             submitSuccess: function(result) {
                 window.location = result.data;
@@ -122,9 +118,7 @@ var INDEX = {
     change_password: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '修改密码',
-            iconCls: 'icon-help',
             href: '/index.php/User/change_password',
-            buttonIconCls: 'icon-help',
             buttonUrl: '/index.php/Api/User/change_password',
             submitFailureCallback: function() {
                 SIGN_IN.refreshVcode();
@@ -141,6 +135,25 @@ var INDEX = {
                         $.Show_Error(result.info);
                     }
                 }, 'json');
+            }
+        });
+    },
+    guestbook: function() {
+        $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
+            title: '留言',
+            resizable:true,
+            height: 450,
+            width: 800,
+            content: '<iframe scrolling="auto" frameborder="0" src="/index.php/Public/guestbook" style="width:100%;height:99%;"></iframe>',
+            buttons: [],
+            onMove: function(left, top) {
+                // console.log(left, top);
+                // if (top <= 0) {
+                    // $(INDEX.DLG_ID).dialog('move', {
+                    //     left: left,
+                    //     top: 0
+                    // });
+                // }
             }
         });
     }
