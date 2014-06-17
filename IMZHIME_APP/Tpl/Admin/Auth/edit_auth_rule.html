@@ -1,10 +1,6 @@
 <script type="text/javascript">
 $(function() {
-    $('#combobox_status').combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
+    $('#combobox_status').Combobox({
         url: '/index.php/Api/Status/combobox_auth_group_status'
     });
 });

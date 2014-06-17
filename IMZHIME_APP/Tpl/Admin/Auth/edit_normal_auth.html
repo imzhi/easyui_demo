@@ -5,16 +5,11 @@ var EDIT_NORMAL_AUTH = {
 };
 
 $(function() {
-    $(EDIT_NORMAL_AUTH.CG_ID).combogrid({
+    $(EDIT_NORMAL_AUTH.CG_ID).Combogrid({
         panelWidth: 450,
-        editable: false,
         multiple: true,
-        idField: 'id',
         textField: 'title',
         url: '/index.php/Api/Auth/get_auth_rule',
-        pagination: true,
-        pageList: [10,20,30,40,50],
-        pageSize: 10,
         columns: [[
             {field: 'ck', checkbox: true},
             {field: 'id', title: 'ID', width: 30},

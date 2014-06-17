@@ -5,26 +5,14 @@ var EDIT_MENU_AUTH = {
 };
 
 $(function() {
-    $(EDIT_MENU_AUTH.CB_STATUS_ID).combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
-        value: 1,
-        required: true,
+    $(EDIT_MENU_AUTH.CB_STATUS_ID).Combobox({
         url: '/index.php/Api/Status/combobox_menu_auth_status'
     });
-    $(EDIT_MENU_AUTH.CG_AUTH_ID).combogrid({
+    $(EDIT_MENU_AUTH.CG_AUTH_ID).Combogrid({
         panelWidth: 450,
-        editable: false,
-        required: true,
         multiple: true,
-        idField: 'id',
         textField: 'title',
         url: '/index.php/Api/Auth/get_auth_rule',
-        pagination: true,
-        pageList: [10,20,30,40,50],
-        pageSize: 10,
         columns: [[
             {field: 'ck', checkbox: true},
             {field: 'id', title: 'ID', width: 30},

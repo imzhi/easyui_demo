@@ -1,4 +1,5 @@
 ;(function($) {
+
     $.extend({
         Show_Warning: function(msg, title) {
             $.messager.show({
@@ -21,6 +22,11 @@
             return Math.random().toString().slice(-Math.abs(num));
         }
     });
+
+
+
+
+
     $.fn.extend({
         serializeJSON: function() {
             var o = {};
@@ -54,60 +60,177 @@
             return this.treegrid('unselectAll');
         },
         Dialog: function(settings) {
+            var self = this;
             var defaults = {
+                // 默认属性
                 title: '新窗口',
                 iconCls: 'icon-help',
                 width: 280,
                 cache: false,
                 modal: true,
                 collapsible: true,
-                onLoad: function() {
-                    $('form', $(this)).form('load', selected);
-                    $(this).Center_Dialog();
+                // 新增属性
+                selected: null,
+                onLoadCallback: function() {},
+                onOpenCallback: function() {},
+                submitSuccess: function(result) {
+                    $(self).Destroy_Dialog();
+                    $.Show_Warning(result.info);
                 },
-                onOpen: function() {},
+                submitSuccessCallback: function() {},
+                submitFailure: function(result) {
+                    $.Show_Error(result.info);
+                },
+                submitFailureCallback: function() {},
+                buttonText: '保存',
+                buttonIconCls: 'icon-help'
+            };
+
+            defaults['buttonFormSubmit'] = function() {
+                $('form', self).form('submit', {
+                    url: defaults.buttonUrl,
+                    onSubmit: function() {
+                        var isValid = $(self).form('validate');
+                        if (!isValid) {
+                            $.Close_Progress();
+                        }
+                        return isValid;
+                    },
+                    success: function(res) {
+                        $.Close_Progress();
+                        var result = $.parseJSON(res);
+                        if (1 === result.status) {
+                            defaults.submitSuccess(result);
+                            defaults.submitSuccessCallback();
+                        } else {
+                            defaults.submitFailure(result);
+                            defaults.submitFailureCallback();
+                        }
+                    }
+                });
+            };
+            defaults['buttonHandler'] = function() {
+               defaults['buttonFormSubmit']();
+            };
+
+            $.extend(defaults, settings);
+
+            var options = $.extend({}, defaults, {
+                onLoad: function() {
+                    defaults.selected && $('form', self).form('load', defaults.selected);
+                    defaults.onLoadCallback();
+                    $(self).Center_Dialog();
+                },
+                onOpen: function() {
+                    defaults.onOpenCallback();
+                },
                 onClose: function() {
-                    $(this).Destroy_Dialog();
+                    $(self).Destroy_Dialog();
                 },
                 buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-help',
-                    handler: function() {
-                        $('form', this).form('submit', {
-                            url: '/index.php/Api/Auth/edit_normal_auth',
-                            onSubmit: function() {
-                                var isValid = $(this).form('validate');
-                                if (!isValid) {
-                                    $.Close_Progress();
-                                }
-                                return isValid;
-                            },
-                            success: function(res) {
-                                $.Close_Progress();
-                                var result = $.parseJSON(res);
-                                if (result.status === 1) {
-                                    $.Show_Warning(result.info);
-                                    $(this).Destroy_Dialog();
-                                    $(self.DG_ID).Reload_Datagrid();
-                                    $(self.NA_DG_ID).Reload_Datagrid();
-                                } else {
-                                    $.Show_Error(result.info);
-                                }
-                            }
-                        });
-                    }
+                    text: defaults.buttonText,
+                    iconCls: defaults.buttonIconCls,
+                    handler: defaults.buttonHandler
                 }, {
                     text: '关闭',
                     iconCls: 'icon-no',
                     handler: function() {
-                        $(this).Destroy_Dialog();
+                        $(self).Destroy_Dialog();
                     }
                 }]
-            };
-            var options = $.extend(true, {}, defaults, settings);
+            }, settings);
             $(this).dialog(options);
-        }
+        },
+        Tree: function(settings) {
+            var self = this;
+            var defaults = {
+                animate: true,
+                lines: false,
+                loadFilter: function(data) {
+                    return data;
+                },
+            };
+            var options = $.extend({}, defaults, settings);
+            $(self).tree(options);
+        },
+        Combobox: function(settings) {
+            var self = this;
+            var defaults = {
+                valueField: 'id',
+                textField: 'value',
+                groupField: null,
+                editable: false,
+                required: true,
+                panelHeight: 'auto'
+            };
+            var options = $.extend({}, defaults, settings);
+            $(self).combobox(options);
+        },
+        Treegrid: function(settings) {
+            var self = this;
+            var defaults = {
+                iconCls:'icon-help',
+                fit: true,
+                rownumbers: true,
+                border: false,
+                singleSelect: true,
+                animate: true,
+                method: 'post',
+            };
+            var options = $.extend({}, defaults, settings);
+            $(self).treegrid(options);
+        },
+        Datagrid: function(settings) {
+            var self = this;
+            var defaults = {
+                iconCls:'icon-help',
+                border: false,
+                fit: true,
+                rownumbers: true,
+                singleSelect: true,
+                idField: 'id',
+                method: 'post',
+                pagination: true,
+                pageList: window.CONSTANTS.PAGELIST,
+                pageSize: window.CONSTANTS.PAGESIZE
+            };
+            var options = $.extend({}, defaults, settings);
+            $(self).datagrid(options);
+        },
+        Combogrid: function(settings) {
+            var self = this;
+            var defaults = {
+                editable: false,
+                idField: 'id',
+                textField: 'value',
+                pagination: true,
+                required: true,
+                pageList: window.CONSTANTS.PAGELIST,
+                pageSize: window.CONSTANTS.PAGESIZE,
+            };
+            var options = $.extend({}, defaults, settings);
+            $(self).combogrid(options);
+        },
+        Combotree: function(settings) {
+            var self = this;
+            var defaults = {
+                editable: false,
+                lines: true,
+                animate: true,
+                required: true,
+                panelHeight: 'auto',
+                loadFilter: function(data) {
+                    return data;
+                },
+            };
+            var options = $.extend({}, defaults, settings);
+            $(self).combotree(options);
+        },
     });
+
+
+
+
 
     /**
      * validatebox规则扩展
@@ -163,6 +286,8 @@
         }
     });
 })(jQuery);
+
+
 
 window.CONSTANTS = {
     PAGELIST: [10,20,50],

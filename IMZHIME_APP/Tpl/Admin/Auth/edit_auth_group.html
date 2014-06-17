@@ -4,12 +4,7 @@ var EDIT_AUTH_GROUP = {
 };
 
 $(function() {
-    $(EDIT_AUTH_GROUP.CB_STATUS_ID).combobox({
-        editable: false,
-        required: true,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
+    $(EDIT_AUTH_GROUP.CB_STATUS_ID).Combobox({
         url: '/index.php/Api/Status/combobox_auth_group_status'
     });
 });

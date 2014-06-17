@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50168
 File Encoding         : 65001
 
-Date: 2014-06-16 19:15:38
+Date: 2014-06-17 19:37:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,7 @@ CREATE TABLE `z_auth_group` (
 -- Records of z_auth_group
 -- ----------------------------
 INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '3,2,9,10', '1,2,3,4');
-INSERT INTO `z_auth_group` VALUES ('3', '版主', '1', '2,3', '1,2,3,4');
+INSERT INTO `z_auth_group` VALUES ('3', '版主', '1', '2,3,7', '1,2,3,4,5,6');
 INSERT INTO `z_auth_group` VALUES ('5', '会员', '1', '', '');
 
 -- ----------------------------
@@ -52,8 +52,11 @@ CREATE TABLE `z_auth_group_access` (
 -- ----------------------------
 INSERT INTO `z_auth_group_access` VALUES ('1', '1');
 INSERT INTO `z_auth_group_access` VALUES ('1', '3');
+INSERT INTO `z_auth_group_access` VALUES ('1', '5');
 INSERT INTO `z_auth_group_access` VALUES ('6', '1');
 INSERT INTO `z_auth_group_access` VALUES ('6', '3');
+INSERT INTO `z_auth_group_access` VALUES ('6', '5');
+INSERT INTO `z_auth_group_access` VALUES ('8', '5');
 
 -- ----------------------------
 -- Table structure for `z_auth_rule`
@@ -67,7 +70,7 @@ CREATE TABLE `z_auth_rule` (
   `condition` char(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_auth_rule
@@ -78,7 +81,8 @@ INSERT INTO `z_auth_rule` VALUES ('7', 'Auth/auth_rule', '权限规则', '1', ''
 INSERT INTO `z_auth_rule` VALUES ('8', 'Auth/auth_group', '用户组', '1', '');
 INSERT INTO `z_auth_rule` VALUES ('9', 'Auth/auth_group_access', '用户组明细', '1', '');
 INSERT INTO `z_auth_rule` VALUES ('10', 'User/index', '用户列表', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('11', 'Auth/edit_auth_group', '编辑用户组', '0', '');
+INSERT INTO `z_auth_rule` VALUES ('11', 'Auth/edit_auth_group', '编辑用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('12', 'Auth/add_auth_group_access', '新增用户组明细', '1', '');
 
 -- ----------------------------
 -- Table structure for `z_cheatsheet`
@@ -134,7 +138,7 @@ CREATE TABLE `z_menu` (
   `order` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序序号',
   `status` enum('1','0') NOT NULL DEFAULT '1' COMMENT '状态 1-启用 0-禁用',
   PRIMARY KEY (`menu_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_menu
@@ -159,6 +163,7 @@ INSERT INTO `z_menu` VALUES ('19', '16', '0', '', '', '缓存2_2_1', '', '0', 't
 INSERT INTO `z_menu` VALUES ('20', '0', '0', '', 'tool_site', '工具站点', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('21', '20', '0', '', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', '0', 'iframe', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('22', '20', '0', '', 'baidu', '百度', 'http://www.baidu.com/', '0', 'iframe', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('23', '0', '0', '', 'test', '测试', '', '0', 'null', 'open', '0', '1');
 
 -- ----------------------------
 -- Table structure for `z_menu_auth`
@@ -221,11 +226,12 @@ CREATE TABLE `z_user` (
   `user_type` enum('admin','moderator','user') NOT NULL DEFAULT 'user' COMMENT '用户类型，普通用户，版主，管理员',
   `status` enum('check','pass','fail','del','noaccess','nopost','lock') NOT NULL DEFAULT 'pass' COMMENT '待审核、未通过、通过、删除、禁止访问、禁止发言、锁定',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '68', '1400948027', '2130706433', 'metro-gray', 'user', 'lock');
+INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '72', '1402989364', '2130706433', 'metro-gray', 'user', 'lock');
 INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '2', '1400940410', '2130706433', 'black', 'user', 'check');
 INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', '0', '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', '', '0', '1', '1402989520', '2130706433', 'metro-blue', 'user', 'pass');

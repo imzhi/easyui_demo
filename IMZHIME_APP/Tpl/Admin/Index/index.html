@@ -22,7 +22,6 @@
     <js href="__PUBLIC__/js/admin/index.js"/>
 </head>
 <body style="margin:0;padding:0;" class="easyui-layout">
-    <if condition="($site_info['site_status'] eq '1') OR ($Think.session.user.unlock eq 1)">
     <div id="north_layout" data-options="region:'north',border:false" style="overflow:hidden;">
         <div class="header">{$site_info['site_title']}</div>
         <div class="panel-header panel-header-noborder top-toolbar" style="padding:2px;">
@@ -67,8 +66,5 @@
             <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_all_tabs()">关闭全部</a>
         </div>
     </div>
-    <else/>
-    已关闭站点
-    </if>
 </body>
 </html>

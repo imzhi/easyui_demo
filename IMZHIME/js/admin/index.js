@@ -88,163 +88,47 @@ var INDEX = {
         }
     },
     sign_in: function() {
-        var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+        $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '登陆',
-            width: 280,
-            cache: false,
-            modal: true,
             iconCls: 'icon-help',
-            collapsible: true,
             href: '/index.php/Public/sign_in',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
+            buttonText: '登陆',
+            buttonIconCls: 'icon-help',
+            buttonUrl: '/index.php/Api/Public/sign_in',
+            submitSuccess: function(result) {
+                window.location = result.data;
             },
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '登陆',
-                iconCls: 'icon-help',
-                handler: function() {
-                    $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/Public/sign_in',
-                        onSubmit: function() {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.Close_Progress();
-                            }
-                            return isValid;
-                        },
-                        success: function(res) {
-                            $.Close_Progress();
-                            var result = $.parseJSON(res);
-                            if (1 === result.status) {
-                                // $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Dialog();
-                                window.location = result.data;
-                            } else {
-                                SIGN_IN.refreshVcode();
-                                $.Show_Error(result.info);
-                            }
-                        }
-                    });
-                }
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
-                    console.log($(self.DLG_ID));
-                    $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
+            submitFailureCallback: function() {
+                SIGN_IN.refreshVcode();
+            }
         });
     },
     sign_up: function() {
-        var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+        $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '注册',
-            width: 280,
-            cache: false,
-            modal: true,
             iconCls: 'icon-help',
-            collapsible: true,
             href: '/index.php/Public/sign_up',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
+            buttonText: '注册',
+            buttonIconCls: 'icon-help',
+            buttonUrl: '/index.php/Api/Public/sign_up',
+            submitSuccess: function(result) {
+                window.location = result.data;
             },
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '注册',
-                iconCls: 'icon-help',
-                handler: function() {
-                    $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/Public/sign_up',
-                        onSubmit: function() {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.Close_Progress();
-                            }
-                            return isValid;
-                        },
-                        success: function(res) {
-                            $.Close_Progress();
-                            console.log(res);
-                            var result = $.parseJSON(res);
-                            if (1 === result.status) {
-                                // $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Dialog();
-                                window.location = result.data;
-                            } else {
-                                SIGN_UP.refreshVcode();
-                                $.Show_Error(result.info);
-                            }
-                        }
-                    });
-                }
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
-                    console.log($(self.DLG_ID));
-                    $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
+            submitFailureCallback: function() {
+                SIGN_IN.refreshVcode();
+            }
         });
     },
     change_password: function() {
-        var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+        $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '修改密码',
-            width: 280,
-            cache: false,
-            modal: true,
             iconCls: 'icon-help',
-            collapsible: true,
             href: '/index.php/User/change_password',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
-            },
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '保存',
-                iconCls: 'icon-help',
-                handler: function() {
-                    $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/User/change_password',
-                        onSubmit: function() {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.Close_Progress();
-                            }
-                            return isValid;
-                        },
-                        success: function(res) {
-                            $.Close_Progress();
-                            var result = $.parseJSON(res);
-                            if (1 === result.status) {
-                                $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Dialog();
-                                // window.location = result.data;
-                            } else {
-                                SIGN_IN.refreshVcode();
-                                $.Show_Error(result.info);
-                            }
-                        }
-                    });
-                }
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
-                    console.log($(self.DLG_ID));
-                    $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
+            buttonIconCls: 'icon-help',
+            buttonUrl: '/index.php/Api/User/change_password',
+            submitFailureCallback: function() {
+                SIGN_IN.refreshVcode();
+            }
         });
     },
     log_out: function() {
@@ -263,13 +147,8 @@ var INDEX = {
 };
 
 $(function() {
-    $(INDEX.LEFT_NAV_TREE_ID).tree({
-        animate: true,
-        lines: true,
+    $(INDEX.LEFT_NAV_TREE_ID).Tree({
         url: '/index.php/Api/Menu/get_tree_menus',
-        loadFilter: function(data) {
-            return data;
-        },
         onClick: function(node) {
             if (!$(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target)) {
                 $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
@@ -293,13 +172,9 @@ $(function() {
         }
     });
 
-    $(INDEX.CB_THEMES_ID).combobox({
+    $(INDEX.CB_THEMES_ID).Combobox({
         url: '/index.php/Api/Data/combobox_themes',
-        valueField: 'id',
-        textField: 'value',
         groupField: 'group',
-        editable: false,
-        panelHeight: 'auto',
         onLoadSuccess: function() {
             $(this).combobox('setValue', window.DEFAULTS.THEME);
         },

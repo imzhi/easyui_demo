@@ -7,108 +7,28 @@ var AUTH_GROUP = {
     // 添加用户组
     add: function() {
         var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+        $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加用户组',
-            width: 280,
-            cache: false,
-            modal: true,
             iconCls: 'icon-help',
-            collapsible: true,
             href: '/index.php/Auth/edit_auth_group',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
-            },
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '保存',
-                iconCls: 'icon-help',
-                handler: function() {
-                    $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/Auth/add_auth_group',
-                        onSubmit: function() {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.Close_Progress();
-                            }
-                            return isValid;
-                        },
-                        success: function(res) {
-                            $.Close_Progress();
-                            var result = $.parseJSON(res);
-                            if (result.status === 1) {
-                                $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Dialog();
-                                $(self.DG_ID).Reload_Datagrid();
-                            } else {
-                                $.Show_Error(result.info);
-                            }
-                        }
-                    });
-                }
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
+            buttonUrl: '/index.php/Api/Auth/add_auth_group',
+            submitSuccessCallback: function() {
+                $(self.DG_ID).Reload_Datagrid();
+            }
         });
     },
     edit: function() {
         var self = this;
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
-            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑用户组',
-                width: 280,
-                cache: false,
-                modal: true,
-                iconCls: 'icon-edit',
-                collapsible: true,
                 href: '/index.php/Admin/Auth/edit_auth_group',
-                onLoad: function() {
-                    $('form', self.DLG_ID).form('load', selected);
-                    $(self.DLG_ID).Center_Dialog();
-                },
-                onOpen: function() {},
-                onClose: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                },
-                buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-help',
-                    handler: function() {
-                        $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/edit_auth_group',
-                            onSubmit: function() {
-                                var isValid = $(this).form('validate');
-                                if (!isValid) {
-                                    $.Close_Progress();
-                                }
-                                return isValid;
-                            },
-                            success: function(res) {
-                                $.Close_Progress();
-                                var result = $.parseJSON(res);
-                                if (result.status === 1) {
-                                    $.Show_Warning(result.info);
-                                    $(self.DLG_ID).Destroy_Dialog();
-                                    $(self.DG_ID).Reload_Datagrid();
-                                } else {
-                                    $.Show_Error(result.info);
-                                }
-                            }
-                        });
-                    }
-                }, {
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function() {
-                        $(self.DLG_ID).Destroy_Dialog();
-                    }
-                }]
+                selected: selected,
+                buttonUrl: '/index.php/Api/Auth/edit_auth_group',
+                submitSuccessCallback: function() {
+                    $(self.DG_ID).Reload_Datagrid();
+                }
             });
         } else {
             $.Show_Warning('请先选择一项');
@@ -140,56 +60,15 @@ var AUTH_GROUP = {
         var self = this;
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
-            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑普通权限',
-                width: 280,
-                cache: false,
-                modal: true,
-                iconCls: 'icon-edit',
-                collapsible: true,
                 href: '/index.php/Admin/Auth/edit_normal_auth',
-                onLoad: function() {
-                    $('form', self.DLG_ID).form('load', selected);
-                    $(self.DLG_ID).Center_Dialog();
-                },
-                onOpen: function() {},
-                onClose: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                },
-                buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-help',
-                    handler: function() {
-                        $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/edit_normal_auth',
-                            onSubmit: function() {
-                                var isValid = $(this).form('validate');
-                                if (!isValid) {
-                                    $.Close_Progress();
-                                }
-                                return isValid;
-                            },
-                            success: function(res) {
-                                $.Close_Progress();
-                                var result = $.parseJSON(res);
-                                if (result.status === 1) {
-                                    $.Show_Warning(result.info);
-                                    $(self.DLG_ID).Destroy_Dialog();
-                                    $(self.DG_ID).Reload_Datagrid();
-                                    $(self.NA_DG_ID).Reload_Datagrid();
-                                } else {
-                                    $.Show_Error(result.info);
-                                }
-                            }
-                        });
-                    }
-                }, {
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function() {
-                        $(self.DLG_ID).Destroy_Dialog();
-                    }
-                }]
+                selected: selected,
+                buttonUrl: '/index.php/Api/Auth/edit_normal_auth',
+                submitSuccessCallback: function() {
+                    $(self.DG_ID).Reload_Datagrid();
+                    $(self.NA_DG_ID).Reload_Datagrid();
+                }
             });
         } else {
             $.Show_Warning('请先选择一项');
@@ -199,55 +78,14 @@ var AUTH_GROUP = {
         var self = this;
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
-            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单权限',
-                width: 280,
-                cache: false,
-                modal: true,
-                iconCls: 'icon-edit',
-                collapsible: true,
                 href: '/index.php/Admin/Auth/edit_menu_auth',
-                onLoad: function() {
-                    $('form', self.DLG_ID).form('load', selected);
-                    $(self.DLG_ID).Center_Dialog();
-                },
-                onOpen: function() {},
-                onClose: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                },
-                buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-help',
-                    handler: function() {
-                        $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/edit_menu_auth',
-                            onSubmit: function() {
-                                var isValid = $(this).form('validate');
-                                if (!isValid) {
-                                    $.Close_Progress();
-                                }
-                                return isValid;
-                            },
-                            success: function(res) {
-                                $.Close_Progress();
-                                var result = $.parseJSON(res);
-                                if (result.status === 1) {
-                                    $.Show_Warning(result.info);
-                                    $(self.DLG_ID).Destroy_Dialog();
-                                    $(self.MA_TG_ID).Reload_Treegrid();
-                                } else {
-                                    $.Show_Error(result.info);
-                                }
-                            }
-                        });
-                    }
-                }, {
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function() {
-                        $(self.DLG_ID).Destroy_Dialog();
-                    }
-                }]
+                selected: selected,
+                buttonUrl: '/index.php/Api/Auth/edit_menu_auth',
+                submitSuccessCallback: function() {
+                    $(self.MA_TG_ID).Reload_Treegrid();
+                }
             });
         } else {
             $.Show_Warning('请先选择一项');
@@ -256,20 +94,10 @@ var AUTH_GROUP = {
 };
 
 $(function() {
-    $(AUTH_GROUP.DG_ID).datagrid({
+    $(AUTH_GROUP.DG_ID).Datagrid({
         title:'用户组',
-        iconCls:'icon-help',
-        fit: true,
         toolbar: AUTH_GROUP.TB_ID,
-        rownumbers: true,
-        border: false,
-        singleSelect: true,
-        pagination: true,
-        pageList: CONSTANTS.PAGELIST,
-        pageSize: CONSTANTS.PAGESIZE,
-        idField: 'id',
         url: '/index.php/Api/Auth/get_auth_group',
-        method: 'post',
         columns: [[
             {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
             {field: 'title', title: '用户组', sortable: true, width: 100, align: 'center'},
@@ -286,20 +114,16 @@ $(function() {
         onSelect: function(rowIndex, rowData) {
             var selected = $(AUTH_GROUP.DG_ID).Get_Selected_Datagrid();
             $(AUTH_GROUP.NA_DG_ID).datagrid('load', { id: selected.id });
+            // treegrid load 方法的属性字段名不能为 id !important
             $(AUTH_GROUP.MA_TG_ID).treegrid('load', { menu_id: selected.id });
             // $(AUTH_GROUP.MA_TG_ID).treegrid('loadData', {total: 0, rows: []});
         }
     });
 
-    $(AUTH_GROUP.NA_DG_ID).datagrid({
+    $(AUTH_GROUP.NA_DG_ID).Datagrid({
         title:'普通权限',
-        iconCls:'icon-help',
-        fit: true,
-        rownumbers: true,
-        border: false,
-        singleSelect: true,
         url: '/index.php/Api/Auth/get_group_normal_auth',
-        method: 'post',
+        pagination: false,
         columns: [[
             {field: 'name', title: '规则名称', width: 150},
             {field: 'title', title: '规则描述', width: 150},
@@ -316,18 +140,11 @@ $(function() {
         ]]
     });
 
-    $(AUTH_GROUP.MA_TG_ID).treegrid({
+    $(AUTH_GROUP.MA_TG_ID).Treegrid({
         title:'菜单权限',
-        iconCls:'icon-help',
-        fit: true,
-        rownumbers: true,
-        border: false,
-        singleSelect: true,
-        animate: true,
         idField: 'menu_id',
         treeField: 'title',
         url: '/index.php/Api/Auth/get_group_menu_auth',
-        method: 'post',
         columns: [[
             {field: 'title', title: '菜单中文名', width: 200},
             {field: 'url', title: 'URL', width: 200}

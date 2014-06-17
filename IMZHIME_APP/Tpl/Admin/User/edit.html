@@ -1,18 +1,10 @@
 <script type="text/javascript">
 $(function() {
-    $('#combobox_user_type').combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
+    $('#combobox_user_type').Combobox({
         url: '/index.php/Api/Status/combobox_user_type'
     });
 
     $('#combobox_user_status').combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
         url: '/index.php/Api/Status/combobox_user_status'
     });
 });
@@ -27,11 +19,11 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">用户类型</td>
-                <td class="form_table_td"><input name="user_type" id="combobox_user_type"></select></td>
+                <td class="form_table_td"><input name="user_type" id="combobox_user_type"></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">状态</td>
-                <td class="form_table_td"><input name="status" id="combobox_user_status"></select></td>
+                <td class="form_table_td"><input name="status" id="combobox_user_status"></td>
             </tr>
         </table>
     </form>

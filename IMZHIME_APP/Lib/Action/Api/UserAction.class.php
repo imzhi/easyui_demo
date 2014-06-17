@@ -65,7 +65,10 @@ class UserAction extends CommonAction {
             $this->ajaxReturn(null, '重复密码不一致', 0);
         }
 
-        M('User')->where('user_id=%d', self::$user['user_id'])->setField('password', md5($password));
+        if (false === M('User')->where('user_id=%d', self::$user['user_id'])->setField('password', md5($password))) {
+            $this->ajaxReturn(null, '修改密码失败', 0);
+        }
+        $this->ajaxReturn(null, '修改密码成功', 1);
     }
 
     public function user_name_exists($user_name = '') {

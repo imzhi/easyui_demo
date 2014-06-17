@@ -7,34 +7,16 @@ var EDIT_MENU = {
 };
 
 $(function() {
-    $(EDIT_MENU.CT_MENU_ID).combotree({
-        animate: true,
-        lines: true,
-        required: true,
+    $(EDIT_MENU.CT_MENU_ID).Combotree({
         url: '/index.php/Api/Menu/get_tree_menus?type=EXTRA_ROOT'
     });
-    $(EDIT_MENU.CB_STATE_ID).combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
-        required: true,
+    $(EDIT_MENU.CB_STATE_ID).Combobox({
         url: '/index.php/Api/Status/combobox_menu_state'
     });
-    $(EDIT_MENU.CB_TYPE_ID).combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
-        required: true,
+    $(EDIT_MENU.CB_TYPE_ID).Combobox({
         url: '/index.php/Api/Status/combobox_menu_type'
     });
-    $(EDIT_MENU.CB_STATUS_ID).combobox({
-        editable: false,
-        panelHeight: 'auto',
-        valueField: 'id',
-        textField: 'value',
-        required: true,
+    $(EDIT_MENU.CB_STATUS_ID).Combobox({
         url: '/index.php/Api/Status/combobox_menu_status',
         onLoadSuccess: function() {
             $(this).combobox('setValue', '1');
@@ -61,7 +43,7 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">URL</td>
-                <td class="form_table_td"><input type="text" name="url" class="easyui-validatebox" data-options="validType:['url']"/></td>
+                <td class="form_table_td"><input type="text" name="url" class="easyui-validatebox" data-options="required:true"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">排序</td>

@@ -192,28 +192,26 @@ class AuthAction extends CommonAction {
     }
 
     public function add_auth_group_access() {
-        $username = I('post.username', '', 'trim');
+        $user_name = I('post.user_name', '', 'trim');
         $group_ids = I('post.group_id', array());
 
-        if (!$uid = M('User')->where('username="%s"', $username)->getField('uid')) {
+        if (!$user_id = M('User')->where('user_name="%s"', $user_name)->getField('user_id')) {
             $this->ajaxReturn(null, '不存在此用户', 0);
         }
 
-        if (M()->table('z_auth_group_access a')
-            ->join('z_user u on u.uid=a.uid')
-            ->where('u.username="%s"', $username)->count()) {
+        if (M('AuthGroupAccess')->where('uid=%d', $user_id)->count()) {
             $this->ajaxReturn(null, '已存在此用户组明细', 0);
         }
 
         foreach ($group_ids as $g) {
             if (!M('AuthGroupAccess')->add(array(
-                'uid'=>$uid,
+                'uid' => $user_id,
                 'group_id' => $g
             ))) {
-                $this->ajaxReturn(null, '添加此用户组明细失败', 0);
+                $this->ajaxReturn(null, '添加用户组明细失败', 0);
             }
         }
-        $this->ajaxReturn(null, '添加此用户组明细成功', 1);
+        $this->ajaxReturn(null, '添加用户组明细成功', 1);
     }
 
     public function edit_auth_group_access() {
@@ -230,7 +228,7 @@ class AuthAction extends CommonAction {
         } else {
             foreach ($group_ids as $g) {
                 if (!$m->add(array(
-                    'uid'=>$uid,
+                    'uid' => $uid,
                     'group_id' => $g
                 ))) {
                     $this->ajaxReturn(null, '编辑此用户组明细失败', 0);

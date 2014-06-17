@@ -5,108 +5,29 @@ var AUTH_RULE = {
     // 添加用户组
     add: function() {
         var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+        $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加权限规则',
             width: 300,
-            cache: false,
-            modal: true,
-            iconCls: 'icon-help',
-            collapsible: true,
             href: '/index.php/Admin/Auth/edit_auth_rule',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
-            },
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '保存',
-                iconCls: 'icon-help',
-                handler: function() {
-                    $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/Auth/do_auth_rule',
-                        onSubmit: function() {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.Close_Progress();
-                            }
-                            return isValid;
-                        },
-                        success: function(res) {
-                            $.Close_Progress();
-                            var result = $.parseJSON(res);
-                            if (result.status === 1) {
-                                $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Dialog();
-                                $(self.DG_ID).Reload_Datagrid();
-                            } else {
-                                $.Show_Error(result.info);
-                            }
-                        }
-                    });
-                }
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
+            buttonUrl: '/index.php/Api/Auth/do_auth_rule',
+            submitSuccessCallback: function() {
+                $(self.DG_ID).Reload_Datagrid();
+            }
         });
     },
     edit: function() {
         var self = this;
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
-            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑权限规则',
                 width: 300,
-                cache: false,
-                modal: true,
-                iconCls: 'icon-edit',
-                collapsible: true,
                 href: '/index.php/Admin/Auth/edit_auth_rule',
-                onLoad: function() {
-                    $('form', self.DLG_ID).form('load', selected);
-                    $(self.DLG_ID).Center_Dialog();
-                },
-                onOpen: function() {},
-                onClose: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                },
-                buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-help',
-                    handler: function() {
-                        $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/do_auth_rule',
-                            onSubmit: function() {
-                                var isValid = $(this).form('validate');
-                                if (!isValid) {
-                                    $.Close_Progress();
-                                }
-                                return isValid;
-                            },
-                            success: function(res) {
-                                $.Close_Progress();
-                                var result = $.parseJSON(res);
-                                if (result.status === 1) {
-                                    $.Show_Warning(result.info);
-                                    $(self.DLG_ID).Destroy_Dialog();
-                                    $(self.DG_ID).Reload_Datagrid();
-                                } else {
-                                    $.Show_Error(result.info);
-                                }
-                            }
-                        });
-                    }
-                }, {
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function() {
-                        $(self.DLG_ID).Destroy_Dialog();
-                    }
-                }]
+                selected: selected,
+                buttonUrl: '/index.php/Api/Auth/do_auth_rule',
+                submitSuccessCallback: function() {
+                    $(self.DG_ID).Reload_Datagrid();
+                }
             });
         } else {
             $.Show_Warning('请先选择一项');
@@ -136,20 +57,10 @@ var AUTH_RULE = {
     }
 };
 $(function() {
-    $(AUTH_RULE.DG_ID).datagrid({
+    $(AUTH_RULE.DG_ID).Datagrid({
         title: '权限规则',
-        iconCls: 'icon-help',
-        fit: true,
         toolbar: AUTH_RULE.TB_ID,
-        rownumbers: true,
-        border: false,
-        singleSelect: true,
-        pagination: true,
-        pageList: [10,20,30,40,50],
-        pageSize: 10,
-        idField: 'id',
         url: '/index.php/Api/Auth/get_auth_rule',
-        method: 'post',
         columns: [[
             {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
             {field: 'name', title: '规则名称', sortable: true, width: 250},

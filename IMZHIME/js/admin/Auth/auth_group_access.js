@@ -4,110 +4,31 @@ var AUTH_GROUP_ACCESS = {
     DLG_ID: '#auth_group_access_dialog',
     add: function() {
         var self = this;
-        $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+        $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加用户组明细',
-            width: 280,
-            cache: false,
-            modal: true,
-            iconCls: 'icon-edit',
-            collapsible: true,
             href: '/index.php/Admin/Auth/edit_auth_group_access',
-            onLoad: function() {
-                $(self.DLG_ID).Center_Dialog();
-            },
-            onOpen: function() {},
-            onClose: function() {
-                $(self.DLG_ID).Destroy_Dialog();
-            },
-            buttons: [{
-                text: '保存',
-                iconCls: 'icon-help',
-                handler: function() {
-                    $('form', self.DLG_ID).form('submit', {
-                        url: '/index.php/Api/Auth/add_auth_group_access',
-                        onSubmit: function() {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.Close_Progress();
-                            }
-                            return isValid;
-                        },
-                        success: function(res) {
-                            $.Close_Progress();
-                            var result = $.parseJSON(res);
-                            if (result.status === 1) {
-                                $.Show_Warning(result.info);
-                                $(self.DLG_ID).Destroy_Dialog();
-                                $(self.DG_ID).Reload_Datagrid();
-                            } else {
-                                $.Show_Error(result.info);
-                            }
-                        }
-                    });
-                }
-            }, {
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                }
-            }]
+            buttonUrl: '/index.php/Api/Auth/add_auth_group_access',
+            submitSuccessCallback: function() {
+                $(self.DG_ID).Reload_Datagrid();
+            }
         });
     },
     edit: function() {
         var self = this;
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
-            $('<div/>').attr('id', self.DLG_ID.substring(1)).dialog({
+            $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑用户组明细',
-                width: 280,
-                cache: false,
-                modal: true,
-                iconCls: 'icon-edit',
-                collapsible: true,
+                width: 300,
                 href: '/index.php/Admin/Auth/edit_auth_group_access',
-                onLoad: function() {
-                    $(self.DLG_ID).Center_Dialog();
-                    $('#edit_auth_group_access_form', self.DLG_ID).form('load', selected);
+                selected: selected,
+                onLoadCallback: function() {
                     $('#validatebox_username', self.DLG_ID).attr('disabled', 'disabled');
                 },
-                onOpen: function() {},
-                onClose: function() {
-                    $(self.DLG_ID).Destroy_Dialog();
-                },
-                buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-help',
-                    handler: function() {
-                        $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/Auth/edit_auth_group_access',
-                            onSubmit: function() {
-                                var isValid = $(this).form('validate');
-                                if (!isValid) {
-                                    $.Close_Progress();
-                                }
-                                return isValid;
-                            },
-                            success: function(res) {
-                                $.Close_Progress();
-                                var result = $.parseJSON(res);
-                                if (result.status === 1) {
-                                    $.Show_Warning(result.info);
-                                    $(self.DLG_ID).Destroy_Dialog();
-                                    $(self.DG_ID).Reload_Datagrid();
-                                } else {
-                                    $.Show_Error(result.info);
-                                }
-                            }
-                        });
-                    }
-                }, {
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function() {
-                        $(self.DLG_ID).Destroy_Dialog();
-                    }
-                }]
+                buttonUrl: '/index.php/Api/Auth/edit_auth_group_access',
+                submitSuccessCallback: function() {
+                    $(self.DG_ID).Reload_Datagrid();
+                }
             });
         } else {
             $.Show_Warning('请先选择一项');
@@ -138,27 +59,14 @@ var AUTH_GROUP_ACCESS = {
 };
 
 $(function() {
-    var dg_id = AUTH_GROUP_ACCESS.DG_ID;
-    var tb_id = AUTH_GROUP_ACCESS.TB_ID;
-    $(dg_id).datagrid({
+    $(AUTH_GROUP_ACCESS.DG_ID).Datagrid({
         title: '用户组明细',
-        fit: true,
-        toolbar: tb_id,
-        rownumbers: true,
-        border: false,
-        singleSelect: true,
-        pagination: true,
-        pageList: [10,20,30,40,50],
-        pageSize: 10,
-        // idField: 'id',
+        toolbar: AUTH_GROUP_ACCESS.TB_ID,
+        idField: null,
         url: '/index.php/Api/Auth/get_auth_group_access',
-        method: 'post',
         columns: [[
-            {field: 'user_name', title: '用户名', sortable: true, width: 80, align: 'center'},
-            {field: 'group_names', title: '所属用户组', sortable: true, width: 250, align: 'center'},
-        ]],
-        onDblClickRow: function(rowIndex, rowData) {
-            AUTH_GROUP_ACCESS.edit();
-        }
+            {field: 'user_name', title: '用户名', sortable: true, width: 80},
+            {field: 'group_names', title: '所属用户组', sortable: true, width: 250}
+        ]]
     });
 });

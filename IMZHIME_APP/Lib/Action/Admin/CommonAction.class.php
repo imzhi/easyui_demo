@@ -6,13 +6,21 @@ class CommonAction extends Action {
 
         // 检查站点是否关闭
         $site_info = M('SiteInfo')->field('id', true)->where('id=1')->find();
-        if (!$user['unlock'] && $site_info['site_status'] === '0') {
-            // $this->redirect();
-        }
+
         $save = array();
-        if (($site_info['site_status'] === '0' && $site_info['close_to_time'] <= time())
-            || ($site_info['site_status'] === '1' && ($site_info['close_to_time'])
-                || $site_info['close_reason'])) {
+        if (
+                (
+                    $site_info['site_status'] === '0' && time() > $site_info['close_to_time']
+                )
+                ||
+                (
+                    $site_info['site_status'] === '1'
+                    &&
+                    (
+                        !empty($site_info['close_to_time']) || !empty($site_info['close_reason'])
+                    )
+                )
+            ) {
             $save = array(
                 'site_status' => '1',
                 'close_to_time' => 0,
@@ -20,7 +28,11 @@ class CommonAction extends Action {
             );
             M('SiteInfo')->where('id=1')->save($save);
         }
-        $this->assign('site_info', array_merge($site_info, $save));
+        $site_info = array_merge($site_info, $save);
+        if (!$user['unlock'] && $site_info['site_status'] === '0') {
+            $this->redirect('/Lock');
+        }
+        $this->assign('site_info', $site_info);
 
         $login_user = array();
         if ($user) {
