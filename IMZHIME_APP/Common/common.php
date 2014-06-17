@@ -87,16 +87,18 @@ function json_return($data) {
 }
 
 // 检查权限
-function action_check_auth($class) {
-    // echo strtr($class, array('Action' => ''));exit;
-    $rules = M('AuthRule')->field('name')
-        ->where('name LIKE "'.strtr($class, array('Action' => '')).'%"')->select();
-    import('ORG.Util.Auth');
-    $auth = new Auth();
-    foreach ($rules as $r) {
-        if ($r['name'] === MODULE_NAME.'/'.ACTION_NAME
-            && !$auth->check(MODULE_NAME.'/'.ACTION_NAME, 1)) {
-            return false;
+function action_check_auth($class, $method) {
+    $user = session('user');
+    $user_id = $user ? $user['user_id'] : 1;
+
+    $module_name = strtr(MODULE_NAME, array('Action' => ''));
+    $rule_name = $module_name.'/'.ACTION_NAME;
+
+    if (M('AuthRule')->field('name')
+        ->where("name='{$rule_name}'")
+        ->count()) {
+        if ($auth->check($rule_name, $user_id)) {
+            return true;
         }
     }
     return true;

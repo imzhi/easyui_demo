@@ -14,8 +14,7 @@ class CommonAction extends Action {
                 )
                 ||
                 (
-                    $site_info['site_status'] === '1'
-                    &&
+                    $site_info['site_status'] === '1' &&
                     (
                         !empty($site_info['close_to_time']) || !empty($site_info['close_reason'])
                     )

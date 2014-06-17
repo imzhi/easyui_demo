@@ -4,7 +4,7 @@ class CommonAction extends Action {
     public function _initialize() {
         self::$user = session('user');
         // 检查权限
-        if (!action_check_auth(MODULE_NAME)) {
+        if (!action_check_auth()) {
             if ($this->isAjax()) {
                 $this->ajaxReturn(null, 'not access', 0);
             } else {
