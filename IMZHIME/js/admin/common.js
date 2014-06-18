@@ -128,7 +128,7 @@
                 },
                 onBeforeOpen: function() {
                     if (false !== $(self).html().indexOf('not access')) {
-                        $.messager.alert('错误', '此对话框未授权', 'error');
+                        $.messager.alert('错误', '未授权', 'error');
                         return false;
                     }
                     defaults.onBeforeOpenCallback();

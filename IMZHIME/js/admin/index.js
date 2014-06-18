@@ -170,7 +170,7 @@ $(function() {
                     var data = node.attributes.url.split('/').slice(-2).join('/');
                     $.post('/index.php/Api/Auth/get_menu_auth2', {data: data}, function(res) {
                         if (res === '0') {
-                            $.messager.alert('错误', '此标签未授权', 'error');
+                            $.messager.alert('错误', '未授权', 'error');
                             return false;
                         }
                         if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
