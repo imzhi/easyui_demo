@@ -45,10 +45,9 @@ class CommonAction extends Action {
 
         $login_user = array();
         if ($user) {
-            $login_user = M('user')->where('user_id=%d', $user['user_id'])->field('theme')->find();
+            $login_user = M('User')->where('user_id=%d', $user['user_id'])->field('theme')->find();
         }
         self::$user = array_merge($user, $login_user);
-        $this->assign('login_user', $login_user);
         $this->assign('curr_theme',
             isset($login_user['theme']) ? $login_user['theme'] :
             (cookie('theme') ? cookie('theme') : $site_info['site_theme']));

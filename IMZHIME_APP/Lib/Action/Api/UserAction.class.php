@@ -46,6 +46,17 @@ class UserAction extends CommonAction {
         ));
     }
 
+    public function info() {
+        $posts = I('post.');
+        if (!isset(self::$user) ||
+            false === M('User')->where('user_id=%d', self::$user['user_id'])->save(array(
+            'email' => $posts['email'],
+            'birthday' => $posts['birthday'],
+        ))) {
+            $this->ajaxReturn(null, '修改个人信息失败', 0);
+        }
+        $this->ajaxReturn(null, '修改个人信息成功', 0);
+    }
 
     public function change_password() {
         $rawpassword = I('post.rawpassword');

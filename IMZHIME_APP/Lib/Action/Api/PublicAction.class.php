@@ -13,12 +13,12 @@ class PublicAction extends Action {
             $this->ajaxReturn(null, '验证码不正确', 0);
         }
 
-        $user_info = M('User')->where('user_name="%s"', $user_name)->field('user_id,password')->find();
+        $user_info = M('User')->where('user_name="%s"', $user_name)->field('user_id,password,email,birthday')->find();
         if (!$user_info || $user_info['password'] != md5($password)) {
             $this->ajaxReturn(null, '用户名或密码不正确', 0);
         }
 
-        $this->login_mark($user_info['user_id'], $user_name);
+        $this->login_mark($user_info['user_id'], $user_name,$user_info['email'],$user_info['birthday']);
         $this->ajaxReturn(__ROOT__, '登陆成功', 1);
     }
 
@@ -68,7 +68,7 @@ class PublicAction extends Action {
             $this->ajaxReturn(null, '注册会员失败', 0);
         }
 
-        $this->login_mark($user_id, $user_name);
+        $this->login_mark($user_id, $user_name, $email, $birthday);
         $this->ajaxReturn(__ROOT__, '登陆成功', 1);
     }
 
@@ -88,10 +88,12 @@ class PublicAction extends Action {
         $this->ajaxReturn(null, "主题已修改为[{$theme}]", 1);
     }
 
-    private function login_mark($user_id, $user_name) {
+    private function login_mark($user_id, $user_name, $email, $birthday) {
         session('user', array(
             'user_id' => $user_id,
             'user_name' => $user_name,
+            'email' => $email,
+            'birthday' => $birthday,
         ));
         M('User')->where('user_id=%d', $user_id)->save(array(
             'log_num' => array('exp', 'log_num+1'),

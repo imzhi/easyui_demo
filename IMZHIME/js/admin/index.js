@@ -115,6 +115,16 @@ var INDEX = {
             }
         });
     },
+    personal_info: function() {
+        $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
+            title: '个人信息',
+            href: '/index.php/User/info',
+            buttonUrl: '/index.php/Api/User/edit_info',
+            submitFailureCallback: function() {
+                SIGN_IN.refreshVcode();
+            }
+        });
+    },
     change_password: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '修改密码',

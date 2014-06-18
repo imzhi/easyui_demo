@@ -313,10 +313,10 @@ $(document).bind('keydown', function(e) {
     var $messager = $('.panel.window.messager-window');
     if ($messager[0]) {
         if (e.keyCode === 27) {
-            $('.messager-button .l-btn:eq(-1)', $messager).trigger('click');
+            $('.messager-button > .l-btn:eq(-1)', $messager).trigger('click');
         }
         if (e.keyCode === 13) {
-            $('.messager-button .l-btn:eq(-2)', $messager).trigger('click');
+            $('.messager-button > .l-btn:eq(-2)', $messager).trigger('click');
         }
     } else if ($dialog[0]) {
         if (e.keyCode === 27) {
