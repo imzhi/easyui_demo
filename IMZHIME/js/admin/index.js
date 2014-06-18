@@ -167,11 +167,18 @@ $(function() {
                 $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
             } else if (node.attributes) {
                 if (node.attributes.type === 'tab') {
-                    if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
-                        $(INDEX.TABS_ID).tabs('select', node.text);
-                    } else {
-                        INDEX.add_tab(node.text, node.attributes.url);
-                    }
+                    var data = node.attributes.url.split('/').slice(-2).join('/');
+                    $.post('/index.php/Api/Auth/get_menu_auth2', {data: data}, function(res) {
+                        if (res === '0') {
+                            $.messager.alert('错误', '此标签未授权', 'error');
+                            return false;
+                        }
+                        if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
+                            $(INDEX.TABS_ID).tabs('select', node.text);
+                        } else {
+                            INDEX.add_tab(node.text, node.attributes.url);
+                        }
+                    });
                 } else if (node.attributes.type === 'dialog') {
                     $.get(node.attributes.url + '?' + $.createRandNum(4));
                 } else if (node.attributes.type === 'iframe') {

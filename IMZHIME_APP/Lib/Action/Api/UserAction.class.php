@@ -9,21 +9,20 @@ class UserAction extends CommonAction {
         $rows = I('post.rows', 10, 'intval');
         $sort = I('post.sort', 'user_id');
         $order = I('post.order', 'ASC');
-        $username = I('post.username', '', 'trim');
+        $user_name = I('post.user_name', '', 'trim');
         $user_type = I('post.user_type', '');
         $status =I('post.status', '');
 
         $where = array();
-        $user_type && $where['u.user_type'] = $user_type;
-        $status && $where['u.status'] = $status;
-        $username && $where['u.username'] = array('LIKE', '%'.$username.'%');
+        $user_type && $where['user_type'] = $user_type;
+        $status && $where['status'] = $status;
+        $user_name && $where['user_name'] = array('LIKE', '%'.$user_name.'%');
 
         $count = 0;
         $users = array();
-        $m = M('User');
 
-        if ($count = $m->where($where)->count()) {
-            $users = $m->field('*')
+        if ($count = M('User')->where($where)->count()) {
+            $users = M('User')->field('*')
                 ->where($where)
                 ->order("$sort $order")
                 ->limit(($page-1)*$rows, $rows)

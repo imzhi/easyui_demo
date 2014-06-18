@@ -71,7 +71,9 @@
                 collapsible: true,
                 // 新增属性
                 selected: null,
+                onBeforeLoadCallback: function() {},
                 onLoadCallback: function() {},
+                onBeforeOpenCallback: function() {},
                 onOpenCallback: function() {},
                 submitSuccess: function(result) {
                     $(self).Destroy_Dialog();
@@ -116,10 +118,20 @@
             $.extend(defaults, settings);
 
             var options = $.extend({}, defaults, {
+                onBeforeLoad: function() {
+                    defaults.onBeforeLoadCallback();
+                },
                 onLoad: function() {
                     defaults.selected && $('form', self).form('load', defaults.selected);
                     defaults.onLoadCallback();
                     $(self).Center_Dialog();
+                },
+                onBeforeOpen: function() {
+                    if (false !== $(self).html().indexOf('not access')) {
+                        $.messager.alert('错误', '此对话框未授权', 'error');
+                        return false;
+                    }
+                    defaults.onBeforeOpenCallback();
                 },
                 onOpen: function() {
                     defaults.onOpenCallback();
@@ -298,7 +310,20 @@ window.CONSTANTS = {
 // 按ESC键dialog响应关闭事件
 $(document).bind('keydown', function(e) {
     var $dialog = $('.panel.window').find('.panel-body.panel-body-noborder.window-body');
-    if (e.keyCode === 27) {
-        $dialog.Destroy_Dialog();
+    var $messager = $('.panel.window.messager-window');
+    if ($messager[0]) {
+        if (e.keyCode === 27) {
+            $('.messager-button .l-btn:eq(-1)', $messager).trigger('click');
+        }
+        if (e.keyCode === 13) {
+            $('.messager-button .l-btn:eq(-2)', $messager).trigger('click');
+        }
+    } else if ($dialog[0]) {
+        if (e.keyCode === 27) {
+            $dialog.Destroy_Dialog();
+        }
+        if (e.keyCode === 13) {
+            $('.dialog-button > .l-btn:eq(-2)', $dialog).trigger('click');
+        }
     }
 });

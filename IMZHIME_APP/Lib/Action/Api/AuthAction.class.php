@@ -334,4 +334,20 @@ class AuthAction extends CommonAction {
         }
         $this->ajaxReturn(null, '编辑菜单权限失败', 0);
     }
+
+    // 供左侧tree使用，检查权限
+    public function get_menu_auth2() {
+        $data = I('post.data');
+        $user = session('user');
+        $user_id = $user ? $user['user_id'] : 1;
+        if ($data) {
+            import('ORG.Util.Auth');
+            $auth = new Auth();
+            if (M('AuthRule')->where("name='{$data}'")->count()) {
+                if (!$auth->check($data, $user_id)) {
+                    echo 0;exit;
+                }
+            }
+        }
+    }
 }

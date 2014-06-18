@@ -137,7 +137,7 @@ class Auth{
         $groups = $this->getGroups($uid);
         $ids = array();
         foreach ($groups as $g) {
-            $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
+            $ids = array_merge($ids, explode(',', trim($g['rules'])), explode(',', trim($g['menu_rules'])));
         }
         $ids = array_unique($ids);
         if (empty($ids)) {

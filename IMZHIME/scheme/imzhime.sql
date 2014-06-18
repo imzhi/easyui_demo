@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本地
-Source Server Version : 50519
+Source Server Version : 50168
 Source Host           : 127.0.0.1:3306
 Source Database       : imzhime
 
 Target Server Type    : MYSQL
-Target Server Version : 50519
+Target Server Version : 50168
 File Encoding         : 65001
 
-Date: 2014-06-18 01:56:18
+Date: 2014-06-18 19:28:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,14 +26,15 @@ CREATE TABLE `z_auth_group` (
   `rules` char(200) NOT NULL DEFAULT '',
   `menu_rules` char(200) NOT NULL DEFAULT '' COMMENT '菜单ID字串',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_auth_group
 -- ----------------------------
-INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '3,2,9,10', '1,2,3,4');
+INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '3,2,9,10', '1,2,3');
 INSERT INTO `z_auth_group` VALUES ('3', '版主', '1', '2,3,7', '1,2,3,4,5,6');
 INSERT INTO `z_auth_group` VALUES ('5', '会员', '1', '', '');
+INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '', '');
 
 -- ----------------------------
 -- Table structure for `z_auth_group_access`
@@ -70,7 +71,7 @@ CREATE TABLE `z_auth_rule` (
   `condition` char(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_auth_rule
@@ -83,6 +84,7 @@ INSERT INTO `z_auth_rule` VALUES ('9', 'Auth/auth_group_access', '用户组明�
 INSERT INTO `z_auth_rule` VALUES ('10', 'User/index', '用户列表', '1', '');
 INSERT INTO `z_auth_rule` VALUES ('11', 'Auth/edit_auth_group', '编辑用户组', '1', '');
 INSERT INTO `z_auth_rule` VALUES ('12', 'Auth/add_auth_group_access', '新增用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('13', 'Site/close', '菜单-关闭站点', '1', '');
 
 -- ----------------------------
 -- Table structure for `z_cheatsheet`
@@ -231,7 +233,7 @@ CREATE TABLE `z_user` (
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '72', '1402989364', '2130706433', 'metro-gray', 'user', 'lock');
+INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '73', '1403062891', '2130706433', 'metro-gray', 'user', 'lock');
 INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '2', '1400940410', '2130706433', 'black', 'user', 'check');
 INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', '0', '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
 INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', '', '0', '1', '1402989520', '2130706433', 'metro-blue', 'user', 'pass');

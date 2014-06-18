@@ -87,27 +87,30 @@ function json_return($data) {
 }
 
 // 检查权限
-function action_check_auth($class, $method) {
+function action_check_auth() {
     $user = session('user');
     $user_id = $user ? $user['user_id'] : 1;
 
     $module_name = strtr(MODULE_NAME, array('Action' => ''));
     $rule_name = $module_name.'/'.ACTION_NAME;
 
-    if (M('AuthRule')->field('name')
-        ->where("name='{$rule_name}'")
-        ->count()) {
-        if ($auth->check($rule_name, $user_id)) {
-            return true;
+    import('ORG.Util.Auth');
+    $auth = new Auth();
+    if (M('AuthRule')->where("name='{$rule_name}'")->count()) {
+        if (!$auth->check($rule_name, $user_id)) {
+            return false;
         }
     }
     return true;
 }
 
 function html_check_auth($class, $method) {
+    $uesr = session('user');
+    $user_id = $user ? $user['user_id'] : 1;
+
     import('ORG.Util.Auth');
     $auth = new Auth();
-    return $auth->check("{$class}/{$method}", 1);
+    return $auth->check("{$class}/{$method}", $user_id);
 }
 
 // 拥有的菜单权限

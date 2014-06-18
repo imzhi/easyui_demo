@@ -125,9 +125,9 @@ $(function() {
         url: '/index.php/Api/Auth/get_group_normal_auth',
         pagination: false,
         columns: [[
-            {field: 'name', title: '规则名称', width: 150},
+            {field: 'name', title: '规则名称', width: 200},
             {field: 'title', title: '规则描述', width: 150},
-            {field: 'condition', title: '规则表达式', width: 100},
+            {field: 'condition', title: '规则表达式', width: 150},
             {
                 field: 'status', title: '状态', width: 40, align: 'center',
                 formatter: function(value, row) {
@@ -146,8 +146,8 @@ $(function() {
         treeField: 'title',
         url: '/index.php/Api/Auth/get_group_menu_auth',
         columns: [[
-            {field: 'title', title: '菜单中文名', width: 200},
-            {field: 'url', title: 'URL', width: 200}
+            {field: 'title', title: '菜单中文名', width: 240},
+            {field: 'url', title: 'URL', width: 240}
         ]]
     });
 });

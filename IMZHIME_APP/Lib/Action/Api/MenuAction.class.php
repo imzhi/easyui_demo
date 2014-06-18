@@ -6,8 +6,11 @@ class MenuAction extends CommonAction {
 
     public function get_tree_menus() {
         $where['status'] = '1';
-        // $auths = get_own_auths();
-        // $where['menu_id'] = array('in', $auths['menu_rules']);
+        // 用户拥有权限的菜单ID
+        // if ('EXTRA_ROOT' !== I('get.type')) {
+        //     $menu_ids = M('AuthGroup')->where('id=%d', self::$user['user_id'])->getField('menu_rules');
+        //     $where['menu_id'] = array('in', $menu_ids);
+        // }
 
         $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id',
             'cate_id', 'url', 'type', 'state');
