@@ -336,7 +336,7 @@ class AuthAction extends CommonAction {
     }
 
     // 供左侧tree使用，检查权限
-    public function get_menu_auth2() {
+    public function check_menu_auth() {
         $data = I('post.data');
         $user = session('user');
         $user_id = $user ? $user['user_id'] : 1;
@@ -345,7 +345,7 @@ class AuthAction extends CommonAction {
             $auth = new Auth();
             if (M('AuthRule')->where("name='{$data}'")->count()) {
                 if (!$auth->check($data, $user_id)) {
-                    echo 0;exit;
+                    json_return(0);
                 }
             }
         }

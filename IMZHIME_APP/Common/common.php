@@ -91,8 +91,9 @@ function action_check_auth() {
     $user = session('user');
     $user_id = $user ? $user['user_id'] : 1;
 
+    $group_name = (GROUP_NAME === 'Api' ? 'Api/' : '');
     $module_name = strtr(MODULE_NAME, array('Action' => ''));
-    $rule_name = $module_name.'/'.ACTION_NAME;
+    $rule_name = $group_name.$module_name.'/'.ACTION_NAME;
 
     import('ORG.Util.Auth');
     $auth = new Auth();
@@ -104,13 +105,15 @@ function action_check_auth() {
     return true;
 }
 
-function html_check_auth($class, $method) {
+function html_check_auth($auth_name) {
     $uesr = session('user');
     $user_id = $user ? $user['user_id'] : 1;
 
+    $auth_name = 'Api/'.$auth_name;
+
     import('ORG.Util.Auth');
     $auth = new Auth();
-    return $auth->check("{$class}/{$method}", $user_id);
+    return $auth->check($auth_name, $user_id);
 }
 
 // 拥有的菜单权限

@@ -17,7 +17,12 @@ var INDEX = {
     },
     close_tab: function() {
         var $index_tabs = $(INDEX.TABS_ID);
-        $index_tabs.tabs('close', $index_tabs.tabs('getTabIndex', $index_tabs.tabs('getSelected')));
+        var curr_tab = $index_tabs.tabs('getSelected');
+        var curr_index = $index_tabs.tabs('getTabIndex', curr_tab);
+
+        if ($index_tabs.tabs('getTab', curr_index).panel('options').closable) {
+            $index_tabs.tabs('close', curr_index);
+        }
     },
     close_other_tabs: function() {
         var $index_tabs = $(INDEX.TABS_ID);
@@ -120,9 +125,7 @@ var INDEX = {
             title: '个人信息',
             href: '/index.php/User/info',
             buttonUrl: '/index.php/Api/User/edit_info',
-            submitFailureCallback: function() {
-                SIGN_IN.refreshVcode();
-            }
+            selected: window.DEFAULTS.USER
         });
     },
     change_password: function() {
@@ -178,8 +181,8 @@ $(function() {
             } else if (node.attributes) {
                 if (node.attributes.type === 'tab') {
                     var data = node.attributes.url.split('/').slice(-2).join('/');
-                    $.post('/index.php/Api/Auth/get_menu_auth2', {data: data}, function(res) {
-                        if (res === '0') {
+                    $.post('/index.php/Api/Auth/check_menu_auth', {data: data}, function(res) {
+                        if (0 === res) {
                             $.messager.alert('错误', '未授权', 'error');
                             return false;
                         }

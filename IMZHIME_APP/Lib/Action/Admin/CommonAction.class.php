@@ -6,7 +6,7 @@ class CommonAction extends Action {
         if (!action_check_auth()) {
             if ($this->isAjax()) {
                 $this->ajaxReturn(null, 'not access', 0);
-                exit('not access');
+                // exit('not access');
             } else {
                 exit('not access');
             }
