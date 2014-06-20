@@ -45,9 +45,6 @@ class PublicAction extends Action {
         if ($password != $repassword) {
             $this->ajaxReturn(null, '重复密码不一致', 0);
         }
-        // if (!$email) {
-        //     $this->ajaxReturn(null, '电子邮件格式不正确', 0);
-        // }
         // if (!$birthday) {
         //     $this->ajaxReturn(null, '生日格式不正确', 0);
         // }

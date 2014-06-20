@@ -318,4 +318,9 @@ class AuthAction extends CommonAction {
             }
         }
     }
+
+    public function combotree_auth_group() {
+        $groups = M('AuthGroup')->field('id,title as text')->where('status=1')->select();
+        json_return($groups);
+    }
 }

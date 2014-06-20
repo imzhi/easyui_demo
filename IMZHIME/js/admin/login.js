@@ -22,7 +22,7 @@ $(function() {
             iconCls: 'icon-help',
             handler: function() {
                 $(dlg_id).form('submit', {
-                    url: 'MA_TG_IDPublic/do_login',
+                    url: 'Public/do_login',
                     onSubmit: function() {
                         return $(this).form('validate');
                     }

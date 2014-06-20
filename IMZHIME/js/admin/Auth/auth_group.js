@@ -23,7 +23,7 @@ var AUTH_GROUP = {
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑用户组',
-                href: 'MA_TG_IDAuth/edit_auth_group',
+                href: 'Auth/edit_auth_group',
                 selected: selected,
                 buttonUrl: 'Api/Auth/edit_auth_group',
                 submitSuccessCallback: function() {

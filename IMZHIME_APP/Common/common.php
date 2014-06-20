@@ -10,30 +10,6 @@ function ipConvertLong($ip = false) {
     return $ip;
 }
 
-// cookie存储登陆信息
-function setLoginCookie($uid, $name) {
-    $auth_str = $uid . '|' . $name . '|' . md5($name . C('COOKIE_AUTH'));
-    cookie(C('COOKIE_NAME'), $auth_str);
-}
-
-// 是否已登陆 或者 是否未登陆
-// @return [用户ID, 用户名]
-function loginOrNot($is = true) {
-    if ($is) {
-        $return = false;
-        $cookie = cookie(C('COOKIE_NAME'));
-        $arr = explode('|', $cookie);
-        count($arr) === 3
-            && md5($arr[1] . C('COOKIE_AUTH')) === $arr[2]
-            && $return = array($arr[0], $arr[1]);
-    }
-    return $return;
-}
-
-function clearLoginCookie() {
-    cookie(C('COOKIE_NAME'), true);
-}
-
 function bootstrap_page($count, $list_rows = 15) {
     import('ORG.Util.Page');
     $Page = new Page($count, $list_rows);
@@ -133,7 +109,6 @@ function is_password($value) {
 }
 
 function must_ajax() {
-    if (!IS_AJAX) {
+    if (!IS_AJAX)
         exit('not access');
-    }
 }

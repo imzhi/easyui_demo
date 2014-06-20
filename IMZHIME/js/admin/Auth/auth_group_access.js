@@ -6,8 +6,9 @@ var AUTH_GROUP_ACCESS = {
         var self = this;
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加用户组明细',
-            href: 'MA_TG_IDAuth/edit_auth_group_access',
+            href: 'Auth/edit_auth_group_access',
             buttonUrl: 'Api/Auth/add_auth_group_access',
+            width: 300,
             submitSuccessCallback: function() {
                 $(self.DG_ID).Reload_Datagrid();
             }
@@ -20,7 +21,7 @@ var AUTH_GROUP_ACCESS = {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑用户组明细',
                 width: 300,
-                href: 'MA_TG_IDAuth/edit_auth_group_access',
+                href: 'Auth/edit_auth_group_access',
                 selected: selected,
                 onLoadCallback: function() {
                     $('#validatebox_username', self.DLG_ID).attr('disabled', 'disabled');

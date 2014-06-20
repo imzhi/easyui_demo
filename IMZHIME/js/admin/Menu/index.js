@@ -23,7 +23,7 @@ var MENU = {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单项',
                 width: 300,
-                href: 'MA_TG_IDMenu/edit',
+                href: 'Menu/edit',
                 selected: selected,
                 buttonUrl: 'Api/Menu/edit',
                 submitSuccessCallback: function() {
@@ -45,7 +45,7 @@ var MENU = {
                 $.messager.confirm('提示', '确定删除吗？', function(r) {
                     if (r) {
                         $.post('Api/Menu/delete', {
-                            id: selected.menu_id
+                            menu_id: selected.menu_id
                         }, function(result) {
                             $.Close_Progress();
                             if (result.status === 1) {
@@ -75,7 +75,7 @@ var MENU_AUTH = {
         if (selected && !selected.children) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '添加菜单拥有的权限',
-                href: 'MA_TG_IDMenu/menu_auth_edit',
+                href: 'Menu/menu_auth_edit',
                 selected: selected,
                 buttonUrl: 'Api/Menu/add_menu_auth',
                 submitSuccessCallback: function() {
@@ -186,6 +186,7 @@ $(function() {
     $(MENU_AUTH.DG_ID).Datagrid({
         title:'拥有的权限',
         toolbar: MENU_AUTH.TB_ID,
+        pagination: false,
         url: 'Api/Menu/get_menu_auth',
         columns: [[
             { field: 'name', title: '规则名称', sortable: true, width: 200 },

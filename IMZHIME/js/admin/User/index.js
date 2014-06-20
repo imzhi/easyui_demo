@@ -14,7 +14,7 @@ var USER = {
                 modal: true,
                 iconCls: 'icon-edit',
                 collapsible: true,
-                href: 'MA_TG_IDUser/edit',
+                href: 'User/edit',
                 onLoad: function() {
                     $('form', self.DLG_ID).form('load', selected);
                     $(self.DLG_ID).Center_Dialog();

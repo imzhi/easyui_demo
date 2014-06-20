@@ -35,6 +35,7 @@ class CommonAction extends Action {
 
         // 检查权限
         if (!action_check_auth()) {
+            // exit('not access');
             if ($this->isAjax()) {
                 // $this->ajaxReturn(null, 'not access', 0);
             } else {
