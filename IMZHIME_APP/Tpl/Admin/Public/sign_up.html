@@ -12,7 +12,7 @@ var SIGN_UP = {
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
                 <td class="form_table_td">用户名</td>
-                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="user_name" data-options="required:true,validType:['isUsername','remote[\'/index.php/Api/User/user_name_not_exists\',\'user_name\']']"></td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="user_name" data-options="required:true,validType:['isUsername','remote[\'Api/User/user_name_not_exists\',\'user_name\']']"></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">密码</td>
@@ -36,7 +36,7 @@ var SIGN_UP = {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">&nbsp;</td>
-                <td class="form_table_td"><img id="vcode" src="{:U('Admin/Public/vcode')}" style="width:150px;height:20px;margin:0 0 0 2px;cursor:pointer;" title="点击刷新" onclick="SIGN_UP.refreshVcode()"/></td>
+                <td class="form_table_td"><img id="vcode" src="{:U('Public/vcode')}" style="width:150px;height:20px;margin:0 0 0 2px;cursor:pointer;" title="点击刷新" onclick="SIGN_UP.refreshVcode()"/></td>
             </tr>
         </table>
     </form>

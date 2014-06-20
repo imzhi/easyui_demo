@@ -8,8 +8,8 @@ var AUTH_RULE = {
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加权限规则',
             width: 300,
-            href: '/index.php/Admin/Auth/edit_auth_rule',
-            buttonUrl: '/index.php/Api/Auth/do_auth_rule',
+            href: 'Auth/edit_auth_rule',
+            buttonUrl: 'Api/Auth/add_auth_rule',
             submitSuccessCallback: function() {
                 $(self.DG_ID).Reload_Datagrid();
             }
@@ -22,9 +22,9 @@ var AUTH_RULE = {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑权限规则',
                 width: 300,
-                href: '/index.php/Admin/Auth/edit_auth_rule',
+                href: 'Auth/edit_auth_rule',
                 selected: selected,
-                buttonUrl: '/index.php/Api/Auth/do_auth_rule',
+                buttonUrl: 'Api/Auth/edit_auth_rule',
                 submitSuccessCallback: function() {
                     $(self.DG_ID).Reload_Datagrid();
                 }
@@ -39,7 +39,7 @@ var AUTH_RULE = {
         if (selected) {
             $.messager.confirm('提示', '确定删除吗？', function(r) {
                 if (r) {
-                    $.post('/index.php/Api/Auth/del_auth_rule', {id: selected.id}, function(result) {
+                    $.post('Api/Auth/del_auth_rule', {id: selected.id}, function(result) {
                         $.Close_Progress();
                         if (result.status === 1) {
                             $(self.DG_ID).Unselect_All_Datagrid(); // 取消选择
@@ -60,7 +60,7 @@ $(function() {
     $(AUTH_RULE.DG_ID).Datagrid({
         title: '权限规则',
         toolbar: AUTH_RULE.TB_ID,
-        url: '/index.php/Api/Auth/get_auth_rule',
+        url: 'Api/Auth/get_auth_rule',
         columns: [[
             {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
             {field: 'name', title: '规则名称', sortable: true, width: 250},

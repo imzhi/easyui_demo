@@ -6,8 +6,9 @@ var AUTH_GROUP_ACCESS = {
         var self = this;
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加用户组明细',
-            href: '/index.php/Admin/Auth/edit_auth_group_access',
-            buttonUrl: '/index.php/Api/Auth/add_auth_group_access',
+            href: 'Auth/edit_auth_group_access',
+            buttonUrl: 'Api/Auth/add_auth_group_access',
+            width: 300,
             submitSuccessCallback: function() {
                 $(self.DG_ID).Reload_Datagrid();
             }
@@ -20,12 +21,12 @@ var AUTH_GROUP_ACCESS = {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑用户组明细',
                 width: 300,
-                href: '/index.php/Admin/Auth/edit_auth_group_access',
+                href: 'Auth/edit_auth_group_access',
                 selected: selected,
                 onLoadCallback: function() {
                     $('#validatebox_username', self.DLG_ID).attr('disabled', 'disabled');
                 },
-                buttonUrl: '/index.php/Api/Auth/edit_auth_group_access',
+                buttonUrl: 'Api/Auth/edit_auth_group_access',
                 submitSuccessCallback: function() {
                     $(self.DG_ID).Reload_Datagrid();
                 }
@@ -40,7 +41,7 @@ var AUTH_GROUP_ACCESS = {
         if (selected) {
             $.messager.confirm('提示', '确定删除吗？', function(r) {
                 if (r) {
-                    $.post('/index.php/Api/Auth/del_auth_group_access', {uid: selected.uid}, function(result) {
+                    $.post('Api/Auth/del_auth_group_access', {uid: selected.uid}, function(result) {
                         $.Close_Progress();
                         if (result.status === 1) {
                             $(self.DG_ID).Unselect_All_Datagrid(); // 取消选择
@@ -63,7 +64,7 @@ $(function() {
         title: '用户组明细',
         toolbar: AUTH_GROUP_ACCESS.TB_ID,
         idField: null,
-        url: '/index.php/Api/Auth/get_auth_group_access',
+        url: 'Api/Auth/get_auth_group_access',
         columns: [[
             {field: 'user_name', title: '用户名', sortable: true, width: 80},
             {field: 'group_names', title: '所属用户组', sortable: true, width: 250}

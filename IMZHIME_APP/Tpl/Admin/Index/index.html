@@ -15,7 +15,8 @@
     <js href="__PUBLIC__/js/common/jquery-easyui/locale/easyui-lang-zh_CN.js"/>
     <script type="text/javascript">
     window.DEFAULTS = {
-        THEME: '{$curr_theme}'
+        THEME: '{$curr_theme}',
+        USER: {$Think.session.user|json_encode}
     };
     </script>
     <js href="__PUBLIC__/js/admin/common.js"/>

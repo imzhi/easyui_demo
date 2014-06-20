@@ -17,7 +17,12 @@ var INDEX = {
     },
     close_tab: function() {
         var $index_tabs = $(INDEX.TABS_ID);
-        $index_tabs.tabs('close', $index_tabs.tabs('getTabIndex', $index_tabs.tabs('getSelected')));
+        var curr_tab = $index_tabs.tabs('getSelected');
+        var curr_index = $index_tabs.tabs('getTabIndex', curr_tab);
+
+        if ($index_tabs.tabs('getTab', curr_index).panel('options').closable) {
+            $index_tabs.tabs('close', curr_index);
+        }
     },
     close_other_tabs: function() {
         var $index_tabs = $(INDEX.TABS_ID);
@@ -90,9 +95,9 @@ var INDEX = {
     sign_in: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '登陆',
-            href: '/index.php/Public/sign_in',
+            href: 'Public/sign_in',
             buttonText: '登陆',
-            buttonUrl: '/index.php/Api/Public/sign_in',
+            buttonUrl: 'Api/Public/sign_in',
             submitSuccess: function(result) {
                 window.location = result.data;
             },
@@ -104,9 +109,9 @@ var INDEX = {
     sign_up: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '注册',
-            href: '/index.php/Public/sign_up',
+            href: 'Public/sign_up',
             buttonText: '注册',
-            buttonUrl: '/index.php/Api/Public/sign_up',
+            buttonUrl: 'Api/Public/sign_up',
             submitSuccess: function(result) {
                 window.location = result.data;
             },
@@ -118,18 +123,16 @@ var INDEX = {
     personal_info: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '个人信息',
-            href: '/index.php/User/info',
-            buttonUrl: '/index.php/Api/User/edit_info',
-            submitFailureCallback: function() {
-                SIGN_IN.refreshVcode();
-            }
+            href: 'User/info',
+            buttonUrl: 'Api/User/edit_info',
+            selected: window.DEFAULTS.USER
         });
     },
     change_password: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
             title: '修改密码',
-            href: '/index.php/User/change_password',
-            buttonUrl: '/index.php/Api/User/change_password',
+            href: 'User/change_password',
+            buttonUrl: 'Api/User/change_password',
             submitFailureCallback: function() {
                 SIGN_IN.refreshVcode();
             }
@@ -138,7 +141,7 @@ var INDEX = {
     log_out: function() {
         $.messager.confirm('提示', '确定要登出吗？', function(r) {
             if (r) {
-                $.post('/index.php/Api/Public/log_out', function(result) {
+                $.post('Api/Public/log_out', function(result) {
                     if (result.status === 1) {
                         window.location = result.data;
                     } else {
@@ -154,7 +157,7 @@ var INDEX = {
             resizable:true,
             height: 450,
             width: 800,
-            content: '<iframe scrolling="auto" frameborder="0" src="/index.php/Public/guestbook" style="width:100%;height:99%;"></iframe>',
+            content: '<iframe scrolling="auto" frameborder="0" src="Public/guestbook" style="width:100%;height:99%;"></iframe>',
             buttons: [],
             onMove: function(left, top) {
                 // console.log(left, top);
@@ -171,15 +174,15 @@ var INDEX = {
 
 $(function() {
     $(INDEX.LEFT_NAV_TREE_ID).Tree({
-        url: '/index.php/Api/Menu/get_tree_menus',
+        url: 'Api/Menu/get_tree_menus',
         onClick: function(node) {
             if (!$(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target)) {
                 $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
             } else if (node.attributes) {
                 if (node.attributes.type === 'tab') {
                     var data = node.attributes.url.split('/').slice(-2).join('/');
-                    $.post('/index.php/Api/Auth/get_menu_auth2', {data: data}, function(res) {
-                        if (res === '0') {
+                    $.post('Api/Auth/check_menu_auth', {data: data}, function(res) {
+                        if (0 === res) {
                             $.messager.alert('错误', '未授权', 'error');
                             return false;
                         }
@@ -203,7 +206,7 @@ $(function() {
     });
 
     $(INDEX.CB_THEMES_ID).Combobox({
-        url: '/index.php/Api/Data/combobox_themes',
+        url: 'Api/Data/combobox_themes',
         groupField: 'group',
         onLoadSuccess: function() {
             $(this).combobox('setValue', window.DEFAULTS.THEME);
@@ -213,7 +216,7 @@ $(function() {
             var arr = $link.attr('href').split('/');
             arr[arr.length - 2] = record.id;
             $link.attr('href', arr.join('/'));
-            $.post('/index.php/Api/Public/set_theme', {theme: record.id}, function(result) {
+            $.post('Api/Public/set_theme', {theme: record.id}, function(result) {
                 if (result.status === 1) {
                     $.Show_Warning(result.info);
                 } else {

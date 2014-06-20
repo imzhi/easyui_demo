@@ -14,7 +14,7 @@ var USER = {
                 modal: true,
                 iconCls: 'icon-edit',
                 collapsible: true,
-                href: '/index.php/Admin/User/edit',
+                href: 'User/edit',
                 onLoad: function() {
                     $('form', self.DLG_ID).form('load', selected);
                     $(self.DLG_ID).Center_Dialog();
@@ -28,7 +28,7 @@ var USER = {
                     iconCls: 'icon-save',
                     handler: function() {
                         $('form', self.DLG_ID).form('submit', {
-                            url: '/index.php/Api/User/save',
+                            url: 'Api/User/save',
                             onSubmit: function() {
                                 var isValid = $(this).form('validate');
                                 if (!isValid) {
@@ -69,7 +69,7 @@ $(function() {
         pageList: [10,20,30,40,50],
         pageSize: 10,
         idField: 'user_id',
-        url: '/index.php/Api/User/get_users',
+        url: 'Api/User/get_users',
         method: 'post',
         columns: [[
             {field: 'user_id', title: 'ID', sortable: true, width: 40, align: 'center'},

@@ -1,6 +1,6 @@
 <?php
 class CommonAction extends Action {
-    public static $user;
+    protected static $user;
     public function _initialize() {
         $user = session('user');
 
@@ -35,11 +35,11 @@ class CommonAction extends Action {
 
         // 检查权限
         if (!action_check_auth()) {
+            // exit('not access');
             if ($this->isAjax()) {
-                $this->ajaxReturn(null, 'not access', 0);
-                exit('not access');
+                // $this->ajaxReturn(null, 'not access', 0);
             } else {
-                exit('not access');
+                // exit('not access');
             }
         }
 

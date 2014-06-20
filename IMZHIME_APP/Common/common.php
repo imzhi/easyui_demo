@@ -1,6 +1,6 @@
 <?php
 // ip字串地址转换成长整型
-function ipConvertLong($ip = FALSE) {
+function ipConvertLong($ip = false) {
     if (!$ip) {
         $ip = get_client_ip(1);
     } else {
@@ -8,30 +8,6 @@ function ipConvertLong($ip = FALSE) {
         $ip   = $long ? $long : 0;
     }
     return $ip;
-}
-
-// cookie存储登陆信息
-function setLoginCookie($uid, $name) {
-    $auth_str = $uid . '|' . $name . '|' . md5($name . C('COOKIE_AUTH'));
-    cookie(C('COOKIE_NAME'), $auth_str);
-}
-
-// 是否已登陆 或者 是否未登陆
-// @return [用户ID, 用户名]
-function loginOrNot($is = TRUE) {
-    if ($is) {
-        $return = FALSE;
-        $cookie = cookie(C('COOKIE_NAME'));
-        $arr = explode('|', $cookie);
-        count($arr) === 3
-            && md5($arr[1] . C('COOKIE_AUTH')) === $arr[2]
-            && $return = array($arr[0], $arr[1]);
-    }
-    return $return;
-}
-
-function clearLoginCookie() {
-    cookie(C('COOKIE_NAME'), NULL);
 }
 
 function bootstrap_page($count, $list_rows = 15) {
@@ -91,8 +67,9 @@ function action_check_auth() {
     $user = session('user');
     $user_id = $user ? $user['user_id'] : 1;
 
+    $group_name = (GROUP_NAME === 'Api' ? 'Api/' : '');
     $module_name = strtr(MODULE_NAME, array('Action' => ''));
-    $rule_name = $module_name.'/'.ACTION_NAME;
+    $rule_name = $group_name.$module_name.'/'.ACTION_NAME;
 
     import('ORG.Util.Auth');
     $auth = new Auth();
@@ -104,13 +81,15 @@ function action_check_auth() {
     return true;
 }
 
-function html_check_auth($class, $method) {
+function html_check_auth($auth_name) {
     $uesr = session('user');
     $user_id = $user ? $user['user_id'] : 1;
 
+    $auth_name = 'Api/'.$auth_name;
+
     import('ORG.Util.Auth');
     $auth = new Auth();
-    return $auth->check("{$class}/{$method}", $user_id);
+    return $auth->check($auth_name, $user_id);
 }
 
 // 拥有的菜单权限
@@ -127,4 +106,9 @@ function is_password($value) {
     return strlen($value) <= 20
         && strlen($value) >= 4
         && false === strpos($value, ' ');
+}
+
+function must_ajax() {
+    if (!IS_AJAX)
+        exit('not access');
 }

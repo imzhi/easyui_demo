@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50168
 File Encoding         : 65001
 
-Date: 2014-06-18 19:28:20
+Date: 2014-06-20 18:44:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `z_auth_group` (
 INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '3,2,9,10', '1,2,3');
 INSERT INTO `z_auth_group` VALUES ('3', '版主', '1', '2,3,7', '1,2,3,4,5,6');
 INSERT INTO `z_auth_group` VALUES ('5', '会员', '1', '', '');
-INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '', '');
+INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '27,26', '20,21,22');
 
 -- ----------------------------
 -- Table structure for `z_auth_group_access`
@@ -71,20 +71,57 @@ CREATE TABLE `z_auth_rule` (
   `condition` char(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_auth_rule
 -- ----------------------------
-INSERT INTO `z_auth_rule` VALUES ('2', 'Auth/add_auth_group', '新增用户组', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('3', 'Auth/del_auth_group', '删除用户组', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('7', 'Auth/auth_rule', '权限规则', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('8', 'Auth/auth_group', '用户组', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('9', 'Auth/auth_group_access', '用户组明细', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('10', 'User/index', '用户列表', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('11', 'Auth/edit_auth_group', '编辑用户组', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('12', 'Auth/add_auth_group_access', '新增用户组明细', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('13', 'Site/close', '菜单-关闭站点', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('2', 'Api/Auth/add_auth_group', 'Api-新增用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('3', 'Api/Auth/del_auth_group', 'Api-删除用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('7', 'Auth/auth_rule', '列表-权限规则', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('8', 'Auth/auth_group', '列表-用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('9', 'Auth/auth_group_access', '列表-用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('10', 'User/index', '列表-用户信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('11', 'Auth/edit_auth_group', '窗口-编辑用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('12', 'Auth/edit_auth_group_access', '窗口-编辑用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('13', 'Site/close', '窗口-关闭站点', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('14', 'Auth/edit_auth_rule', '窗口-编辑权限规则', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('15', 'Auth/edit_normal_auth', '窗口-编辑普通权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('16', 'Auth/edit_menu_auth', '窗口-编辑菜单权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('17', 'Menu/index', '列表-菜单信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('18', 'Menu/edit', '窗口-编辑菜单', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('19', 'Menu/menu_auth_edit', '窗口-编辑菜单权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('20', 'User/change_password', '窗口-修改密码', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('21', 'Site/info', '窗口-站点信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('22', 'User/edit', '窗口-编辑用户', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('23', 'Api/Auth/get_auth_group', 'Api-获取用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('24', 'Api/Auth/get_auth_rule', 'Api-获取权限规则', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('25', 'Api/Auth/edit_auth_group', 'Api-编辑用户组', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('26', 'Api/Auth/del_auth_rule', 'Api-删除权限规则', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('27', 'Api/Auth/add_auth_rule', 'Api-新增权限规则', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('28', 'Api/Auth/edit_auth_rule', 'Api-编辑权限规则', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('29', 'Api/Auth/get_auth_group_access', 'Api-获取用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('30', 'Api/Auth/add_auth_group_access', 'Api-新增用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('31', 'Api/Auth/edit_auth_group_access', 'Api-编辑用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('32', 'Api/Auth/del_auth_group_access', 'Api-删除用户组明细', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('33', 'Api/Auth/get_group_normal_auth', 'Api-用户组对应普通权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('34', 'Api/Auth/get_group_menu_auth', 'Api-用户组对应菜单权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('35', 'Api/Auth/edit_normal_auth', 'Api-编辑用户组对应普通权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('36', 'Api/Auth/edit_menu_auth', 'Api-编辑用户组对应菜单权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('37', 'Api/Menu/get_treegrid_menus', 'Api-获取菜单树形表格', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('38', 'Api/Menu/edit', 'Api-编辑菜单项', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('39', 'Api/Menu/add', 'Api-添加菜单项', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('40', 'Api/Menu/delete', 'Api-删除菜单项', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('41', 'Api/Menu/get_menu_auth', 'Api-获取菜单拥有的权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('42', 'Api/Menu/add_menu_auth', 'Api-添加菜单拥有的权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('43', 'Api/Menu/del_menu_auth', 'Api-删除菜单拥有权限', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('44', 'Api/Site/edit_info', 'Api-编辑站点信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('45', 'Api/Site/get_info', 'Api-获取站点信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('46', 'Api/Site/close', 'Api-关闭站点', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('47', 'Api/User/get_users', 'Api-获取用户列表', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('48', 'Api/User/save', 'Api-保存用户信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('49', 'Api/User/edit_info', 'Api-修改个人信息', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('50', 'Api/User/change_password', 'Api-修改个人密码', '1', '');
 
 -- ----------------------------
 -- Table structure for `z_cheatsheet`
@@ -157,15 +194,9 @@ INSERT INTO `z_menu` VALUES ('9', '0', '0', '', '', '用户管理', '', '0', 'nu
 INSERT INTO `z_menu` VALUES ('10', '9', '0', '', '', '用户列表', '/index.php/Admin/User', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('13', '0', '0', '', '', '缓存管理', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('14', '13', '0', '', '', '缓存列表', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('15', '14', '0', '', '', '缓存2', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('16', '15', '0', '', '', '缓存2_2', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('17', '14', '0', '', '', '缓存3', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('18', '15', '0', '', '', '缓存2_3', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('19', '16', '0', '', '', '缓存2_2_1', '', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('20', '0', '0', '', 'tool_site', '工具站点', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('21', '20', '0', '', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', '0', 'iframe', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('22', '20', '0', '', 'baidu', '百度', 'http://www.baidu.com/', '0', 'iframe', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('23', '0', '0', '', 'test', '测试', '', '0', 'null', 'open', '0', '1');
 
 -- ----------------------------
 -- Table structure for `z_menu_auth`
@@ -180,10 +211,21 @@ CREATE TABLE `z_menu_auth` (
 -- ----------------------------
 -- Records of z_menu_auth
 -- ----------------------------
-INSERT INTO `z_menu_auth` VALUES ('2', '8', '0');
-INSERT INTO `z_menu_auth` VALUES ('2', '2', '0');
-INSERT INTO `z_menu_auth` VALUES ('2', '3', '0');
-INSERT INTO `z_menu_auth` VALUES ('2', '7', '0');
+INSERT INTO `z_menu_auth` VALUES ('3', '17', '0');
+INSERT INTO `z_menu_auth` VALUES ('3', '37', '0');
+INSERT INTO `z_menu_auth` VALUES ('2', '45', '0');
+INSERT INTO `z_menu_auth` VALUES ('2', '21', '0');
+INSERT INTO `z_menu_auth` VALUES ('4', '13', '0');
+INSERT INTO `z_menu_auth` VALUES ('6', '7', '0');
+INSERT INTO `z_menu_auth` VALUES ('6', '24', '0');
+INSERT INTO `z_menu_auth` VALUES ('7', '8', '0');
+INSERT INTO `z_menu_auth` VALUES ('7', '23', '0');
+INSERT INTO `z_menu_auth` VALUES ('8', '9', '0');
+INSERT INTO `z_menu_auth` VALUES ('8', '29', '0');
+INSERT INTO `z_menu_auth` VALUES ('7', '33', '0');
+INSERT INTO `z_menu_auth` VALUES ('7', '34', '0');
+INSERT INTO `z_menu_auth` VALUES ('10', '47', '0');
+INSERT INTO `z_menu_auth` VALUES ('10', '10', '0');
 
 -- ----------------------------
 -- Table structure for `z_site_info`
@@ -233,7 +275,7 @@ CREATE TABLE `z_user` (
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '73', '1403062891', '2130706433', 'metro-gray', 'user', 'lock');
+INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '73', '1403062891', '2130706433', 'metro-green', 'user', 'lock');
 INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '2', '1400940410', '2130706433', 'black', 'user', 'check');
 INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', '0', '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
-INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', '', '0', '1', '1402989520', '2130706433', 'metro-blue', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', '', '0', '2', '1403257058', '2130706433', 'metro-blue', 'user', 'pass');

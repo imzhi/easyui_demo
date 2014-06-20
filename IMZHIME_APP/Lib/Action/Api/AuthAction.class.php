@@ -2,14 +2,6 @@
 class AuthAction extends CommonAction {
     public function _initialize() {
         parent::_initialize();
-
-        if (!action_check_auth(__CLASS__)) { // 检查权限
-            if ($this->isAjax()) {
-                $this->ajaxReturn(null, 'not access', 0);
-            } else {
-                exit('not access');
-            }
-        }
     }
 
     public function get_auth_group() {
@@ -95,45 +87,40 @@ class AuthAction extends CommonAction {
         }
     }
 
-    public function do_auth_rule() {
+    public function edit_auth_rule() {
         $id = I('post.id', 0, 'intval');
         $name = I('post.name');
         $title = I('post.title');
         $condition = I('post.condition', '');
         $status = I('post.status', 0, 'intval');
 
-        if ($id > 0) {
-            $this->edit_auth_rule($id, $name, $title, $condition, $status);
-        } else {
-            $this->add_auth_rule($name, $title, $condition, $status);
-        }
-    }
-
-    private function edit_auth_rule($id, $name, $title, $condition, $status) {
-        if (false !== M('AuthRule')->where('id=%d', $id)->save(array(
+        if (false === M('AuthRule')->where('id=%d', $id)->save(array(
             'name' => $name,
             'title' => $title,
             'condition' => $condition,
             'status' => $status,
         ))) {
-            $this->ajaxReturn(null, '编辑权限规则成功', 1);
-        } else {
             $this->ajaxReturn(null, '编辑权限规则失败', 0);
         }
+        $this->ajaxReturn(null, '编辑权限规则成功', 1);
 
     }
 
-    private function add_auth_rule($name, $title, $condition, $status) {
-        if (M('AuthRule')->add(array(
+    public function add_auth_rule() {
+        $name = I('post.name');
+        $title = I('post.title');
+        $condition = I('post.condition', '');
+        $status = I('post.status', 0, 'intval');
+
+        if (!M('AuthRule')->add(array(
             'name' => $name,
             'title' => $title,
             'condition' => $condition,
             'status' => $status,
         ))) {
-            $this->ajaxReturn(null, '新增权限规则成功', 1);
-        } else {
             $this->ajaxReturn(null, '新增权限规则失败', 0);
         }
+        $this->ajaxReturn(null, '新增权限规则成功', 1);
     }
 
     public function del_auth_rule() {
@@ -173,22 +160,6 @@ class AuthAction extends CommonAction {
         // LEFT JOIN z_auth_group g ON g.id=a.group_id
         // GROUP BY a.uid";
         datagrid_return($accesses, $count);
-    }
-
-    public function do_auth_group_access() {
-        $uid = I('post.uid', 0, 'intval');
-        $group_ids = I('post.group_id', array());
-        foreach ($group_ids as $k => $v) {
-            $add_data[$k]['uid'] = $uid;
-            $add_data[$k]['group_id'] = $v;
-        }
-
-        $m = M('AuthGroupAccess');
-        if (false !== $m->where('uid=%d', $uid)->delete() && !$m->addAll($add_data)) {
-            $this->ajaxReturn(null, '编辑用户组明细成功', 1);
-        } else {
-            $this->ajaxReturn(null, '编辑用户组明细失败', 0);
-        }
     }
 
     public function add_auth_group_access() {
@@ -245,11 +216,6 @@ class AuthAction extends CommonAction {
         } else {
             $this->ajaxReturn(null, '删除用户组明细失败', 0);
         }
-    }
-
-    public function combotree_auth_group() {
-        $groups = M('AuthGroup')->field('id,title as text')->where('status<5')->select();
-        json_return($groups);
     }
 
     // 获取用户组对应的普通权限
@@ -309,6 +275,7 @@ class AuthAction extends CommonAction {
         }
     }
 
+    // 编辑用户组对应普通权限
     public function edit_normal_auth() {
         $id = I('post.id', 0, 'intval');
         $rules = I('post.rules');
@@ -322,6 +289,7 @@ class AuthAction extends CommonAction {
         $this->ajaxReturn(null, '编辑普通权限失败', 0);
     }
 
+    // 编辑用户组对应菜单权限
     public function edit_menu_auth() {
         $id = I('post.id', 0, 'intval');
         $menu_rules = I('post.menu_rules');
@@ -336,7 +304,7 @@ class AuthAction extends CommonAction {
     }
 
     // 供左侧tree使用，检查权限
-    public function get_menu_auth2() {
+    public function check_menu_auth() {
         $data = I('post.data');
         $user = session('user');
         $user_id = $user ? $user['user_id'] : 1;
@@ -345,9 +313,14 @@ class AuthAction extends CommonAction {
             $auth = new Auth();
             if (M('AuthRule')->where("name='{$data}'")->count()) {
                 if (!$auth->check($data, $user_id)) {
-                    echo 0;exit;
+                    // json_return(0);
                 }
             }
         }
+    }
+
+    public function combotree_auth_group() {
+        $groups = M('AuthGroup')->field('id,title as text')->where('status=1')->select();
+        json_return($groups);
     }
 }
