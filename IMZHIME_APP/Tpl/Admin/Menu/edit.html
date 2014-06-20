@@ -8,16 +8,16 @@ var EDIT_MENU = {
 
 $(function() {
     $(EDIT_MENU.CT_MENU_ID).Combotree({
-        url: '/index.php/Api/Menu/get_tree_menus?type=EXTRA_ROOT'
+        url: 'Api/Menu/get_tree_menus?type=EXTRA_ROOT'
     });
     $(EDIT_MENU.CB_STATE_ID).Combobox({
-        url: '/index.php/Api/Status/combobox_menu_state'
+        url: 'Api/Status/combobox_menu_state'
     });
     $(EDIT_MENU.CB_TYPE_ID).Combobox({
-        url: '/index.php/Api/Status/combobox_menu_type'
+        url: 'Api/Status/combobox_menu_type'
     });
     $(EDIT_MENU.CB_STATUS_ID).Combobox({
-        url: '/index.php/Api/Status/combobox_menu_status',
+        url: 'Api/Status/combobox_menu_status',
         onLoadSuccess: function() {
             $(this).combobox('setValue', '1');
         }

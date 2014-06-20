@@ -8,9 +8,9 @@ var MENU = {
             title: '添加菜单项',
             width: 300,
             iconCls: 'icon-help',
-            href: '/index.php/Admin/Menu/edit',
+            href: 'Menu/edit',
             buttonIconCls: 'icon-help',
-            buttonUrl: '/index.php/Api/Menu/do_add',
+            buttonUrl: 'Api/Menu/add',
             submitSuccessCallback: function() {
                 $(self.TG_ID).Reload_Treegrid();
             }
@@ -23,9 +23,9 @@ var MENU = {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单项',
                 width: 300,
-                href: '/index.php/Admin/Menu/edit',
+                href: 'MA_TG_IDMenu/edit',
                 selected: selected,
-                buttonUrl: '/index.php/Api/Menu/do_edit',
+                buttonUrl: 'Api/Menu/edit',
                 submitSuccessCallback: function() {
                     $(self.TG_ID).Reload_Treegrid();
                 }
@@ -44,7 +44,7 @@ var MENU = {
             } else {
                 $.messager.confirm('提示', '确定删除吗？', function(r) {
                     if (r) {
-                        $.post('/index.php/Api/Menu/del_menu', {
+                        $.post('Api/Menu/delete', {
                             id: selected.menu_id
                         }, function(result) {
                             $.Close_Progress();
@@ -75,9 +75,9 @@ var MENU_AUTH = {
         if (selected && !selected.children) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '添加菜单拥有的权限',
-                href: '/index.php/Admin/Menu/menu_auth_edit',
+                href: 'MA_TG_IDMenu/menu_auth_edit',
                 selected: selected,
-                buttonUrl: '/index.php/Api/Menu/do_add_menu_auth',
+                buttonUrl: 'Api/Menu/add_menu_auth',
                 submitSuccessCallback: function() {
                     $(self.DG_ID).Reload_Datagrid();
                 }
@@ -92,7 +92,7 @@ var MENU_AUTH = {
         if (selected) {
             $.messager.confirm('提示', '确定删除吗？', function(r) {
                 if (r) {
-                    $.post('/index.php/Api/Menu/del_menu_auth', {
+                    $.post('Api/Menu/del_menu_auth', {
                         menu_id: selected.menu_id, auth_id: selected.auth_id
                     }, function(result) {
                         $.Close_Progress();
@@ -118,7 +118,7 @@ $(function() {
         toolbar: MENU.TB_ID,
         idField: 'menu_id',
         treeField: 'title',
-        url: '/index.php/Api/Menu/get_treegrid_menus',
+        url: 'Api/Menu/get_treegrid_menus',
         columns: [[
             {field: 'menu_id', title: 'ID', width: 40, align: 'center'},
             {field: 'title', title: '菜单中文名', width: 200},
@@ -186,7 +186,7 @@ $(function() {
     $(MENU_AUTH.DG_ID).Datagrid({
         title:'拥有的权限',
         toolbar: MENU_AUTH.TB_ID,
-        url: '/index.php/Api/Menu/get_menu_auth',
+        url: 'Api/Menu/get_menu_auth',
         columns: [[
             { field: 'name', title: '规则名称', sortable: true, width: 200 },
             { field: 'title', title: '规则描述', sortable: true, width: 150 }

@@ -2,9 +2,7 @@
 class DataAction extends CommonAction {
     public function _initialize() {
         parent::_initialize();
-        if (!$this->isAjax()) {
-            exit('not access');
-        }
+        must_ajax();
     }
 
     public function combobox_themes() {

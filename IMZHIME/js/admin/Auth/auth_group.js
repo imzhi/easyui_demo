@@ -10,8 +10,8 @@ var AUTH_GROUP = {
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加用户组',
             iconCls: 'icon-help',
-            href: '/index.php/Auth/edit_auth_group',
-            buttonUrl: '/index.php/Api/Auth/add_auth_group',
+            href: 'Auth/edit_auth_group',
+            buttonUrl: 'Api/Auth/add_auth_group',
             submitSuccessCallback: function() {
                 $(self.DG_ID).Reload_Datagrid();
             }
@@ -23,9 +23,9 @@ var AUTH_GROUP = {
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑用户组',
-                href: '/index.php/Admin/Auth/edit_auth_group',
+                href: 'MA_TG_IDAuth/edit_auth_group',
                 selected: selected,
-                buttonUrl: '/index.php/Api/Auth/edit_auth_group',
+                buttonUrl: 'Api/Auth/edit_auth_group',
                 submitSuccessCallback: function() {
                     $(self.DG_ID).Reload_Datagrid();
                 }
@@ -40,7 +40,7 @@ var AUTH_GROUP = {
         if (selected) {
             $.messager.confirm('提示', '确定删除吗？', function(r) {
                 if (r) {
-                    $.post('/index.php/Api/Auth/del_auth_group', {id: selected.id}, function(result) {
+                    $.post('Api/Auth/del_auth_group', {id: selected.id}, function(result) {
                         $.Close_Progress();
                         if (result.status === 1) {
                             $(self.DG_ID).Unselect_All_Datagrid(); // 取消选择
@@ -62,9 +62,9 @@ var AUTH_GROUP = {
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑普通权限',
-                href: '/index.php/Admin/Auth/edit_normal_auth',
+                href: 'Auth/edit_normal_auth',
                 selected: selected,
-                buttonUrl: '/index.php/Api/Auth/edit_normal_auth',
+                buttonUrl: 'Api/Auth/edit_normal_auth',
                 submitSuccessCallback: function() {
                     $(self.DG_ID).Reload_Datagrid();
                     $(self.NA_DG_ID).Reload_Datagrid();
@@ -80,9 +80,9 @@ var AUTH_GROUP = {
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单权限',
-                href: '/index.php/Admin/Auth/edit_menu_auth',
+                href: 'Auth/edit_menu_auth',
                 selected: selected,
-                buttonUrl: '/index.php/Api/Auth/edit_menu_auth',
+                buttonUrl: 'Api/Auth/edit_menu_auth',
                 submitSuccessCallback: function() {
                     $(self.MA_TG_ID).Reload_Treegrid();
                 }
@@ -97,7 +97,7 @@ $(function() {
     $(AUTH_GROUP.DG_ID).Datagrid({
         title:'用户组',
         toolbar: AUTH_GROUP.TB_ID,
-        url: '/index.php/Api/Auth/get_auth_group',
+        url: 'Api/Auth/get_auth_group',
         columns: [[
             {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
             {field: 'title', title: '用户组', sortable: true, width: 100, align: 'center'},
@@ -122,7 +122,7 @@ $(function() {
 
     $(AUTH_GROUP.NA_DG_ID).Datagrid({
         title:'普通权限',
-        url: '/index.php/Api/Auth/get_group_normal_auth',
+        url: 'Api/Auth/get_group_normal_auth',
         pagination: false,
         columns: [[
             {field: 'name', title: '规则名称', width: 200},
@@ -144,7 +144,7 @@ $(function() {
         title:'菜单权限',
         idField: 'menu_id',
         treeField: 'title',
-        url: '/index.php/Api/Auth/get_group_menu_auth',
+        url: 'Api/Auth/get_group_menu_auth',
         columns: [[
             {field: 'title', title: '菜单中文名', width: 240},
             {field: 'url', title: 'URL', width: 240}

@@ -152,7 +152,7 @@
             if (!defaults.href) {
                 $(self).dialog(options);
             } else {
-                $.post('/index.php/Api/Auth/check_menu_auth', {
+                $.post('Api/Auth/check_menu_auth', {
                     data: defaults.href.split('/').slice(-2).join('/')
                 }, function(res) {
                     if (0 === res) {

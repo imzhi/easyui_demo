@@ -1,6 +1,6 @@
 <?php
 // ip字串地址转换成长整型
-function ipConvertLong($ip = FALSE) {
+function ipConvertLong($ip = false) {
     if (!$ip) {
         $ip = get_client_ip(1);
     } else {
@@ -18,9 +18,9 @@ function setLoginCookie($uid, $name) {
 
 // 是否已登陆 或者 是否未登陆
 // @return [用户ID, 用户名]
-function loginOrNot($is = TRUE) {
+function loginOrNot($is = true) {
     if ($is) {
-        $return = FALSE;
+        $return = false;
         $cookie = cookie(C('COOKIE_NAME'));
         $arr = explode('|', $cookie);
         count($arr) === 3
@@ -31,7 +31,7 @@ function loginOrNot($is = TRUE) {
 }
 
 function clearLoginCookie() {
-    cookie(C('COOKIE_NAME'), NULL);
+    cookie(C('COOKIE_NAME'), true);
 }
 
 function bootstrap_page($count, $list_rows = 15) {
@@ -130,4 +130,10 @@ function is_password($value) {
     return strlen($value) <= 20
         && strlen($value) >= 4
         && false === strpos($value, ' ');
+}
+
+function must_ajax() {
+    if (!IS_AJAX) {
+        exit('not access');
+    }
 }

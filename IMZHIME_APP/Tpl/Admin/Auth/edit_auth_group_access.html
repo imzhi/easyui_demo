@@ -7,7 +7,7 @@ var EDIT_AUTH_GROUP_ACCESS = {
 $(function() {
     $(EDIT_AUTH_GROUP_ACCESS.CT_GROUP_ID).Combotree({
         multiple: true,
-        url: '/index.php/Api/Auth/combotree_auth_group',
+        url: 'Api/Auth/combotree_auth_group',
         onLoadSuccess: function() {
             $(EDIT_AUTH_GROUP_ACCESS.CT_GROUP_ID).combotree('setValues', $(EDIT_AUTH_GROUP_ACCESS.RAW_GROUP_IDS).val().split(','));
         },
@@ -25,7 +25,7 @@ $(function() {
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
                 <td class="form_table_td">用户名</td>
-                <td class="form_table_td"><input name="user_name" id="validatebox_username" type="text" class="easyui-validatebox" data-options="required:true,validType:['isUsername','remote[\'/index.php/Api/User/user_name_exists\', \'user_name\']']"/></td>
+                <td class="form_table_td"><input name="user_name" id="validatebox_username" type="text" class="easyui-validatebox" data-options="required:true,validType:['isUsername','remote[\'Api/User/user_name_exists\', \'user_name\']']"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">所属用户组</td>

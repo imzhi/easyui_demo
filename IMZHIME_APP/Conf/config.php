@@ -9,10 +9,7 @@ return array(
     'DB_PREFIX' => 'z_',
     'DB_DSN' => 'mysql:host=127.0.0.1;dbname=imzhime;charset=utf8',
 
-    'SITE_TITLE' => 'IMZHI',
-    'COOKIE_AUTH' => 'LUFY',
-    'COOKIE_NAME' => 'y_logged',
-    'COOKIE_EXPIRE' => 1800,
+    'URL_MODEL' => 2,
 
     'DEFAULT_FILTER' => 'htmlspecialchars',
 

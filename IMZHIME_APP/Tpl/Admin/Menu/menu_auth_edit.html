@@ -6,13 +6,13 @@ var EDIT_MENU_AUTH = {
 
 $(function() {
     $(EDIT_MENU_AUTH.CB_STATUS_ID).Combobox({
-        url: '/index.php/Api/Status/combobox_menu_auth_status'
+        url: 'Api/Status/combobox_menu_auth_status'
     });
     $(EDIT_MENU_AUTH.CG_AUTH_ID).Combogrid({
         panelWidth: 450,
         multiple: true,
         textField: 'title',
-        url: '/index.php/Api/Auth/get_auth_rule',
+        url: 'Api/Auth/get_auth_rule',
         columns: [[
             {field: 'ck', checkbox: true},
             {field: 'id', title: 'ID', width: 30},

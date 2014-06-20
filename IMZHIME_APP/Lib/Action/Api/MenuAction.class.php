@@ -89,7 +89,7 @@ class MenuAction extends CommonAction {
         }
     }
 
-    public function do_edit() {
+    public function edit() {
         $menu_id = I('post.menu_id', 0, 'intval');
         $parent_id = I('post.parent_id', 0, 'intval');
         $title = I('post.title', '', 'trim');
@@ -117,7 +117,7 @@ class MenuAction extends CommonAction {
         }
     }
 
-    public function do_add() {
+    public function add() {
         // $menu_id = I('post.menu_id', 0, 'intval');
         $parent_id = I('post.parent_id', 0, 'intval');
         $title = I('post.title', '', 'trim');
@@ -140,7 +140,7 @@ class MenuAction extends CommonAction {
         $this->ajaxReturn(null, '添加菜单项成功', 1);
     }
 
-    public function del_menu() {
+    public function delete() {
         $menu_id = I('post.menu_id', 0, 'intval');
 
         if ($menu_id <= 0) {
@@ -171,7 +171,7 @@ class MenuAction extends CommonAction {
     /**
      * 批量添加菜单的权限。若有重复则不添加。
      */
-    public function do_add_menu_auth() {
+    public function add_menu_auth() {
         $menu_id = I('post.menu_id', 0, 'intval');
         $auth_ids = I('post.auth_ids', '');
         $status = I('post.status', 1, 'intval');
@@ -203,7 +203,7 @@ class MenuAction extends CommonAction {
             $this->ajaxReturn(null, 'not access', 0);
         }
 
-        if (!M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)
+        if (false === M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)
             ->delete()) {
             $this->ajaxReturn(null, '删除菜单对应的权限失败', 0);
         }
