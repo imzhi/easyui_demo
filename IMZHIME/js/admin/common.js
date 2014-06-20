@@ -127,10 +127,6 @@
                     $(self).Center_Dialog();
                 },
                 onBeforeOpen: function() {
-                    if (false !== $(self).html().indexOf('not access')) {
-                        $.messager.alert('错误', '未授权', 'error');
-                        return false;
-                    }
                     defaults.onBeforeOpenCallback();
                 },
                 onOpen: function() {
@@ -151,7 +147,21 @@
                     }
                 }]
             }, settings);
-            $(self).dialog(options);
+
+            // 如留言板dialog则无href属性
+            if (!defaults.href) {
+                $(self).dialog(options);
+            } else {
+                $.post('/index.php/Api/Auth/check_menu_auth', {
+                    data: defaults.href.split('/').slice(-2).join('/')
+                }, function(res) {
+                    if (0 === res) {
+                        $.messager.alert('错误', '未授权', 'error');
+                        return false;
+                    }
+                    $(self).dialog(options);
+                });
+            }
         },
         Tree: function(settings) {
             var self = this;
@@ -312,17 +322,14 @@ $(document).bind('keydown', function(e) {
     var $dialog = $('.panel.window').find('.panel-body.panel-body-noborder.window-body');
     var $messager = $('.panel.window.messager-window');
     if ($messager[0]) {
-        if (e.keyCode === 27) {
-            $('.messager-button > .l-btn:eq(-1)', $messager).trigger('click');
-        }
-        if (e.keyCode === 13) {
-            $('.messager-button > .l-btn:eq(-2)', $messager).trigger('click');
+        if (27 === e.keyCode) { // ESC
+            $('.messager-button > .l-btn', $messager).eq(-1).trigger('click');
         }
     } else if ($dialog[0]) {
-        if (e.keyCode === 27) {
+        if (27 === e.keyCode) { // ESC
             $dialog.Destroy_Dialog();
         }
-        if (e.keyCode === 13) {
+        if (13 === e.keyCode) { // Enter
             $('.dialog-button > .l-btn:eq(-2)', $dialog).trigger('click');
         }
     }
