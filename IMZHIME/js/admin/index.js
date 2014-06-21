@@ -1,12 +1,17 @@
 var INDEX = {
-    LEFT_NAV_TREE_ID: '#left_nav_tree',
+    LEFT_NAV_TREE_ID: '#left_nav_tree_1',
     TABS_ID: '#index_tabs',
     DLG_ID: '#index_dialog',
     CB_THEMES_ID: '#combobox_themes',
-    full_screen_view: function() {},
+    refresh_nav_tree: function(serial) {
+        $(INDEX.LEFT_NAV_TREE_ID.slice(0, -1) + serial).Reload_Tree();
+    },
+    full_screen_view: function() {
+        alert('不知道做……');
+    },
     expand_view: function() {
         if ($('#left_layout').layout().panel('options').collapsed) {
-            $('body').layout('expand', 'south');
+            // $('body').layout('expand', 'south');
             $('body').layout('expand', 'north');
             $('body').layout('expand', 'west');
         } else {

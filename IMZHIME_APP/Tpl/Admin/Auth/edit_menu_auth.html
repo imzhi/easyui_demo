@@ -6,9 +6,10 @@ var EDIT_MENU_AUTH = {
 
 $(function() {
     $(EDIT_MENU_AUTH.CT_ID).Combotree({
-        multiple: true,
         panelWidth: 190,
         panelHeight: 200,
+        required: false,
+        multiple: true,
         cascadeCheck: false,
         url: 'Api/Menu/get_tree_menus',
         onLoadSuccess: function() {

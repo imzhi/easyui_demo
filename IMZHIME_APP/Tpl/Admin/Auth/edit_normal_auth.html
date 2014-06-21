@@ -37,6 +37,7 @@ $(function() {
     $(EDIT_NORMAL_AUTH.CT_ID).Combotree({
         panelWidth: 300,
         panelHeight: 200,
+        required: false,
         multiple: true,
         url: 'Api/Auth/get_auth_rule_tree',
         onLoadSuccess: function() {

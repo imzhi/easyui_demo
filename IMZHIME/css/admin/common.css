@@ -43,3 +43,10 @@
     border-color: #CCC;
     border-width: 0 1px 1px 0;
 }
+
+/* Mozilla草案 (有中划线) */
+:full-screen div { width:100%; height:100%;}
+/* W3C草案 (无中划线) */
+:fullscreen div { width:100%; height:100%;}
+/* 当前可用的供应商前缀 */
+:-webkit-full-screen div, :-moz-full-screen div { width:100%; height:100%; }

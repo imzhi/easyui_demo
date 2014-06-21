@@ -22,7 +22,7 @@
     <js href="__PUBLIC__/js/admin/common.js"/>
     <js href="__PUBLIC__/js/admin/index.js"/>
 </head>
-<body style="margin:0;padding:0;" class="easyui-layout">
+<body style="margin:0;padding:0;" class="easyui-layout" id="body">
     <div id="north_layout" data-options="region:'north',border:false" style="overflow:hidden;">
         <div class="header">{$site_info['site_title']}</div>
         <div class="panel-header panel-header-noborder top-toolbar" style="padding:2px;">
@@ -52,7 +52,10 @@
         <div class="footer">it's me. imzhi. since 2014.</div>
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
-        <ul id="left_nav_tree" class="easyui-tree"></ul>
+        <div class="easyui-toolbar dialog-toolbar toolbar toolbar-f" style="width: auto; height: auto;">
+            <a href="javascript:;" class="easyui-linkbutton easyui-tooltip" title="刷新菜单" data-options="iconCls:'icon-reload',plain:true,position:'right'" onclick="INDEX.refresh_nav_tree(1)"></a>
+        </div>
+        <ul id="left_nav_tree_1"></ul>
     </div>
     <div id="center_layout" data-options="region:'center',split:true,border:false" style="padding:0px;">
         <div class="easyui-tabs" id="index_tabs" data-options="fit:true,tools:'#index_tabs_tools'">
