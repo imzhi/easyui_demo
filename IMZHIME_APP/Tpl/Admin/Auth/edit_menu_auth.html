@@ -7,11 +7,10 @@ var EDIT_MENU_AUTH = {
 $(function() {
     $(EDIT_MENU_AUTH.CT_ID).Combotree({
         multiple: true,
+        panelWidth: 190,
+        panelHeight: 200,
         cascadeCheck: false,
         url: 'Api/Menu/get_tree_menus',
-        loadFilter: function(data) {
-            return data;
-        },
         onLoadSuccess: function() {
             $(EDIT_MENU_AUTH.CT_ID).combotree('setValues', $(EDIT_MENU_AUTH.RAW_MENU_RULES_ID).val().split(','));
         },

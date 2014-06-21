@@ -83,7 +83,7 @@ function action_check_auth() {
 
 function html_check_auth($auth_name) {
     $uesr = session('user');
-    $user_id = $user ? $user['user_id'] : 1;
+    $user_id = $user ? $user['user_id'] : 6;
 
     $auth_name = 'Api/'.$auth_name;
 

@@ -11,7 +11,7 @@ class MenuAction extends CommonAction {
         // 用户拥有权限的菜单ID
         if ('EXTRA_ROOT' !== I('get.type')) {
             $menu_ids = M('AuthGroup')->where('id=%d', self::$user['user_id'])->getField('menu_rules');
-            $where['menu_id'] = array('in', $menu_ids);
+            // $where['menu_id'] = array('in', $menu_ids);
         }
 
         $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id',

@@ -9,17 +9,15 @@ $(function() {
         url: 'Api/Status/combobox_menu_auth_status'
     });
     $(EDIT_MENU_AUTH.CG_AUTH_ID).Combogrid({
-        panelWidth: 500,
-        panelHeight: 300,
-        multiple: true,
+        panelWidth: 550,
+        panelHeight: 250,
         textField: 'title',
         url: 'Api/Auth/get_auth_rule',
         pageSize: 50,
         columns: [[
-            {field: 'ck', checkbox: true},
             {field: 'id', title: 'ID', width: 30},
             {field: 'name', title: '规则名称', width: 200},
-            {field: 'title', title: '规则描述', width: 100},
+            {field: 'title', title: '规则描述', width: 150},
             {field: 'condition', title: '规则表达式', width: 100},
             {
                 field: 'status', title: '状态', width: 40,

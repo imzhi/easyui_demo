@@ -26,6 +26,7 @@ class AuthAction extends CommonAction {
         datagrid_return($groups, $count);
     }
 
+    // 暂不使用
     public function get_auth_rule() {
         $page = I('post.page', 1, 'intval');
         $rows = I('post.rows', 10, 'intval');
@@ -45,6 +46,21 @@ class AuthAction extends CommonAction {
                 ->select();
         }
         datagrid_return($rules, $count);
+    }
+
+    public function get_auth_rule_tree() {
+        $field = array('title' => 'text', 'id', 'name');
+        $auth_rules = M('AuthRule')->field($field)->where('status=1')->select();
+        $root = array('Api', '窗口', '列表');
+        $flip_root = array_flip($root);
+        foreach ($root as $k => $v) {
+            $data[$k] = array('text'=>$v, 'state' => 'closed', 'children' => array());
+        }
+        foreach ($auth_rules as $k => $v) {
+            $arr = explode('-', $v['text']);
+            $data[$flip_root[$arr[0]]]['children'][] = $v;
+        }
+        json_return($data);
     }
 
     public function add_auth_group() {
@@ -221,19 +237,28 @@ class AuthAction extends CommonAction {
     // 获取用户组对应的普通权限
     public function get_group_normal_auth() {
         $id = I('id', 0, 'intval');
+        $sort = I('post.sort', 'id');
+        $order = I('post.order', 'ASC');
+
         if ($id <= 0) {
             datagrid_return(array());
         }
 
         $data = array();
         $rules = M('AuthGroup')->where('id=%d', $id)->getField('rules');
-        $rules && $data = M('AuthRule')->field('*')->where("id IN (%s)", $rules)->select();
+        $rules && $data = M('AuthRule')->field('*')
+            ->where("id IN (%s)", $rules)
+            ->order("$sort $order")
+            ->select();
         datagrid_return($data);
     }
 
     // 获取用户组对应的菜单权限
     public function get_group_menu_auth() {
         $id = I('post.menu_id', 0, 'intval');
+        $sort = I('post.sort', 'menu_id');
+        $order = I('post.order', 'ASC');
+
         $data = array();
         if ($id <= 0) {
             datagrid_return($data);
@@ -241,7 +266,10 @@ class AuthAction extends CommonAction {
 
         $menu_rules = M('AuthGroup')->where('id=%d', $id)->getField('menu_rules');
         if ($menu_rules) {
-            $data = M('Menu')->field('menu_id,parent_id,title,url')->where("menu_id IN (%s)", $menu_rules)->select();
+            $data = M('Menu')->field('menu_id,parent_id,title,url')
+                ->where("menu_id IN (%s)", $menu_rules)
+                ->order("$sort $order")
+                ->select();
             if ($data) {
                 list($data, $children) = $this->get_parents_children($data);
                 foreach ($children as $c) {
@@ -279,14 +307,15 @@ class AuthAction extends CommonAction {
     public function edit_normal_auth() {
         $id = I('post.id', 0, 'intval');
         $rules = I('post.rules');
-        if ($id <= 0) {
-            $this->ajaxReturn(null, 'not access', 0);
-        }
-        if (false !== M('AuthGroup')->where('id=%d', $id)
+        // 处理数字，去掉空数据
+        $rules_arr = explode(',', $rules);
+        $rules = implode(',', array_filter($rules_arr));
+
+        if (false === M('AuthGroup')->where('id=%d', $id)
             ->setField('rules', $rules)) {
-            $this->ajaxReturn(null, '编辑普通权限成功', 1);
+            $this->ajaxReturn(null, '编辑普通权限失败', 0);
         }
-        $this->ajaxReturn(null, '编辑普通权限失败', 0);
+        $this->ajaxReturn(null, '编辑普通权限成功', 1);
     }
 
     // 编辑用户组对应菜单权限

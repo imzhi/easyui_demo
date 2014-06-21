@@ -44,8 +44,8 @@ var AUTH_GROUP = {
                         $.Close_Progress();
                         if (result.status === 1) {
                             $(self.DG_ID).Unselect_All_Datagrid(); // 取消选择
-                            $.Show_Warning(result.info);
                             $(self.DG_ID).Reload_Datagrid();
+                            $.Show_Warning(result.info);
                         } else {
                             $.Show_Error(result.info);
                         }
@@ -125,11 +125,11 @@ $(function() {
         url: 'Api/Auth/get_group_normal_auth',
         pagination: false,
         columns: [[
-            {field: 'name', title: '规则名称', width: 200},
-            {field: 'title', title: '规则描述', width: 150},
-            {field: 'condition', title: '规则表达式', width: 150},
+            {field: 'name', title: '规则名称', width: 200, sortable: true},
+            {field: 'title', title: '规则描述', width: 150, sortable: true},
+            {field: 'condition', title: '规则表达式', width: 150, sortable: true},
             {
-                field: 'status', title: '状态', width: 40, align: 'center',
+                field: 'status', title: '状态', width: 40, align: 'center', sortable: true,
                 formatter: function(value, row) {
                     if (value === '1') {
                         return '启用';
@@ -146,8 +146,8 @@ $(function() {
         treeField: 'title',
         url: 'Api/Auth/get_group_menu_auth',
         columns: [[
-            {field: 'title', title: '菜单中文名', width: 240},
-            {field: 'url', title: 'URL', width: 240}
+            {field: 'title', title: '菜单中文名', width: 240, sortable: true},
+            {field: 'url', title: 'URL', width: 240, sortable: true}
         ]]
     });
 });

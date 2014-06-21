@@ -1,36 +1,56 @@
 <script type="text/javascript">
 var EDIT_NORMAL_AUTH = {
-    CG_ID: '#combogrid_normal_auth',
+    CT_ID: '#combotree_normal_auth',
     RAW_RULES_ID: '#raw_rules'
 };
 
 $(function() {
-    $(EDIT_NORMAL_AUTH.CG_ID).Combogrid({
-        panelWidth: 450,
+    // $(EDIT_NORMAL_AUTH.CG_ID).Combogrid({
+    //     panelWidth: 550,
+    //     panelHeight: 250,
+    //     pageSize: 50,
+    //     textField: 'title',
+    //     url: 'Api/Auth/get_auth_rule',
+    //     columns: [[
+    //         {field: 'id', title: 'ID', width: 30},
+    //         {field: 'name', title: '规则名称', width: 200},
+    //         {field: 'title', title: '规则描述', width: 150},
+    //         {field: 'condition', title: '规则表达式', width: 100},
+    //         {
+    //             field: 'status', title: '状态', width: 40, align: 'center',
+    //             formatter: function(value, row) {
+    //                 if (value === '1') {
+    //                     return '启用';
+    //                 }
+    //                 return '禁用';
+    //             }
+    //         }
+    //     ]],
+    //     onLoadSuccess: function() {
+    //         $(EDIT_NORMAL_AUTH.CG_ID).combogrid('setValues', $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val().split(','));
+    //     },
+    //     onChange: function(newVal, oldVal) {
+    //         $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val(newVal.join(','));
+    //     }
+    // });
+
+    $(EDIT_NORMAL_AUTH.CT_ID).Combotree({
+        panelWidth: 300,
+        panelHeight: 200,
         multiple: true,
-        textField: 'title',
-        url: 'Api/Auth/get_auth_rule',
-        columns: [[
-            {field: 'ck', checkbox: true},
-            {field: 'id', title: 'ID', width: 30},
-            {field: 'name', title: '规则名称', width: 100},
-            {field: 'title', title: '规则描述', width: 100},
-            {field: 'condition', title: '规则表达式', width: 100},
-            {
-                field: 'status', title: '状态', width: 40, align: 'center',
-                formatter: function(value, row) {
-                    if (value === '1') {
-                        return '启用';
-                    }
-                    return '禁用';
-                }
-            }
-        ]],
+        url: 'Api/Auth/get_auth_rule_tree',
         onLoadSuccess: function() {
-            $(EDIT_NORMAL_AUTH.CG_ID).combogrid('setValues', $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val().split(','));
+            $(EDIT_NORMAL_AUTH.CT_ID).combotree('setValues', $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val().split(','));
         },
         onChange: function(newVal, oldVal) {
             $(EDIT_NORMAL_AUTH.RAW_RULES_ID).val(newVal.join(','));
+        },
+        formatter: function(node) {
+            var append = '';
+            if (!node.children) {
+                append = '(<span style="color:#f00;">' + node.name + '</span>)';
+            }
+            return node.text + append;
         }
     });
 });
@@ -47,7 +67,7 @@ $(function() {
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">普通权限</td>
-                <td class="form_table_td"><input id="combogrid_normal_auth"/></td>
+                <td class="form_table_td"><input id="combotree_normal_auth"/></td>
             </tr>
         </table>
     </form>
