@@ -85,8 +85,6 @@ function html_check_auth($auth_name) {
     $uesr = session('user');
     $user_id = $user ? $user['user_id'] : 6;
 
-    $auth_name = 'Api/'.$auth_name;
-
     import('ORG.Util.Auth');
     $auth = new Auth();
     return $auth->check($auth_name, $user_id);

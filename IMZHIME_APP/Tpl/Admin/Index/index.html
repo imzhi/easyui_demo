@@ -12,6 +12,8 @@
     <js href="__PUBLIC__/js/common/jquery.1.8.3.min.js"/>
     <!-- <js href="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"/> -->
     <js href="__PUBLIC__/js/common/jquery-easyui/jquery.easyui.min.js"/>
+    <!-- <js href="__PUBLIC__/js/common/jquery-easyui/plugins/jquery.datagrid.js"/> -->
+    <js href="__PUBLIC__/js/common/jquery-easyui/plugins/datagrid/datagrid-groupview.js"/>
     <js href="__PUBLIC__/js/common/jquery-easyui/locale/easyui-lang-zh_CN.js"/>
     <script type="text/javascript">
     window.DEFAULTS = {
@@ -20,9 +22,10 @@
     };
     </script>
     <js href="__PUBLIC__/js/admin/common.js"/>
+    <js href="__PUBLIC__/js/admin/easyui_common.js"/>
     <js href="__PUBLIC__/js/admin/index.js"/>
 </head>
-<body style="margin:0;padding:0;" class="easyui-layout" id="body">
+<body style="margin:0;padding:0;width:100%;height:100%;" class="easyui-layout">
     <div id="north_layout" data-options="region:'north',border:false" style="overflow:hidden;">
         <div class="header">{$site_info['site_title']}</div>
         <div class="panel-header panel-header-noborder top-toolbar" style="padding:2px;">
@@ -53,7 +56,7 @@
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
         <div class="easyui-toolbar dialog-toolbar toolbar toolbar-f" style="width: auto; height: auto;">
-            <a href="javascript:;" class="easyui-linkbutton easyui-tooltip" title="刷新菜单" data-options="iconCls:'icon-reload',plain:true,position:'right'" onclick="INDEX.refresh_nav_tree(1)"></a>
+            <a href="javascript:;" class="easyui-linkbutton" title="刷新菜单" data-options="iconCls:'icon-reload',plain:true" onclick="INDEX.refresh_nav_tree(1)">刷新</a>
         </div>
         <ul id="left_nav_tree_1"></ul>
     </div>
@@ -71,5 +74,11 @@
             <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_all_tabs()">关闭全部</a>
         </div>
     </div>
+<if condition="$Think.const.APP_DEBUG neq true">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9afb5a54f8d40b889f8bc364a276480c' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</if>
 </body>
 </html>

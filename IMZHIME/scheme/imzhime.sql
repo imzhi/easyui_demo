@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本地
-Source Server Version : 50168
+Source Server Version : 50519
 Source Host           : 127.0.0.1:3306
 Source Database       : imzhime
 
 Target Server Type    : MYSQL
-Target Server Version : 50168
+Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2014-06-20 18:44:35
+Date: 2014-06-23 00:21:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,10 +31,10 @@ CREATE TABLE `z_auth_group` (
 -- ----------------------------
 -- Records of z_auth_group
 -- ----------------------------
-INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '3,2,9,10', '1,2,3');
+INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '2,3,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,55,56,57,58,59,60,11,12,13,14,15,16,18,19,20,21,22,52,53,54,7,8,9,10,17,51', '1,2,3,4,5,6,7,8,9,10,13,14,20,21,22,24');
 INSERT INTO `z_auth_group` VALUES ('3', '版主', '1', '2,3,7', '1,2,3,4,5,6');
 INSERT INTO `z_auth_group` VALUES ('5', '会员', '1', '', '');
-INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '27,26', '20,21,22');
+INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '', '20,21,22');
 
 -- ----------------------------
 -- Table structure for `z_auth_group_access`
@@ -71,7 +71,7 @@ CREATE TABLE `z_auth_rule` (
   `condition` char(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_auth_rule
@@ -120,8 +120,16 @@ INSERT INTO `z_auth_rule` VALUES ('45', 'Api/Site/get_info', 'Api-获取站点�
 INSERT INTO `z_auth_rule` VALUES ('46', 'Api/Site/close', 'Api-关闭站点', '1', '');
 INSERT INTO `z_auth_rule` VALUES ('47', 'Api/User/get_users', 'Api-获取用户列表', '1', '');
 INSERT INTO `z_auth_rule` VALUES ('48', 'Api/User/save', 'Api-保存用户信息', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('49', 'Api/User/edit_info', 'Api-修改个人信息', '1', '');
-INSERT INTO `z_auth_rule` VALUES ('50', 'Api/User/change_password', 'Api-修改个人密码', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('51', 'Cheatsheet/index', '列表-各种快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('52', 'Cheatsheet/edit', '窗口-编辑快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('53', 'Cheatsheet/add', '窗口-添加快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('54', 'Cheatsheet/batch_add', '窗口-批量添加快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('55', 'Api/Cheatsheet/get_cheatsheets', 'Api-获取各种快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('56', 'Api/Cheatsheet/add', 'Api-添加快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('57', 'Api/Cheatsheet/batch_add', 'Api-批量添加快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('58', 'Api/Cheatsheet/edit', 'Api-编辑快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('59', 'Api/Cheatsheet/delete', 'Api-删除快捷键', '1', '');
+INSERT INTO `z_auth_rule` VALUES ('60', 'Api/Menu/get_all_tree_menus', 'Api-获取全部菜单', '1', '');
 
 -- ----------------------------
 -- Table structure for `z_cheatsheet`
@@ -129,7 +137,8 @@ INSERT INTO `z_auth_rule` VALUES ('50', 'Api/User/change_password', 'Api-修改�
 DROP TABLE IF EXISTS `z_cheatsheet`;
 CREATE TABLE `z_cheatsheet` (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-  `cate_id` smallint(6) unsigned NOT NULL COMMENT '分类ID',
+  `cate_id` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '分类ID',
+  `cate_name` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '分类名称',
   `command` varchar(100) NOT NULL COMMENT '命令或快捷键',
   `describe` varchar(400) NOT NULL COMMENT '解释描述',
   `add_user_id` smallint(6) unsigned NOT NULL COMMENT '添加人ID',
@@ -137,11 +146,48 @@ CREATE TABLE `z_cheatsheet` (
   `edit_user_id` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '编辑人ID',
   `edit_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '编辑时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='快捷键或命令表';
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='快捷键或命令表';
 
 -- ----------------------------
 -- Records of z_cheatsheet
 -- ----------------------------
+INSERT INTO `z_cheatsheet` VALUES ('1', '0', 'sublime', 'ctrl+x', '删除整行', '1', '1403424767', '1', '1403442753');
+INSERT INTO `z_cheatsheet` VALUES ('2', '0', 'sublime', 'ctrl+k+u', '转换大写', '1', '1403424795', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('37', '0', 'vim', 'j', '光标下移一行', '1', '1403443184', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('4', '0', 'sublime', 'Ctrl+L\r', '选择整行(按住-继续选择下行)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('5', '0', 'sublime', 'Ctrl+KK\r', '从光标处删除至行尾\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('6', '0', 'sublime', 'Ctrl+Shift+K\r', '删除整行\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('7', '0', 'sublime', 'Ctrl+Shift+D\r', '复制光标所在整行，插入在该行之前\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('8', '0', 'sublime', 'Ctrl+J\r', '合并行(已选择需要合并的多行时)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('9', '0', 'sublime', 'Ctrl+KU\r', '改为大写\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('10', '0', 'sublime', 'Ctrl+KL\r', '改为小写\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('11', '0', 'sublime', 'Ctrl+D\r', '选词(按住-继续选择下个相同的字符串)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('12', '0', 'sublime', 'Ctrl+M\r', '光标移动至括号内开始或结束的位置\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('13', '0', 'sublime', 'Ctrl+Shift+M\r', '选择括号内的内容(按住-继续选择父括号)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('14', '0', 'sublime', 'Ctrl+/\r', '注释整行(如已选择内容，同“Ctrl+Shift+/”效果)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('15', '0', 'sublime', 'Ctrl+Shift+/\r', '注释已选择内容\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('16', '0', 'sublime', 'Ctrl+Space\r', '自动完成(win与系统快捷键冲突，需修改)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('17', '0', 'sublime', 'Ctrl+Z\r', '撤销\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('18', '0', 'sublime', 'Ctrl+Y\r', '恢复撤销\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('19', '0', 'sublime', 'Ctrl+Shift+V\r', '粘贴并自动缩进(其它兄弟写的，实测win系统自动缩进无效)\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('20', '0', 'sublime', 'Ctrl+M\r', '光标跳至对应的括号\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('21', '0', 'sublime', 'Alt+.\r', '闭合当前标签\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('22', '0', 'sublime', 'Ctrl+Shift+A\r', '选择光标位置父标签对儿\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('23', '0', 'sublime', 'Ctrl+Shift+[\r', '折叠代码\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('24', '0', 'sublime', 'Ctrl+Shift+]\r', '展开代码\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('25', '0', 'sublime', 'Ctrl+KT\r', '折叠属性\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('26', '0', 'sublime', 'Ctrl+K0\r', '展开所有\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('27', '0', 'sublime', 'Ctrl+U\r', '软撤销\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('28', '0', 'sublime', 'Ctrl+T\r', '词互换\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('29', '0', 'sublime', 'Ctrl+Enter\r', '插入行后\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('30', '0', 'sublime', 'Ctrl+Shift Enter\r', '插入行前\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('31', '0', 'sublime', 'Ctrl+K Backspace\r', '从光标处删除至行首\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('32', '0', 'sublime', 'Ctrl+Shift+UP\r', '与上行互换\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('33', '0', 'sublime', 'Ctrl+Shift+DOWN\r', '与下行互换\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('34', '0', 'sublime', 'Shift+Tab\r', '去除缩进\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('35', '0', 'sublime', 'Tab\r', '缩进\r', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('36', '0', 'sublime', 'F9', '行排序(按a-z)', '1', '1403439935', '0', '0');
+INSERT INTO `z_cheatsheet` VALUES ('38', '0', 'git', 'git push origin master', 'push本地代码', '1', '1403443288', '0', '0');
 
 -- ----------------------------
 -- Table structure for `z_log_info`
@@ -177,26 +223,27 @@ CREATE TABLE `z_menu` (
   `order` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序序号',
   `status` enum('1','0') NOT NULL DEFAULT '1' COMMENT '状态 1-启用 0-禁用',
   PRIMARY KEY (`menu_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of z_menu
 -- ----------------------------
 INSERT INTO `z_menu` VALUES ('1', '0', '0', '', '', '基本设置', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('2', '1', '0', '', 'site_info', '站点信息', 'js/admin/Site/info.js', '0', 'dialog', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('3', '1', '0', '', 'menu_list', '菜单列表', '/index.php/Menu/index', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('3', '1', '0', '', 'menu_list', '菜单列表', 'Menu/index', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('4', '1', '0', '', 'close_site', '关闭站点', 'js/admin/Site/close.js', '0', 'dialog', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('5', '0', '0', '', '', '权限管理', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('6', '5', '0', '', '', '权限规则', '/index.php/Admin/Auth/auth_rule', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('7', '5', '0', '', '', '用户组', '/index.php/Admin/Auth/auth_group', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('8', '5', '0', '', '', '用户组明细', '/index.php/Admin/Auth/auth_group_access', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('6', '5', '0', '', '', '权限规则', 'Auth/auth_rule', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('7', '5', '0', '', '', '用户组', 'Auth/auth_group', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('8', '5', '0', '', '', '用户组明细', 'Auth/auth_group_access', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('9', '0', '0', '', '', '用户管理', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('10', '9', '0', '', '', '用户列表', '/index.php/Admin/User', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('10', '9', '0', '', '', '用户列表', 'User/index', '0', 'tab', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('13', '0', '0', '', '', '缓存管理', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('14', '13', '0', '', '', '缓存列表', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('20', '0', '0', '', 'tool_site', '工具站点', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('20', '0', '0', '', 'common_site', '常用站点', '', '0', 'null', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('21', '20', '0', '', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', '0', 'iframe', 'open', '0', '1');
 INSERT INTO `z_menu` VALUES ('22', '20', '0', '', 'baidu', '百度', 'http://www.baidu.com/', '0', 'iframe', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('24', '20', '0', '', 'cheatsheet', '各种快捷键', 'Cheatsheet/index', '0', 'tab', 'open', '0', '1');
 
 -- ----------------------------
 -- Table structure for `z_menu_auth`
@@ -262,7 +309,7 @@ CREATE TABLE `z_user` (
   `reg_time` int(11) unsigned NOT NULL,
   `reg_ip` bigint(20) unsigned NOT NULL COMMENT '注册IP',
   `email` varchar(40) NOT NULL,
-  `birthday` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '生日',
+  `birthday` date DEFAULT NULL,
   `log_num` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
   `last_login` int(11) unsigned NOT NULL COMMENT '最后登录时间',
   `last_ip` bigint(20) unsigned NOT NULL COMMENT '最后登陆IP',
@@ -275,7 +322,7 @@ CREATE TABLE `z_user` (
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '73', '1403062891', '2130706433', 'metro-green', 'user', 'lock');
-INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', '0', '2', '1400940410', '2130706433', 'black', 'user', 'check');
-INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', '0', '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
-INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', '', '0', '2', '1403257058', '2130706433', 'metro-blue', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', 'tt@tt.com', '2014-06-25', '80', '1403405245', '2130706433', 'metro-green', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', null, '2', '1400940410', '2130706433', 'black', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', null, '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', 'tt@tt.com', '2014-05-27', '3', '1403403331', '2130706433', 'metro-orange', 'user', 'pass');

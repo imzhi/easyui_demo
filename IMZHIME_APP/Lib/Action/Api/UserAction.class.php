@@ -39,22 +39,29 @@ class UserAction extends CommonAction {
         $user_id = I('post.user_id', 0, 'intval');
         $user_type = I('post.user_type');
         $status = I('post.status');
-        M('User')->where('user_id=%d', $user_id)->save(array(
+
+        if (false === M('User')->where('user_id=%d', $user_id)->save(array(
             'user_type' => $user_type,
             'status' => $status,
-        ));
+        ))) {
+            $this->ajaxReturn(null, '编辑用户失败', 0);
+        }
+        $this->ajaxReturn(null, '编辑用户成功', 1);
     }
 
     public function edit_info() {
         $posts = I('post.');
         if (!isset(self::$user) ||
-            false === M('User')->where('user_id=%d', self::$user['user_id'])->save(array(
+            false === M('User')->where('user_id=%d', self::$user['user_id'])
+            ->save(array(
             'email' => $posts['email'],
-            'birthday' => strtotime($posts['birthday']),
+            'birthday' => $posts['birthday'],
         ))) {
             $this->ajaxReturn(null, '修改个人信息失败', 0);
         }
-        $this->ajaxReturn(null, '修改个人信息成功', 1);
+        R('Api/Public/set_session', array(self::$user['user_id']));
+
+        $this->ajaxReturn(__ROOT__, '修改个人信息成功', 1);
     }
 
     public function change_password() {

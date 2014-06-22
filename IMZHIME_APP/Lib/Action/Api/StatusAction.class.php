@@ -9,6 +9,7 @@ class StatusAction extends CommonAction {
 
     public function combobox_user_status() {
         combobox_return(array(
+            '' => '请选择',
             'check' => 'check',
             'pass' => 'pass',
             'fail' => 'fail',
@@ -21,6 +22,7 @@ class StatusAction extends CommonAction {
 
     public function combobox_user_type() {
         combobox_return(array(
+            '' => '请选择',
             'admin' => 'admin',
             'user' => 'user',
             'moderator' => 'moderator',

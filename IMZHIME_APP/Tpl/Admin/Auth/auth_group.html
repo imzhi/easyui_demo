@@ -3,17 +3,21 @@
     <div data-options="region:'center',border:false" style="border-right-width:1px">
         <table id="auth_group_datagrid"></table>
         <div id="auth_group_datagrid_toolbar" style="padding:2px;height:26px;">
-            <if condition="html_check_auth('Auth','add_auth_group')">
-            </if>
+            <if condition="html_check_auth('Api/Auth/add_auth_group')">
             <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP.add()">添加</a>
-            <if condition="html_check_auth('Auth','edit_auth_group')">
             </if>
+            <if condition="html_check_auth('Api/Auth/edit_auth_group')">
             <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP.edit()">编辑</a>
-            <if condition="html_check_auth('Auth','del_auth_group')">
             </if>
+            <if condition="html_check_auth('Api/Auth/del_auth_group')">
             <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP.delete()">删除</a>
+            </if>
+            <if condition="html_check_auth('Api/Auth/edit_normal_auth')">
             <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP.edit_normal_auth()">编辑普通权限</a>
+            </if>
+            <if condition="html_check_auth('Api/Auth/edit_menu_auth')">
             <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP.edit_menu_auth()">编辑菜单权限</a>
+            </if>
         </div>
     </div>
     <div data-options="region:'east',border:false" style="width:700px;border-right-width:1px;">

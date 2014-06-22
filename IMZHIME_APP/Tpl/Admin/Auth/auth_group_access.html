@@ -1,7 +1,13 @@
 <js href="__PUBLIC__/js/admin/Auth/auth_group_access.js"/>
 <table id="auth_group_access_datagrid"></table>
 <div id="auth_group_access_datagrid_toolbar" style="padding:2px;">
+    <if condition="html_check_auth('Api/Auth/add_auth_group_access')">
     <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP_ACCESS.add()">添加</a>
+    </if>
+    <if condition="html_check_auth('Api/Auth/edit_auth_group_access')">
     <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP_ACCESS.edit()">编辑</a>
+    </if>
+    <if condition="html_check_auth('Api/Auth/del_auth_group_access')">
     <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_GROUP_ACCESS.delete()">删除</a>
+    </if>
 </div>

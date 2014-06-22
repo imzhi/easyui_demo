@@ -11,7 +11,7 @@ $(function() {
         required: false,
         multiple: true,
         cascadeCheck: false,
-        url: 'Api/Menu/get_tree_menus',
+        url: 'Api/Menu/get_all_tree_menus',
         onLoadSuccess: function() {
             $(EDIT_MENU_AUTH.CT_ID).combotree('setValues', $(EDIT_MENU_AUTH.RAW_MENU_RULES_ID).val().split(','));
         },

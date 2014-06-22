@@ -2,7 +2,7 @@
 class CommonAction extends Action {
     protected static $user;
     public function _initialize() {
-        $user = session('user');
+        self::$user = session('user');
 
         // 检查站点是否关闭
         $site_info = M('SiteInfo')->field('id', true)->where('id=1')->find();
@@ -28,29 +28,25 @@ class CommonAction extends Action {
             M('SiteInfo')->where('id=1')->save($save);
         }
         $site_info = array_merge($site_info, $save);
-        if (!$user['unlock'] && $site_info['site_status'] === '0') {
+        if (!self::$user['unlock'] && $site_info['site_status'] === '0') {
             $this->redirect('/Lock');
         }
         $this->assign('site_info', $site_info);
 
+
+
         // 检查权限
         if (!action_check_auth()) {
-            // exit('not access');
             if ($this->isAjax()) {
-                // $this->ajaxReturn(null, 'not access', 0);
+                $this->ajaxReturn(null, 'not access', 0);
             } else {
-                // exit('not access');
+                exit('not access');
             }
         }
 
-        $login_user = array();
-        if ($user) {
-            $login_user = M('User')->where('user_id=%d', $user['user_id'])
-                ->field('theme')->find();
-        }
-        self::$user = array_merge($user, $login_user);
+
         $this->assign('curr_theme',
-            isset($login_user['theme']) ? $login_user['theme'] :
+            isset(self::$user) ? self::$user['theme'] :
             (cookie('theme') ? cookie('theme') : $site_info['site_theme']));
     }
 }

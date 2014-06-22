@@ -7,7 +7,7 @@ var INDEX = {
         $(INDEX.LEFT_NAV_TREE_ID.slice(0, -1) + serial).Reload_Tree();
     },
     full_screen_view: function() {
-        alert('不知道做……');
+        $('body').requestFullScreen();
     },
     expand_view: function() {
         if ($('#left_layout').layout().panel('options').collapsed) {
@@ -130,7 +130,10 @@ var INDEX = {
             title: '个人信息',
             href: 'User/info',
             buttonUrl: 'Api/User/edit_info',
-            selected: window.DEFAULTS.USER
+            selected: window.DEFAULTS.USER,
+            submitSuccess: function(result) {
+                window.location = result.data;
+            }
         });
     },
     change_password: function() {

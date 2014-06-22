@@ -1,6 +1,6 @@
 <?php
 return array(
-    'SHOW_PAGE_TRACE' => TRUE,
+    // 'SHOW_PAGE_TRACE' => TRUE,
 
     // 'APP_STATUS' => 'company',
     'DB_TYPE' => 'pdo',

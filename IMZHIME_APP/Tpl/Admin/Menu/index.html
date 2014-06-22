@@ -4,9 +4,15 @@
         <table id="menu_treegrid"></table>
         <div id="menu_treegrid_toolbar" style="padding:2px;height:26px;">
             <div>
+                <if condition="html_check_auth('Api/Menu/add')">
                 <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add()">添加</a>
+                </if>
+                <if condition="html_check_auth('Api/Menu/edit')">
                 <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit()">编辑</a>
+                </if>
+                <if condition="html_check_auth('Api/Menu/delete')">
                 <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete()">删除</a>
+                </if>
             </div>
         </div>
     </div>
@@ -14,8 +20,12 @@
         <table id="menu_auth_datagrid"></table>
         <div id="menu_auth_datagrid_toolbar" style="padding:2px;height:26px;">
             <div>
+                <if condition="html_check_auth('Api/Menu/add_menu_auth')">
                 <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.add()">添加</a>
+                </if>
+                <if condition="html_check_auth('Api/Menu/del_menu_auth')">
                 <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.delete()">删除</a>
+                </if>
             </div>
         </div>
     </div>

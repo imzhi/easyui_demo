@@ -4,14 +4,13 @@ class MenuAction extends CommonAction {
         parent::_initialize();
     }
 
-    public function get_tree_menus() {
+    public function get_all_tree_menus($user_id = false) {
         $where['status'] = '1';
-        $user = session('user');
-        $user_id = isset($user['user_id']) ? $user['user_id'] : 6;
-        // ÓÃ»§ÓµÓĞÈ¨ÏŞµÄ²Ëµ¥ID
-        if ('EXTRA_ROOT' !== I('get.type')) {
-            $menu_ids = M('AuthGroup')->where('id=%d', self::$user['user_id'])->getField('menu_rules');
-            // $where['menu_id'] = array('in', $menu_ids);
+
+        // ç”¨æˆ·æ‹¥æœ‰æƒé™çš„èœå•ID
+        if ($user_id && 'EXTRA_ROOT' !== I('get.type')) {
+            $menu_ids = M('AuthGroup')->where('id=%d', $user_id)->getField('menu_rules');
+            $where['menu_id'] = array('in', $menu_ids);
         }
 
         $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id',
@@ -24,11 +23,17 @@ class MenuAction extends CommonAction {
         }
         $this->unset_unused_item($data);
 
-        // ¹©±à¼­²Ëµ¥ÁĞ±íµÄcombotreeÊ¹ÓÃ
+        // ä¾›ç¼–è¾‘èœå•åˆ—è¡¨çš„combotreeä½¿ç”¨
         'EXTRA_ROOT' === I('get.type') && array_unshift($data, array(
-            'id' => 0, 'text' => '¸ù½áµã', 'iconCls' => 'icon-help'
+            'id' => 0, 'text' => 'æ ¹ç»“ç‚¹', 'iconCls' => 'icon-help'
         ));
         json_return($data);
+    }
+
+    public function get_tree_menus() {
+        $where['status'] = '1';
+        $user_id = isset(self::$user) ? self::$user['user_id'] : 6;
+        $this->get_all_tree_menus($user_id);
     }
 
     private function format_tree_menus(&$data, $new) {
@@ -43,7 +48,7 @@ class MenuAction extends CommonAction {
     }
 
     /**
-     * È¥µôtree jsonÊı¾İÖĞ²»ĞèÒªµÄcate_id,parent_id...ÊôĞÔ£¬¼ÓÈëattributesÊôĞÔ
+     * å»æ‰tree jsonæ•°æ®ä¸­ä¸éœ€è¦çš„cate_id,parent_id...å±æ€§ï¼ŒåŠ å…¥attributeså±æ€§
      */
     private function unset_unused_item(&$data) {
         foreach ($data as $k => &$v) {
@@ -68,7 +73,7 @@ class MenuAction extends CommonAction {
         json_return($data);
     }
 
-    // ·µ»Øarray(²Ëµ¥µÄ¸ù½áµã,×Ó½áµã)
+    // è¿”å›array(èœå•çš„æ ¹ç»“ç‚¹,å­ç»“ç‚¹)
     private function get_parents_children($data) {
         $parents = array();
         foreach ($data as $k => $v) {
@@ -100,7 +105,7 @@ class MenuAction extends CommonAction {
 
         $m = M('Menu');
         if ($menu_id <= 0 || !$m->where('menu_id=%d', $menu_id)->count()) {
-            $this->ajaxReturn(null, 'ÎŞ´Ë²Ëµ¥Ïî', 0);
+            $this->ajaxReturn(null, 'æ— æ­¤èœå•é¡¹', 0);
         }
 
         if (false !== $m->where('menu_id=%d', $menu_id)->save(array(
@@ -113,9 +118,9 @@ class MenuAction extends CommonAction {
             'state' => I('post.state'),
             'status' => I('post.status'),
         ))) {
-            $this->ajaxReturn(null, '±à¼­²Ëµ¥Ïî³É¹¦', 1);
+            $this->ajaxReturn(null, 'ç¼–è¾‘èœå•é¡¹æˆåŠŸ', 1);
         } else {
-            $this->ajaxReturn(null, '±à¼­²Ëµ¥ÏîÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'ç¼–è¾‘èœå•é¡¹å¤±è´¥', 0);
         }
     }
 
@@ -137,21 +142,21 @@ class MenuAction extends CommonAction {
             'status' => I('post.status'),
         ))) {
             echo M()->_sql();
-            $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥ÏîÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'æ·»åŠ èœå•é¡¹å¤±è´¥', 0);
         }
-        $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥Ïî³É¹¦', 1);
+        $this->ajaxReturn(null, 'æ·»åŠ èœå•é¡¹æˆåŠŸ', 1);
     }
 
     public function delete() {
         $menu_id = I('post.menu_id', 0, 'intval');
 
         if ($menu_id <= 0) {
-            $this->ajaxReturn(null, 'ÎŞ´Ë²Ëµ¥Ïî', 0);
+            $this->ajaxReturn(null, 'æ— æ­¤èœå•é¡¹', 0);
         }
         if (false === M('Menu')->where('menu_id=%d', $menu_id)->delete()) {
-            $this->ajaxReturn(null, 'É¾³ı²Ëµ¥ÏîÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'åˆ é™¤èœå•é¡¹å¤±è´¥', 0);
         }
-        $this->ajaxReturn(null, 'É¾³ı²Ëµ¥Ïî³É¹¦', 1);
+        $this->ajaxReturn(null, 'åˆ é™¤èœå•é¡¹æˆåŠŸ', 1);
     }
 
     public function get_menu_auth() {
@@ -170,7 +175,7 @@ class MenuAction extends CommonAction {
     }
 
     /**
-     * ÅúÁ¿Ìí¼Ó²Ëµ¥µÄÈ¨ÏŞ¡£ÈôÓĞÖØ¸´Ôò²»Ìí¼Ó¡£
+     * æ‰¹é‡æ·»åŠ èœå•çš„æƒé™ã€‚è‹¥æœ‰é‡å¤åˆ™ä¸æ·»åŠ ã€‚
      */
     public function add_menu_auth() {
         $menu_id = I('post.menu_id', 0, 'intval');
@@ -189,11 +194,11 @@ class MenuAction extends CommonAction {
                     'auth_id' => $v,
                     'status' => $status,
                 ))) {
-                    $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞÊ§°Ü', 0);
+                    $this->ajaxReturn(null, 'æ·»åŠ èœå•å¯¹åº”çš„æƒé™å¤±è´¥', 0);
                 }
             }
         }
-        $this->ajaxReturn(null, 'Ìí¼Ó²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞ³É¹¦', 1);
+        $this->ajaxReturn(null, 'æ·»åŠ èœå•å¯¹åº”çš„æƒé™æˆåŠŸ', 1);
     }
 
     public function del_menu_auth() {
@@ -206,8 +211,8 @@ class MenuAction extends CommonAction {
 
         if (false === M('MenuAuth')->where('menu_id=%d AND auth_id=%d', $menu_id, $auth_id)
             ->delete()) {
-            $this->ajaxReturn(null, 'É¾³ı²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞÊ§°Ü', 0);
+            $this->ajaxReturn(null, 'åˆ é™¤èœå•å¯¹åº”çš„æƒé™å¤±è´¥', 0);
         }
-        $this->ajaxReturn(null, 'É¾³ı²Ëµ¥¶ÔÓ¦µÄÈ¨ÏŞ³É¹¦', 1);
+        $this->ajaxReturn(null, 'åˆ é™¤èœå•å¯¹åº”çš„æƒé™æˆåŠŸ', 1);
     }
 }

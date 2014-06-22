@@ -18,7 +18,7 @@ class PublicAction extends Action {
             $this->ajaxReturn(null, '用户名或密码不正确', 0);
         }
 
-        $this->login_mark($user_info['user_id'], $user_name,$user_info['email'],$user_info['birthday']);
+        $this->login_mark($user_info['user_id']);
         $this->ajaxReturn(__ROOT__, '登陆成功', 1);
     }
 
@@ -65,7 +65,7 @@ class PublicAction extends Action {
             $this->ajaxReturn(null, '注册会员失败', 0);
         }
 
-        $this->login_mark($user_id, $user_name, $email, $birthday);
+        $this->login_mark($user_id);
         $this->ajaxReturn(__ROOT__, '登陆成功', 1);
     }
 
@@ -78,25 +78,33 @@ class PublicAction extends Action {
         $theme = I('post.theme');
         $user = session('user');
         if ($user) {
-            M('User')->where('user_id=%d', $user['user_id'])->setField('theme', $theme);
+            if (false === M('User')->where('user_id=%d', $user['user_id'])
+                ->setField('theme', $theme)) {
+                $this->ajaxReturn(null, "主题修改为[{$theme}]失败", 0);
+            }
+            $user = session('user');
+            $user['theme'] = $theme;
+            session('user', $user);
         } else {
-            cookie('theme', $theme, 30);
+            cookie('theme', $theme, 30*60); // 30分钟
         }
         $this->ajaxReturn(null, "主题已修改为[{$theme}]", 1);
     }
 
-    private function login_mark($user_id, $user_name, $email, $birthday) {
-        session('user', array(
-            'user_id' => $user_id,
-            'user_name' => $user_name,
-            'email' => $email,
-            'birthday' => $birthday,
-        ));
+    private function login_mark($user_id) {
         M('User')->where('user_id=%d', $user_id)->save(array(
             'log_num' => array('exp', 'log_num+1'),
             'last_login' => time(),
             'last_ip' => sprintf('%u', get_client_ip(1)),
         ));
+        $this->set_session($user_id);
+    }
+
+    public function set_session($user_id) {
+        $user = M('User')->field('user_id,user_name,email,birthday,theme')
+            ->where('user_id=%d', $user_id)
+            ->find();
+        session('user', $user);
     }
 
     private function logout_mark() {
