@@ -8,6 +8,7 @@
     <css href="__PUBLIC__/js/common/jquery-easyui/themes/{$curr_theme}/easyui.css"/>
     <css href="__PUBLIC__/js/common/jquery-easyui/themes/icon.css"/>
     <css href="__PUBLIC__/js/common/jquery-easyui/themes/icon-all-16x16.css"/>
+    <css href="__PUBLIC__/js/common/jquery-easyui/themes/portal.css"/>
     <css href="__PUBLIC__/css/admin/common.css"/>
     <js href="__PUBLIC__/js/common/jquery.1.8.3.min.js"/>
     <!-- <js href="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"/> -->
@@ -15,6 +16,7 @@
     <!-- <js href="__PUBLIC__/js/common/jquery-easyui/plugins/jquery.datagrid.js"/> -->
     <js href="__PUBLIC__/js/common/jquery-easyui/plugins/datagrid/datagrid-groupview.js"/>
     <js href="__PUBLIC__/js/common/jquery-easyui/locale/easyui-lang-zh_CN.js"/>
+    <js href="__PUBLIC__/js/common/jquery-easyui/plugins/jquery.portal.js"/>
     <script type="text/javascript">
     window.DEFAULTS = {
         THEME: '{$curr_theme}',
@@ -55,15 +57,53 @@
         <div class="footer">it's me. imzhi. since 2014.</div>
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
-        <div class="easyui-toolbar dialog-toolbar toolbar toolbar-f" style="width: auto; height: auto;">
-            <a href="javascript:;" class="easyui-linkbutton" title="刷新菜单" data-options="iconCls:'icon-reload',plain:true" onclick="INDEX.refresh_nav_tree(1)">刷新</a>
+        <div class="easyui-accordion" data-options="selected:0,fit:true,border:false">
+            <div title="菜单1" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(1); }}]" style="overflow:auto;">
+                <ul id="left_nav_tree_1"></ul>
+            </div>
+            <div title="菜单2" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+            </div>
+            <div title="菜单3" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(3); }}]" style="overflow:auto;">
+            </div>
         </div>
-        <ul id="left_nav_tree_1"></ul>
     </div>
-    <div id="center_layout" data-options="region:'center',split:true,border:false" style="padding:0px;">
+    <div id="center_layout" data-options="region:'center',split:true,border:false" style="padding:0px;overflow:hidden;">
         <div class="easyui-tabs" id="index_tabs" data-options="fit:true,tools:'#index_tabs_tools'">
-            <div data-options="title:'欢迎光临',fit:true,closed:false,tools:[{iconCls: 'icon-mini-refresh',handler:function() { INDEX.refresh_tab(0); }}]">
-                <h1>欢迎光临</h1>
+            <div data-options="title:'欢迎光临',fit:true,closed:false,tools:[{iconCls: 'icon-mini-refresh',handler:function() { INDEX.refresh_tab(0); }}]" style="overflow:hidden;">
+                <div id="center_portal" style="position:relative;">
+                    <div style="width:33%;">
+                        <div class="portal_inner_div" data-options="title:'信息',closable:true,collapsible:true" style="height:200px;">
+                            PHP VERSION:{$Think.const.PHP_VERSION}<br/>
+                            PHP OS:{$Think.const.PHP_OS}<br/>
+                        </div>
+                        <div class="portal_inner_div" data-options="title:'关于',closable:true,collapsible:true" style="height:200px;">
+                        </div>
+                    </div>
+                    <div style="width:34%;">
+                        <div class="portal_inner_div" data-options="title:'关于本项目',closable:true,collapsible:true" style="background:#f3eeaf;height:150px;">
+                            EasyUI权限管理后台
+                        </div>
+                        <div class="portal_inner_div" data-options="title:'感谢',closable:true,collapsible:true" style="height:150px;">
+                            <ul style="margin:0;padding-left:20px;">
+                                <li>ZHCNLEI</li>
+                                <li>流云</li>
+                                <li>EasyUI<a href="http://www.jeasyui.com/" target="_blank">官网</a></li>
+                                <li><a href="http://blog.sina.com.cn/s/blog_58cfda2a0101iqhy.html" target="_blank">EasyUI 1.3.6离线简体中文API文档(CHM版)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="width:33%;">
+                        <div class="portal_inner_div" data-options="title:'分享',closable:true,collapsible:true"  style="height:200px;">
+                            虚拟主机分享<br/><br/>
+                            由于我在家的网络连不上这个主机，闲着也闲着，把它放出来，觉得有用的人可以把我设的原始密码改掉，是香港主机。<br/><br/>
+                            用户名：yxz_blue，<br/>邮箱：yxz_blue@126.com，<br/>密码：12346。<br/><br/>
+                            今年9月到期。<br/>
+                            主机网址：<a href="http://www.fyvps.com/" target="_blank">http://www.fyvps.com/</a>
+                        </div>
+                        <div class="portal_inner_div" data-options="title:'LICENSE',closable:true,collapsible:true,content:'<iframe scrolling=\'auto\' frameborder=\'0\' marginwidth=\'0\' marginheight=\'0\' src=\'/LICENSE.txt\' style=\'width:100%;height:99%;\'><pre style=\'word-wrap: break-word; white-space: pre-wrap;\'></pre></iframe>'" style="height:230px;padding:0;">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="index_tabs_tools">

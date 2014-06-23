@@ -3,6 +3,7 @@ var INDEX = {
     TABS_ID: '#index_tabs',
     DLG_ID: '#index_dialog',
     CB_THEMES_ID: '#combobox_themes',
+    PORTAL_ID: '#center_portal',
     refresh_nav_tree: function(serial) {
         $(INDEX.LEFT_NAV_TREE_ID.slice(0, -1) + serial).Reload_Tree();
     },
@@ -72,7 +73,7 @@ var INDEX = {
         });
     },
     add_iframe_tab: function(title, url) {
-        var content = '<iframe scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
+        var content = '<iframe scrolling="auto" frameborder="0" marginwidth="0" marginheight="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
         $(INDEX.TABS_ID).tabs('add', {
             title: title,
             content: content,
@@ -232,5 +233,9 @@ $(function() {
                 }
             }, 'json');
         }
+    });
+    $(INDEX.PORTAL_ID).portal({
+        border:false,
+        fit:true
     });
 });
