@@ -52,10 +52,15 @@
         <div class="footer">it's me. imzhi. since 2014.</div>
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
-        <div class="easyui-toolbar dialog-toolbar toolbar toolbar-f" style="width: auto; height: auto;">
-            <a href="javascript:;" class="easyui-linkbutton easyui-tooltip" title="刷新菜单" data-options="iconCls:'icon-reload',plain:true,position:'right'" onclick="INDEX.refresh_nav_tree(1)"></a>
+        <div class="easyui-accordion" data-options="selected:0,fit:true,border:false">
+            <div title="菜单1" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(1); }}]" style="overflow:auto;">
+                <ul id="left_nav_tree_1"></ul>
+            </div>
+            <div title="菜单2" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+            </div>
+            <div title="菜单3" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(3); }}]" style="overflow:auto;">
+            </div>
         </div>
-        <ul id="left_nav_tree_1"></ul>
     </div>
     <div id="center_layout" data-options="region:'center',split:true,border:false" style="padding:0px;">
         <div class="easyui-tabs" id="index_tabs" data-options="fit:true,tools:'#index_tabs_tools'">

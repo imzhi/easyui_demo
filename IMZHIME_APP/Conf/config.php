@@ -1,8 +1,8 @@
 <?php
 return array(
-    'SHOW_PAGE_TRACE' => TRUE,
+    // 'SHOW_PAGE_TRACE' => TRUE,
 
-    // 'APP_STATUS' => 'company',
+    'APP_STATUS' => 'company',
     'DB_TYPE' => 'pdo',
     'DB_USER' => 'root',
     'DB_PWD' => '1234',
