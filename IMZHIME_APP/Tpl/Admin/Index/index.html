@@ -73,21 +73,23 @@
                 <div id="center_portal" style="position:relative;">
                     <div style="width:33%;">
                         <div class="portal_inner_div" data-options="title:'信息',closable:true,collapsible:true" style="height:200px;">
-                            PHP VERSION:{$Think.const.PHP_VERSION}<br/>
-                            PHP OS:{$Think.const.PHP_OS}<br/>
+                            <ul style="margin:0;padding-left:20px;">
+                                <li>PHP VERSION:{$Think.const.PHP_VERSION}</li>
+                                <li>OS INFO:{:php_uname()}</li>
+                                <li>APACHE VERSION:{:apache_get_version()}</li>
+                            </ul>
                         </div>
                         <div class="portal_inner_div" data-options="title:'关于',closable:true,collapsible:true" style="height:200px;">
                         </div>
                     </div>
                     <div style="width:34%;">
-                        <div class="portal_inner_div" data-options="title:'关于本项目',closable:true,collapsible:true" style="background:#f3eeaf;height:150px;">
-                            EasyUI权限管理后台
+                        <div class="portal_inner_div" data-options="title:'没想好',closable:true,collapsible:true" style="background:#f3eeaf;height:150px;">
                         </div>
                         <div class="portal_inner_div" data-options="title:'感谢',closable:true,collapsible:true" style="height:150px;">
                             <ul style="margin:0;padding-left:20px;">
                                 <li>ZHCNLEI</li>
-                                <li>流云</li>
-                                <li>EasyUI<a href="http://www.jeasyui.com/" target="_blank">官网</a></li>
+                                <li><a href="http://jqext.sinaapp.com/" target="_blank">流云</a></li>
+                                <li><a href="http://www.jeasyui.com/" target="_blank">EasyUI官网</a></li>
                                 <li><a href="http://blog.sina.com.cn/s/blog_58cfda2a0101iqhy.html" target="_blank">EasyUI 1.3.6离线简体中文API文档(CHM版)</a></li>
                             </ul>
                         </div>
@@ -114,7 +116,7 @@
             <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-help'" onclick="INDEX.close_all_tabs()">关闭全部</a>
         </div>
     </div>
-<if condition="$Think.const.APP_DEBUG neq true">
+<if condition="($Think.const.APP_DEBUG neq true) AND (C('DB_NAME') neq 'imzhime' OR $Think.server.http_host == 'imzhi.me')">
 <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9afb5a54f8d40b889f8bc364a276480c' type='text/javascript'%3E%3C/script%3E"));
