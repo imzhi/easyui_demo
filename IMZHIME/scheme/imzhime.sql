@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2014-06-23 00:21:17
+Date: 2014-06-25 07:12:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -273,6 +273,8 @@ INSERT INTO `z_menu_auth` VALUES ('7', '33', '0');
 INSERT INTO `z_menu_auth` VALUES ('7', '34', '0');
 INSERT INTO `z_menu_auth` VALUES ('10', '47', '0');
 INSERT INTO `z_menu_auth` VALUES ('10', '10', '0');
+INSERT INTO `z_menu_auth` VALUES ('24', '55', '0');
+INSERT INTO `z_menu_auth` VALUES ('24', '51', '0');
 
 -- ----------------------------
 -- Table structure for `z_site_info`
@@ -322,7 +324,7 @@ CREATE TABLE `z_user` (
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', 'tt@tt.com', '2014-06-25', '80', '1403405245', '2130706433', 'metro-green', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', 'tt@tt.com', '2014-06-25', '80', '1403405245', '2130706433', 'metro-gray', 'user', 'pass');
 INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', null, '2', '1400940410', '2130706433', 'black', 'user', 'pass');
 INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', null, '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
 INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', 'tt@tt.com', '2014-05-27', '3', '1403403331', '2130706433', 'metro-orange', 'user', 'pass');
