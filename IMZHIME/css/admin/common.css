@@ -60,3 +60,10 @@
     word-break: break-all;
     word-wrap: word-break;
 }
+#center_portal .portal_inner_div ul {
+    margin: 0;
+    padding-left:20px;
+}
+#center_portal .portal_inner_div ul li {
+    margin: 0 0 2px 0;
+}
