@@ -1,5 +1,5 @@
 var INDEX = {
-    LEFT_NAV_TREE_ID: '#left_nav_tree_1',
+    LEFT_NAV_TREE_ID: '#left_nav_tree_3',
     TABS_ID: '#index_tabs',
     DLG_ID: '#index_dialog',
     CB_THEMES_ID: '#combobox_themes',

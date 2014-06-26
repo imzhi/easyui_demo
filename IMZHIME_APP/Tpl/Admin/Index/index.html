@@ -13,7 +13,6 @@
     <js href="__PUBLIC__/js/common/jquery.1.8.3.min.js"/>
     <!-- <js href="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"/> -->
     <js href="__PUBLIC__/js/common/jquery-easyui/jquery.easyui.min.js"/>
-    <!-- <js href="__PUBLIC__/js/common/jquery-easyui/plugins/jquery.datagrid.js"/> -->
     <js href="__PUBLIC__/js/common/jquery-easyui/plugins/datagrid/datagrid-groupview.js"/>
     <js href="__PUBLIC__/js/common/jquery-easyui/locale/easyui-lang-zh_CN.js"/>
     <js href="__PUBLIC__/js/common/jquery-easyui/plugins/jquery.portal.js"/>
@@ -57,13 +56,15 @@
         <div class="footer">it's me. imzhi. since 2014.</div>
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
-        <div class="easyui-accordion" data-options="selected:0,fit:true,border:false">
-            <div title="菜单1" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(1); }}]" style="overflow:auto;">
+        <div class="easyui-accordion" data-options="selected:2,fit:true,border:false">
+            <div title="公共区域" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(1); }}]" style="overflow:auto;">
                 <ul id="left_nav_tree_1"></ul>
             </div>
-            <div title="菜单2" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+            <div title="个人区域" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+                <ul id="left_nav_tree_2"></ul>
             </div>
-            <div title="菜单3" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(3); }}]" style="overflow:auto;">
+            <div title="管理区域" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+                <ul id="left_nav_tree_3"></ul>
             </div>
         </div>
     </div>
@@ -103,7 +104,7 @@
                     <div style="width:33%;">
                         <div class="portal_inner_div" data-options="title:'分享',closable:true,collapsible:true"  style="height:200px;background-color:#E0FDF4;">
                             虚拟主机分享<br/><br/>
-                            由于我在家的网络连不上这个主机，闲着也闲着，把它放出来，觉得有用的人可以把我设的原始密码改掉，是香港主机。<br/><br/>
+                            买了一直没用，闲着也闲着，把它放出来，觉得有用的人可以把我设的原始密码改掉，是香港主机。<br/><br/>
                             用户名：yxz_blue，<br/>邮箱：yxz_blue@126.com，<br/>密码：12346。<br/><br/>
                             今年9月到期。<br/>
                             主机网址：<a href="http://www.fyvps.com/" target="_blank">http://www.fyvps.com/</a>
