@@ -3,7 +3,8 @@ var EDIT_MENU = {
     CB_STATUS_ID: '#combobox_status',
     CB_STATE_ID: '#combobox_state',
     CB_TYPE_ID: '#combobox_type',
-    CT_MENU_ID: '#combotree_menu'
+    CT_MENU_ID: '#combotree_menu',
+    CB_CATE_ID: '#combobox_cate'
 };
 
 $(function() {
@@ -18,15 +19,18 @@ $(function() {
     });
     $(EDIT_MENU.CB_STATUS_ID).Combobox({
         url: 'Api/Status/combobox_menu_status',
-        onLoadSuccess: function() {
-            $(this).combobox('setValue', '1');
-        }
+        value: 1
+    });
+    $(EDIT_MENU.CB_CATE_ID).Combobox({
+        url: 'Api/Data/combobox_menu_cate',
+        value: 0
     });
 });
 </script>
 <div id="auth_group_form">
     <form method="post">
         <input type="hidden" name="menu_id"/>
+        <input type="hidden" name="cate_name"/>
         <input type="hidden" name="ajax" value="1"/>
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
@@ -48,6 +52,10 @@ $(function() {
             <tr class="form_table_tr">
                 <td class="form_table_td">排序</td>
                 <td class="form_table_td"><input type="text" name="order" value="0" class="easyui-validatebox" data-options="required:true"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">分类</td>
+                <td class="form_table_td"><input name="cate_id" id="combobox_cate"/></td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">类型</td>

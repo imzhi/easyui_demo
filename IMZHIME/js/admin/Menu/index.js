@@ -2,7 +2,7 @@ var MENU = {
     DLG_ID: '#menu_dialog',
     TG_ID: '#menu_treegrid',
     TB_ID: '#menu_treegrid_toolbar',
-    add: function() {
+    add: function(number) {
         var self = this;
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加菜单项',
@@ -12,13 +12,13 @@ var MENU = {
             buttonIconCls: 'icon-help',
             buttonUrl: 'Api/Menu/add',
             submitSuccessCallback: function() {
-                $(self.TG_ID).Reload_Treegrid();
+                $(self.TG_ID + '_' + number).Reload_Treegrid();
             }
         });
     },
-    edit: function() {
+    edit: function(number) {
         var self = this;
-        var selected = $(self.TG_ID).Get_Selected_Treegrid();
+        var selected = $(self.TG_ID + '_' + number).Get_Selected_Treegrid();
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单项',
@@ -27,16 +27,16 @@ var MENU = {
                 selected: selected,
                 buttonUrl: 'Api/Menu/edit',
                 submitSuccessCallback: function() {
-                    $(self.TG_ID).Reload_Treegrid();
+                    $(self.TG_ID + '_' + number).Reload_Treegrid();
                 }
             });
         } else {
             $.Show_Warning('请先选择一项');
         }
     },
-    delete: function() {
+    delete: function(number) {
         var self = this;
-        var selected = $(self.TG_ID).Get_Selected_Treegrid();
+        var selected = $(self.TG_ID + '_' + number).Get_Selected_Treegrid();
         if (selected) {
             // 简化逻辑。必须先删除下级元素
             if (selected.children) {
@@ -50,8 +50,8 @@ var MENU = {
                             $.Close_Progress();
                             if (result.status === 1) {
                                 $.Show_Warning(result.info);
-                                $(self.TG_ID).Unselect_All_Treegrid(); // 取消选择
-                                $(self.TG_ID).Reload_Treegrid();
+                                $(self.TG_ID + '_' + number).Unselect_All_Treegrid(); // 取消选择
+                                $(self.TG_ID + '_' + number).Reload_Treegrid();
                             } else {
                                 $.Show_Error(result.info);
                             }
@@ -113,75 +113,83 @@ var MENU_AUTH = {
 };
 
 $(function() {
-    $(MENU.TG_ID).Treegrid({
-        title:'菜单列表',
-        toolbar: MENU.TB_ID,
-        idField: 'menu_id',
-        treeField: 'title',
-        url: 'Api/Menu/get_treegrid_menus',
-        columns: [[
-            {field: 'menu_id', title: 'ID', width: 40, align: 'center'},
-            {field: 'title', title: '菜单中文名', width: 200},
-            {field: 'name', title: '菜单英文名', width: 150},
-            {field: 'url', title: 'URL', width: 300},
-            {
-                field: 'type', title: '类型', width: 50, align: 'center',
-                styler: function(value, row) {
-                    if ((row.children && 'null' !== value) ||
-                        (/^https?:\/\//.test(row.url) && 'iframe' !== value) ||
-                        (/\.js$/.test(row.url) && 'dialog' !== value)) {
-                        return 'color:#f00';
-                    }
-                },
-                formatter: function(value, row) {
-                    var val;
-                    switch (value) {
-                        case 'iframe': val = '框架'; break;
-                        case 'dialog': val = '对话框'; break;
-                        case 'tab': val = '标签'; break;
-                        case 'null': val = '无'; break;
-                    }
-                    return val;
+    var treegrid_columns = [[
+        {field: 'menu_id', title: 'ID', width: 40, align: 'center'},
+        {field: 'title', title: '菜单中文名', width: 200},
+        {field: 'name', title: '菜单英文名', width: 150},
+        {field: 'url', title: 'URL', width: 300},
+        {
+            field: 'type', title: '类型', width: 50, align: 'center',
+            styler: function(value, row) {
+                if ((row.children && 'null' !== value) ||
+                    (/^https?:\/\//.test(row.url) && 'iframe' !== value) ||
+                    (/\.js$/.test(row.url) && 'dialog' !== value)) {
+                    return 'color:#f00';
                 }
             },
-            {field: 'order', title: '排序', width: 40, align: 'center'},
-            {
-                field: 'state', title: '节点状态', width: 60, align: 'center',
-                formatter: function(value, row) {
-                    if (value === 'open') {
-                        return '展开';
-                    }
-                    return '折叠';
+            formatter: function(value, row) {
+                var val;
+                switch (value) {
+                    case 'iframe': val = '框架'; break;
+                    case 'dialog': val = '对话框'; break;
+                    case 'tab': val = '标签'; break;
+                    case 'null': val = '无'; break;
                 }
-            },
-            {
-                field: 'status', title: '状态', width: 40, align: 'center',
-                styler: function(value, row) {
-                    if (value === '0') {
-                        return 'background-color:#D3D3D3;';
-                    }
-                },
-                formatter: function(value, row) {
-                    if (value === '1') {
-                        return '启用';
-                    }
-                    return '禁用';
-                }
-            },
-        ]],
-        onLoadSuccess: function(row, data) {
-            // $(MENU.TG_ID).treegrid('collapseAll');
+                return val;
+            }
         },
-        rowStyler: function(row) {},
-        onClickRow: function(row) {
-            // 选择了子节点并且不为iframe类型，则载入数据
-            if (!row.children && !/^https?:\/\//.test(row.url)) {
-                $(MENU_AUTH.DG_ID).datagrid('load', {menu_id: row.menu_id});
-            } else {
-                $(MENU_AUTH.DG_ID).datagrid('loadData', {total: 0, rows: []});
+        {field: 'order', title: '排序', width: 40, align: 'center'},
+        {
+            field: 'state', title: '节点状态', width: 60, align: 'center',
+            formatter: function(value, row) {
+                if (value === 'open') {
+                    return '展开';
+                }
+                return '折叠';
+            }
+        },
+        {
+            field: 'status', title: '状态', width: 40, align: 'center',
+            styler: function(value, row) {
+                if (value === '0') {
+                    return 'background-color:#D3D3D3;';
+                }
+            },
+            formatter: function(value, row) {
+                if (value === '1') {
+                    return '启用';
+                }
+                return '禁用';
             }
         }
-    });
+    ]];
+    function treegrid_click_row(row) {
+        // 选择了子节点并且不为iframe类型，则载入数据
+        if (!row.children && !/^https?:\/\//.test(row.url)) {
+            $(MENU_AUTH.DG_ID).datagrid('load', {menu_id: row.menu_id});
+        } else {
+            $(MENU_AUTH.DG_ID).datagrid('loadData', {total: 0, rows: []});
+        }
+    }
+    (function(arr) {
+        for (var len = arr.length,i = 0; i < len; i++) {
+            $(MENU.TG_ID + '_' + arr[i]).Treegrid({
+                toolbar: MENU.TB_ID + '_' + arr[i],
+                idField: 'menu_id',
+                treeField: 'title',
+                url: 'Api/Menu/get_treegrid_menus',
+                queryParams: { cate_id: arr[i] },
+                columns: treegrid_columns,
+                onLoadSuccess: function(row, data) {
+                    // $(MENU.TG_ID).treegrid('collapseAll');
+                },
+                rowStyler: function(row) {},
+                onClickRow: function(row) {
+                    treegrid_click_row(row);
+                }
+            });
+        }
+    })([1, 2, 3]);
 
     $(MENU_AUTH.DG_ID).Datagrid({
         title:'拥有的权限',

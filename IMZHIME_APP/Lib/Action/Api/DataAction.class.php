@@ -29,4 +29,8 @@ class DataAction extends CommonAction {
             ),
         ));
     }
+
+    public function combobox_menu_cate() {
+        combobox_return(M('Menu')->getField('cate_id,cate_name'));
+    }
 }
