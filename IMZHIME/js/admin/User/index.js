@@ -10,26 +10,18 @@ var USER = {
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
-                title: '编辑用户',
-                href: 'User/edit',
-                selected: selected,
-                buttonUrl: 'Api/User/save',
-                submitSuccessCallback: function() {
-                    $(self.DG_ID).Reload_Datagrid();
-                }
+                title: '编辑用户', href: 'User/edit',
+                selected: selected, buttonUrl: 'Api/User/save',
+                submitSuccessCallback: function() { $(self.DG_ID).Reload_Datagrid(); }
             });
-        } else {
-            $.Show_Warning('请先选择一项');
-        }
+        } else { $.Show_Warning('请先选择一项'); }
     }
 };
 
 $(function() {
     $(USER.DG_ID).Datagrid({
-        title: '用户列表',
+        title: '用户列表', url: 'Api/User/get_users', idField: 'user_id',
         toolbar: USER.TB_ID,
-        idField: 'user_id',
-        url: 'Api/User/get_users',
         columns: [[
             {field: 'user_id', title: 'ID', sortable: true, width: 40, align: 'center'},
             {field: 'user_name', title: '用户名', sortable: true, width: 100},
@@ -43,12 +35,8 @@ $(function() {
         ]]
     });
 
-    $(USER.USER_TYPE_CB_ID).Combobox({
-        url: 'Api/Status/combobox_user_type'
-    });
-    $(USER.USER_STATUS_CB_ID).Combobox({
-        url: 'Api/Status/combobox_user_status'
-    });
+    $(USER.USER_TYPE_CB_ID).Combobox({ url: 'Api/Status/combobox_user_type' });
+    $(USER.USER_STATUS_CB_ID).Combobox({ url: 'Api/Status/combobox_user_status' });
 
     $(USER.BTN_ID).bind('click', function(e) {
         var params = $('#search_form').serializeJSON();

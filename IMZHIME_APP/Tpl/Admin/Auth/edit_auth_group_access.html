@@ -6,8 +6,7 @@ var EDIT_AUTH_GROUP_ACCESS = {
 
 $(function() {
     $(EDIT_AUTH_GROUP_ACCESS.CT_GROUP_ID).Combotree({
-        multiple: true,
-        url: 'Api/Auth/combotree_auth_group',
+        multiple: true, url: 'Api/Auth/combotree_auth_group',
         onLoadSuccess: function() {
             $(EDIT_AUTH_GROUP_ACCESS.CT_GROUP_ID).combotree('setValues', $(EDIT_AUTH_GROUP_ACCESS.RAW_GROUP_IDS).val().split(','));
         },

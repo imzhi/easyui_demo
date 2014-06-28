@@ -1,3 +1,14 @@
+String.prototype.append = function(str) {
+    var after;
+    // 如果是正整数
+    if (+str == str && Math.abs(str) == str) {
+         after = this + '_' + str;
+    } else {
+        after = this + str;
+    }
+    return after;
+};
+
 ;(function($) {
 
     /**

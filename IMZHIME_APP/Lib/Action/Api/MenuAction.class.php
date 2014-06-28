@@ -6,10 +6,11 @@ class MenuAction extends CommonAction {
 
     public function get_all_tree_menus($user_id = false) {
         $where['status'] = '1';
-        $where['cate_id'] = I('post.cate_id', 1, 'intval');
+        $cate_id = I('post.cate_id', 0, 'intval');
+        $cate_id > 0 && $where['cate_id'] = $cate_id;
 
         // 用户拥有权限的菜单ID
-        if ($user_id && 'EXTRA_ROOT' !== I('get.type')) {
+        if ($user_id && 'EXTRA_ROOT' !== I('post.type')) {
             $menu_ids = M('AuthGroup')->where('id=%d', $user_id)->getField('menu_rules');
             $where['menu_id'] = array('in', $menu_ids);
         }
@@ -17,7 +18,7 @@ class MenuAction extends CommonAction {
         $field = array('menu_id' => 'id', 'title' => 'text', 'parent_id',
             'cate_id', 'url', 'type', 'state');
         $data = M('Menu')->field($field)->where($where)
-            ->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
+            ->order('`parent_id` ASC,`order` ASC,`cate_id` ASC,`menu_id` ASC')->select();
         list($data, $children) = $this->get_parents_children($data);
         foreach ($children as $c) {
             $this->format_tree_menus($data, $c);
@@ -25,7 +26,7 @@ class MenuAction extends CommonAction {
         $this->unset_unused_item($data);
 
         // 供编辑菜单列表的combotree使用
-        'EXTRA_ROOT' === I('get.type') && array_unshift($data, array(
+        'EXTRA_ROOT' === I('post.type') && array_unshift($data, array(
             'id' => 0, 'text' => '根结点', 'iconCls' => 'icon-help'
         ));
         json_return($data);
@@ -60,7 +61,7 @@ class MenuAction extends CommonAction {
                     $v['attributes'] = array('url' => $v['url'], 'type' => $v['type']);
                 }
             }
-            unset($v['url'], $v['type'], $v['cate_id'], $v['parent_id']);
+            unset($v['url'], $v['type'], $v['parent_id']);
         }
     }
 
@@ -121,6 +122,8 @@ class MenuAction extends CommonAction {
             'type' => I('post.type'),
             'state' => I('post.state'),
             'status' => I('post.status'),
+            'cate_id' => I('post.cate_id'),
+            'cate_name' => I('post.cate_name')
         ))) {
             $this->ajaxReturn(null, '编辑菜单项成功', 1);
         } else {
@@ -144,6 +147,8 @@ class MenuAction extends CommonAction {
             'type' => I('post.type'),
             'state' => I('post.state'),
             'status' => I('post.status'),
+            'cate_id' => I('post.cate_id'),
+            'cate_name' => I('post.cate_name')
         ))) {
             echo M()->_sql();
             $this->ajaxReturn(null, '添加菜单项失败', 0);

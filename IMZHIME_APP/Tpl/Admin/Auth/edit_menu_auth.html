@@ -6,17 +6,24 @@ var EDIT_MENU_AUTH = {
 
 $(function() {
     $(EDIT_MENU_AUTH.CT_ID).Combotree({
-        panelWidth: 190,
-        panelHeight: 200,
-        required: false,
-        multiple: true,
-        cascadeCheck: false,
-        url: 'Api/Menu/get_all_tree_menus',
+        url: 'Api/Menu/get_all_tree_menus', panelWidth: 190, panelHeight: 200,
+        required: false, multiple: true, cascadeCheck: false,
         onLoadSuccess: function() {
             $(EDIT_MENU_AUTH.CT_ID).combotree('setValues', $(EDIT_MENU_AUTH.RAW_MENU_RULES_ID).val().split(','));
         },
         onChange: function(newVal, oldVal) {
             $(EDIT_MENU_AUTH.RAW_MENU_RULES_ID).val(newVal.join(','));
+        },
+        formatter: function(node) {
+            var text;
+            if ('1' === node.cate_id) {
+                text = '<span style="color:#008000;">' + node.text + '</span>';
+            } else if ('2' === node.cate_id) {
+                text = '<span style="color:#C0B317;">' + node.text + '</span>';
+            } else if ('3' === node.cate_id) {
+                text = '<span style="color:#F00;">' + node.text + '</span>';
+            }
+            return text;
         }
     });
 });
@@ -30,6 +37,14 @@ $(function() {
             <tr class="form_table_tr">
                 <td class="form_table_td">用户组</td>
                 <td class="form_table_td"><input type="text" name="title" disabled/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">权限类别</td>
+                <td class="form_table_td">
+                    公共<span style="width:10px;height:10px;background-color:#008000;display:inline-block;"></span>
+                    个人<span style="width:10px;height:10px;background-color:#C0B317;display:inline-block;"></span>
+                    管理<span style="margin:1px 0 0 1px;width:10px;height:10px;background-color:#F00;display:inline-block;"></span>
+                </td>
             </tr>
             <tr class="form_table_tr">
                 <td class="form_table_td">菜单权限</td>

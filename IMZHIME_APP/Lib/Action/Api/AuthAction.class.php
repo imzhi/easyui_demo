@@ -266,9 +266,9 @@ class AuthAction extends CommonAction {
 
         $menu_rules = M('AuthGroup')->where('id=%d', $id)->getField('menu_rules');
         if ($menu_rules) {
-            $data = M('Menu')->field('menu_id,parent_id,title,url')
+            $data = M('Menu')->field('menu_id,parent_id,cate_id,title,url')
                 ->where("menu_id IN (%s)", $menu_rules)
-                ->order("$sort $order")
+                ->order("cate_id ASC,$sort $order")
                 ->select();
             if ($data) {
                 list($data, $children) = $this->get_parents_children($data);

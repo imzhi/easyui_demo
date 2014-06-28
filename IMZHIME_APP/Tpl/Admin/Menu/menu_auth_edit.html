@@ -5,15 +5,10 @@ var EDIT_MENU_AUTH = {
 };
 
 $(function() {
-    $(EDIT_MENU_AUTH.CB_STATUS_ID).Combobox({
-        url: 'Api/Status/combobox_menu_auth_status'
-    });
+    $(EDIT_MENU_AUTH.CB_STATUS_ID).Combobox({ url: 'Api/Status/combobox_menu_auth_status' });
     $(EDIT_MENU_AUTH.CG_AUTH_ID).Combogrid({
-        panelWidth: 550,
-        panelHeight: 250,
-        textField: 'title',
-        url: 'Api/Auth/get_auth_rule',
-        pageSize: 50,
+        url: 'Api/Auth/get_auth_rule', panelWidth: 550, panelHeight: 250,
+        textField: 'title', pageSize: 50,
         columns: [[
             {field: 'id', title: 'ID', width: 30},
             {field: 'name', title: '规则名称', width: 200},
@@ -22,9 +17,7 @@ $(function() {
             {
                 field: 'status', title: '状态', width: 40,
                 formatter: function(value, row) {
-                    if (value === '1') {
-                        return '启用';
-                    }
+                    if (value === '1') { return '启用'; }
                     return '禁用';
                 }
             }

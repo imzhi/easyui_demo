@@ -5,13 +5,9 @@ var AUTH_GROUP_ACCESS = {
     add: function() {
         var self = this;
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
-            title: '添加用户组明细',
-            href: 'Auth/edit_auth_group_access',
+            title: '添加用户组明细', width: 300, href: 'Auth/edit_auth_group_access',
             buttonUrl: 'Api/Auth/add_auth_group_access',
-            width: 300,
-            submitSuccessCallback: function() {
-                $(self.DG_ID).Reload_Datagrid();
-            }
+            submitSuccessCallback: function() { $(self.DG_ID).Reload_Datagrid(); }
         });
     },
     edit: function() {
@@ -19,21 +15,14 @@ var AUTH_GROUP_ACCESS = {
         var selected = $(self.DG_ID).Get_Selected_Datagrid();
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
-                title: '编辑用户组明细',
-                width: 300,
-                href: 'Auth/edit_auth_group_access',
-                selected: selected,
+                title: '编辑用户组明细', width: 300, href: 'Auth/edit_auth_group_access',
+                selected: selected, buttonUrl: 'Api/Auth/edit_auth_group_access',
                 onLoadCallback: function() {
                     $('#validatebox_username', self.DLG_ID).attr('disabled', 'disabled');
                 },
-                buttonUrl: 'Api/Auth/edit_auth_group_access',
-                submitSuccessCallback: function() {
-                    $(self.DG_ID).Reload_Datagrid();
-                }
+                submitSuccessCallback: function() { $(self.DG_ID).Reload_Datagrid(); }
             });
-        } else {
-            $.Show_Warning('请先选择一项');
-        }
+        } else { $.Show_Warning('请先选择一项'); }
     },
     delete: function() {
         var self = this;
@@ -47,23 +36,17 @@ var AUTH_GROUP_ACCESS = {
                             $(self.DG_ID).Unselect_All_Datagrid(); // 取消选择
                             $.Show_Warning(result.info);
                             $(self.DG_ID).Reload_Datagrid();
-                        } else {
-                            $.Show_Error(result.info);
-                        }
+                        } else { $.Show_Error(result.info); }
                     }, 'json');
                 }
             });
-        } else {
-            $.Show_Warning('请先选择一项');
-        }
+        } else { $.Show_Warning('请先选择一项'); }
     }
 };
 
 $(function() {
     $(AUTH_GROUP_ACCESS.DG_ID).Datagrid({
-        title: '用户组明细',
-        toolbar: AUTH_GROUP_ACCESS.TB_ID,
-        idField: null,
+        title: '用户组明细', toolbar: AUTH_GROUP_ACCESS.TB_ID, idField: null,
         url: 'Api/Auth/get_auth_group_access',
         columns: [[
             {field: 'user_name', title: '用户名', sortable: true, width: 80},

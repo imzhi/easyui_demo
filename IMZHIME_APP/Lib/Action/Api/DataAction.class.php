@@ -31,6 +31,6 @@ class DataAction extends CommonAction {
     }
 
     public function combobox_menu_cate() {
-        combobox_return(M('Menu')->getField('cate_id,cate_name'));
+        combobox_return(array(1 => '公共区域', '个人区域', '管理区域'));
     }
 }

@@ -66,24 +66,17 @@ var INDEX = {
             closable: true,
             tools: [{
                 iconCls: 'icon-mini-refresh',
-                handler: function() {
-                    INDEX.refresh_tab(title, url);
-                }
+                handler: function() { INDEX.refresh_tab(title, url); }
             }]
         });
     },
     add_iframe_tab: function(title, url) {
         var content = '<iframe scrolling="auto" frameborder="0" marginwidth="0" marginheight="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
         $(INDEX.TABS_ID).tabs('add', {
-            title: title,
-            content: content,
-            iconCls: 'icon-help',
-            closable: true,
+            title: title, iconCls: 'icon-help', closable: true, content: content,
             tools: [{
                 iconCls: 'icon-mini-refresh',
-                handler: function() {
-                    INDEX.refresh_tab(title, url);
-                }
+                handler: function() { INDEX.refresh_tab(title, url); }
             }]
         });
     },
@@ -91,83 +84,54 @@ var INDEX = {
         var tab = $(INDEX.TABS_ID).tabs('select', title).tabs('getTab', title);
         if (/^https?:\/\//.test(url)) {
             $(INDEX.TABS_ID).tabs('update', {
-                tab: tab,
-                options: { content: tab.tabs().panel('options').content }
+                tab: tab, options: { content: tab.tabs().panel('options').content }
             });
-        } else {
-            tab.panel('refresh', url);
-        }
+        } else { tab.panel('refresh', url); }
     },
     sign_in: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
-            title: '登陆',
-            href: 'Public/sign_in',
-            buttonText: '登陆',
-            buttonUrl: 'Api/Public/sign_in',
-            submitSuccess: function(result) {
-                window.location = result.data;
-            },
-            submitFailureCallback: function() {
-                SIGN_IN.refreshVcode();
-            }
+            title: '登陆', href: 'Public/sign_in',
+            buttonText: '登陆', buttonUrl: 'Api/Public/sign_in',
+            submitSuccess: function(result) { window.location = result.data; },
+            submitFailureCallback: function() { SIGN_IN.refreshVcode(); }
         });
     },
     sign_up: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
-            title: '注册',
-            href: 'Public/sign_up',
-            buttonText: '注册',
-            buttonUrl: 'Api/Public/sign_up',
-            submitSuccess: function(result) {
-                window.location = result.data;
-            },
-            submitFailureCallback: function() {
-                SIGN_IN.refreshVcode();
-            }
+            title: '注册', href: 'Public/sign_up',
+            buttonText: '注册', buttonUrl: 'Api/Public/sign_up',
+            submitSuccess: function(result) { window.location = result.data; },
+            submitFailureCallback: function() { SIGN_IN.refreshVcode(); }
         });
     },
     personal_info: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
-            title: '个人信息',
-            href: 'User/info',
-            buttonUrl: 'Api/User/edit_info',
-            selected: window.DEFAULTS.USER,
-            submitSuccess: function(result) {
-                window.location = result.data;
-            }
+            title: '个人信息', href: 'User/info',
+            selected: window.DEFAULTS.USER, buttonUrl: 'Api/User/edit_info',
+            submitSuccess: function(result) { window.location = result.data; }
         });
     },
     change_password: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
-            title: '修改密码',
-            href: 'User/change_password',
+            title: '修改密码', href: 'User/change_password',
             buttonUrl: 'Api/User/change_password',
-            submitFailureCallback: function() {
-                SIGN_IN.refreshVcode();
-            }
+            submitFailureCallback: function() { SIGN_IN.refreshVcode(); }
         });
     },
     log_out: function() {
         $.messager.confirm('提示', '确定要登出吗？', function(r) {
             if (r) {
                 $.post('Api/Public/log_out', function(result) {
-                    if (result.status === 1) {
-                        window.location = result.data;
-                    } else {
-                        $.Show_Error(result.info);
-                    }
+                    if (result.status === 1) { window.location = result.data; }
+                    else { $.Show_Error(result.info); }
                 }, 'json');
             }
         });
     },
     guestbook: function() {
         $('<div/>').attr('id', this.DLG_ID.substring(1)).Dialog({
-            title: '留言',
-            resizable:true,
-            height: 450,
-            width: 800,
+            title: '留言', height: 450, width: 800, resizable: true, buttons: [],
             content: '<iframe scrolling="auto" frameborder="0" src="Public/guestbook" style="width:100%;height:99%;"></iframe>',
-            buttons: [],
             onMove: function(left, top) {
                 // console.log(left, top);
                 // if (top <= 0) {
@@ -184,26 +148,20 @@ var INDEX = {
 $(function() {
     $(INDEX.LEFT_NAV_TREE_ID + '_1').Tree({
         url: 'Api/Menu/get_tree_menus',
-        queryParams: { cate_id: 1 },
-        onClick: function(node) {
-            left_nav_tree_click(node);
-        }
+        onBeforeLoad: function(node, params) { params.cate_id = 1; },
+        onClick: function(node) { left_nav_tree_click(node); }
     });
 
     $(INDEX.LEFT_NAV_TREE_ID + '_2').Tree({
         url: 'Api/Menu/get_tree_menus',
-        queryParams: { cate_id: 2 },
-        onClick: function(node) {
-            left_nav_tree_click(node);
-        }
+        onBeforeLoad: function(node, params) { params.cate_id = 2; },
+        onClick: function(node) { left_nav_tree_click(node); }
     });
 
     $(INDEX.LEFT_NAV_TREE_ID + '_3').Tree({
         url: 'Api/Menu/get_tree_menus',
-        queryParams: { cate_id: 3 },
-        onClick: function(node) {
-            left_nav_tree_click(node);
-        }
+        onBeforeLoad: function(node, params) { params.cate_id = 3; },
+        onClick: function(node) { left_nav_tree_click(node); }
     });
 
     function left_nav_tree_click(node) {
@@ -219,45 +177,32 @@ $(function() {
                     }
                     if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
                         $(INDEX.TABS_ID).tabs('select', node.text);
-                    } else {
-                        INDEX.add_tab(node.text, node.attributes.url);
-                    }
+                    } else { INDEX.add_tab(node.text, node.attributes.url); }
                 });
             } else if ('dialog' === node.attributes.type) {
                 $.get(node.attributes.url + '?' + $.createRandNum(4));
             } else if (node.attributes.type === 'iframe') {
                 if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
                     $(INDEX.TABS_ID).tabs('select', node.text);
-                } else {
-                    INDEX.add_iframe_tab(node.text, node.attributes.url);
-                }
+                } else { INDEX.add_iframe_tab(node.text, node.attributes.url); }
             }
         }
     }
 
     $(INDEX.CB_THEMES_ID).Combobox({
-        url: 'Api/Data/combobox_themes',
-        groupField: 'group',
-        onLoadSuccess: function() {
-            $(this).combobox('setValue', window.DEFAULTS.THEME);
-        },
+        url: 'Api/Data/combobox_themes', groupField: 'group',
+        onLoadSuccess: function() { $(this).combobox('setValue', window.DEFAULTS.THEME); },
         onSelect: function(record) {
             var $link = $('link:first');
             var arr = $link.attr('href').split('/');
             arr[arr.length - 2] = record.id;
             $link.attr('href', arr.join('/'));
-            $.post('Api/Public/set_theme', {theme: record.id}, function(result) {
-                if (1 === result.status) {
-                    $.Show_Warning(result.info);
-                } else {
-                    $.Show_Error(result.info);
-                }
+            $.post('Api/Public/set_theme', { theme: record.id }, function(result) {
+                if (1 === result.status) { $.Show_Warning(result.info); }
+                else { $.Show_Error(result.info); }
             }, 'json');
         }
     });
 
-    $(INDEX.PORTAL_ID).portal({
-        border:false,
-        fit:true
-    });
+    $(INDEX.PORTAL_ID).portal({ border:false, fit:true });
 });

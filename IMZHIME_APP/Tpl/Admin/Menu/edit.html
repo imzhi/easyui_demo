@@ -4,33 +4,33 @@ var EDIT_MENU = {
     CB_STATE_ID: '#combobox_state',
     CB_TYPE_ID: '#combobox_type',
     CT_MENU_ID: '#combotree_menu',
-    CB_CATE_ID: '#combobox_cate'
+    CB_CATE_ID: '#combobox_cate',
+    RAW_CATE_NAME: '#raw_cate_name'
 };
 
 $(function() {
     $(EDIT_MENU.CT_MENU_ID).Combotree({
-        url: 'Api/Menu/get_tree_menus?type=EXTRA_ROOT'
+        url: 'Api/Menu/get_tree_menus', panelWidth: 200,
+        onBeforeLoad: function(node, params) {
+            params.type = 'EXTRA_ROOT';
+            params.cate_id = $(MENU.DLG_ID).dialog('options').cate_id;
+        }
     });
-    $(EDIT_MENU.CB_STATE_ID).Combobox({
-        url: 'Api/Status/combobox_menu_state'
-    });
-    $(EDIT_MENU.CB_TYPE_ID).Combobox({
-        url: 'Api/Status/combobox_menu_type'
-    });
+    $(EDIT_MENU.CB_STATE_ID).Combobox({ url: 'Api/Status/combobox_menu_state' });
+    $(EDIT_MENU.CB_TYPE_ID).Combobox({ url: 'Api/Status/combobox_menu_type' });
     $(EDIT_MENU.CB_STATUS_ID).Combobox({
-        url: 'Api/Status/combobox_menu_status',
-        value: 1
+        url: 'Api/Status/combobox_menu_status', value: 1
     });
     $(EDIT_MENU.CB_CATE_ID).Combobox({
         url: 'Api/Data/combobox_menu_cate',
-        value: 0
+        onSelect: function(record) { $(EDIT_MENU.RAW_CATE_NAME).val(record.value); }
     });
 });
 </script>
 <div id="auth_group_form">
     <form method="post">
         <input type="hidden" name="menu_id"/>
-        <input type="hidden" name="cate_name"/>
+        <input type="hidden" name="cate_name" id="raw_cate_name"/>
         <input type="hidden" name="ajax" value="1"/>
         <table cellspacing="0" cellpadding="0" border="0" class="form_table">
             <tr class="form_table_tr">
