@@ -182,6 +182,24 @@
             var defaults = {
                 animate: true,
                 lines: false,
+                loader: function(param, success, error) {
+                    var opts = $(this).tree('options');
+                    if (!opts.url) {
+                        return false;
+                    }
+                    $.ajax({
+                        type: opts.method,
+                        url: opts.url,
+                        data: settings.queryParams || {},
+                        dataType: 'json',
+                        success: function(data) {
+                            success(data);
+                        },
+                        error: function() {
+                            error.apply(this, arguments);
+                        }
+                    });
+                },
                 loadFilter: function(data) {
                     return data;
                 },

@@ -1,11 +1,11 @@
 var INDEX = {
-    LEFT_NAV_TREE_ID: '#left_nav_tree_3',
+    LEFT_NAV_TREE_ID: '#left_nav_tree',
     TABS_ID: '#index_tabs',
     DLG_ID: '#index_dialog',
     CB_THEMES_ID: '#combobox_themes',
     PORTAL_ID: '#center_portal',
     refresh_nav_tree: function(serial) {
-        $(INDEX.LEFT_NAV_TREE_ID.slice(0, -1) + serial).Reload_Tree();
+        $(INDEX.LEFT_NAV_TREE_ID + serial).Reload_Tree();
     },
     full_screen_view: function() {
         $('body').requestFullScreen();
@@ -182,37 +182,58 @@ var INDEX = {
 };
 
 $(function() {
-    $(INDEX.LEFT_NAV_TREE_ID).Tree({
+    $(INDEX.LEFT_NAV_TREE_ID + '_1').Tree({
         url: 'Api/Menu/get_tree_menus',
+        queryParams: { cate_id: 1 },
         onClick: function(node) {
-            if (!$(INDEX.LEFT_NAV_TREE_ID).tree('isLeaf', node.target)) {
-                $(INDEX.LEFT_NAV_TREE_ID).tree('toggle', node.target);
-            } else if (node.attributes) {
-                if (node.attributes.type === 'tab') {
-                    var data = node.attributes.url.split('/').slice(-2).join('/');
-                    $.post('Api/Auth/check_menu_auth', {data: data}, function(res) {
-                        if (0 === res) {
-                            $.messager.alert('错误', '未授权', 'error');
-                            return false;
-                        }
-                        if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
-                            $(INDEX.TABS_ID).tabs('select', node.text);
-                        } else {
-                            INDEX.add_tab(node.text, node.attributes.url);
-                        }
-                    });
-                } else if (node.attributes.type === 'dialog') {
-                    $.get(node.attributes.url + '?' + $.createRandNum(4));
-                } else if (node.attributes.type === 'iframe') {
+            left_nav_tree_click(node);
+        }
+    });
+
+    $(INDEX.LEFT_NAV_TREE_ID + '_2').Tree({
+        url: 'Api/Menu/get_tree_menus',
+        queryParams: { cate_id: 2 },
+        onClick: function(node) {
+            left_nav_tree_click(node);
+        }
+    });
+
+    $(INDEX.LEFT_NAV_TREE_ID + '_3').Tree({
+        url: 'Api/Menu/get_tree_menus',
+        queryParams: { cate_id: 3 },
+        onClick: function(node) {
+            left_nav_tree_click(node);
+        }
+    });
+
+    function left_nav_tree_click(node) {
+        if (!$(this).tree('isLeaf', node.target)) {
+            $(this).tree('toggle', node.target);
+        } else if (node.attributes) {
+            if ('tab' === node.attributes.type) {
+                var data = node.attributes.url.split('/').slice(-2).join('/');
+                $.post('Api/Auth/check_menu_auth', {data: data}, function(res) {
+                    if (0 === res) {
+                        $.messager.alert('错误', '未授权', 'error');
+                        return false;
+                    }
                     if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
                         $(INDEX.TABS_ID).tabs('select', node.text);
                     } else {
-                        INDEX.add_iframe_tab(node.text, node.attributes.url);
+                        INDEX.add_tab(node.text, node.attributes.url);
                     }
+                });
+            } else if ('dialog' === node.attributes.type) {
+                $.get(node.attributes.url + '?' + $.createRandNum(4));
+            } else if (node.attributes.type === 'iframe') {
+                if ($(INDEX.TABS_ID).tabs('exists', node.text)) {
+                    $(INDEX.TABS_ID).tabs('select', node.text);
+                } else {
+                    INDEX.add_iframe_tab(node.text, node.attributes.url);
                 }
             }
         }
-    });
+    }
 
     $(INDEX.CB_THEMES_ID).Combobox({
         url: 'Api/Data/combobox_themes',
@@ -226,7 +247,7 @@ $(function() {
             arr[arr.length - 2] = record.id;
             $link.attr('href', arr.join('/'));
             $.post('Api/Public/set_theme', {theme: record.id}, function(result) {
-                if (result.status === 1) {
+                if (1 === result.status) {
                     $.Show_Warning(result.info);
                 } else {
                     $.Show_Error(result.info);
@@ -234,6 +255,7 @@ $(function() {
             }, 'json');
         }
     });
+
     $(INDEX.PORTAL_ID).portal({
         border:false,
         fit:true

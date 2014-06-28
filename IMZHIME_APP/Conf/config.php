@@ -2,7 +2,7 @@
 return array(
     'SHOW_PAGE_TRACE' => false,
 
-    'APP_STATUS' => 'company',
+    // 'APP_STATUS' => 'company',
     'DB_TYPE' => 'pdo',
     'DB_USER' => 'root',
     'DB_PWD' => '1234',

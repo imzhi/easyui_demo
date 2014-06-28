@@ -57,13 +57,13 @@
     </div>
     <div id="left_layout" data-options="region:'west',title:'导航菜单',split:true" style="width:200px">
         <div class="easyui-accordion" data-options="selected:2,fit:true,border:false">
-            <div title="公共区域" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(1); }}]" style="overflow:auto;">
+            <div data-options="title:'公共区域',iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(1); }}]" style="overflow:auto;">
                 <ul id="left_nav_tree_1"></ul>
             </div>
-            <div title="个人区域" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+            <div data-options="title:'个人区域',iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
                 <ul id="left_nav_tree_2"></ul>
             </div>
-            <div title="管理区域" data-options="iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
+            <div data-options="title:'管理区域',iconCls:'icon-help',tools:[{iconCls:'icon-reload',handler:function() { INDEX.refresh_nav_tree(2); }}]" style="overflow:auto;">
                 <ul id="left_nav_tree_3"></ul>
             </div>
         </div>

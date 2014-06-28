@@ -6,6 +6,7 @@ class MenuAction extends CommonAction {
 
     public function get_all_tree_menus($user_id = false) {
         $where['status'] = '1';
+        $where['cate_id'] = I('post.cate_id', 1, 'intval');
 
         // 用户拥有权限的菜单ID
         if ($user_id && 'EXTRA_ROOT' !== I('get.type')) {
@@ -31,7 +32,6 @@ class MenuAction extends CommonAction {
     }
 
     public function get_tree_menus() {
-        $where['status'] = '1';
         $user_id = isset(self::$user) ? self::$user['user_id'] : 6;
         $this->get_all_tree_menus($user_id);
     }
@@ -65,7 +65,11 @@ class MenuAction extends CommonAction {
     }
 
     public function get_treegrid_menus() {
-        $data = M('Menu')->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')->select();
+        $where = array();
+        $where['cate_id'] = I('post.cate_id', 0, 'intval');
+        $data = M('Menu')->where($where)
+            ->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')
+            ->select();
         list($data, $children) = $this->get_parents_children($data);
         foreach ($children as $c) {
             $this->format_treegird_menus($data, $c);
