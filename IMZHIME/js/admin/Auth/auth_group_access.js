@@ -46,7 +46,7 @@ var AUTH_GROUP_ACCESS = {
 
 $(function() {
     $(AUTH_GROUP_ACCESS.DG_ID).Datagrid({
-        title: '用户组明细', toolbar: AUTH_GROUP_ACCESS.TB_ID, idField: null,
+        title: '用户组明细', toolbar: AUTH_GROUP_ACCESS.TB_ID, idField: 'user_id',
         url: 'Api/Auth/get_auth_group_access',
         columns: [[
             {field: 'user_name', title: '用户名', sortable: true, width: 80},
