@@ -62,8 +62,11 @@ var AUTH_GROUP = {
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单权限', href: 'Auth/edit_menu_auth',
-                buttonUrl: 'Api/Auth/edit_menu_auth', selected: selected,
-                submitSuccessCallback: function() { $(self.MA_TG_ID).Reload_Treegrid(); }
+                selected: selected, buttonUrl: 'Api/Auth/edit_menu_auth',
+                submitSuccessCallback: function() {
+                    $(self.DG_ID).Reload_Datagrid();
+                    $(self.MA_TG_ID).Reload_Treegrid();
+                }
             });
         } else { $.Show_Warning('请先选择一项'); }
     }
@@ -125,4 +128,6 @@ $(function() {
             {field: 'url', title: 'URL', width: 240, sortable: true}
         ]]
     });
+
+    whetherRemoveToolbar(AUTH_GROUP.TB_ID);
 });

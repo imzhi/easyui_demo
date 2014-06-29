@@ -151,7 +151,7 @@ class AuthAction extends CommonAction {
     public function get_auth_group_access() {
         $page = I('post.page', 1, 'intval');
         $rows = I('post.rows', 10, 'intval');
-        $sort = I('post.sort', 'uid');
+        $sort = I('post.sort', 'user_id');
         $order = I('post.order', 'ASC');
 
         $where = array();
@@ -160,8 +160,8 @@ class AuthAction extends CommonAction {
         $accesses = array();
 
         if ($count = M()->table('z_auth_group_access')->where($where)->group('uid')->count()) {
-            $accesses = M()->table('z_auth_group_access a')
-                ->join('z_user u on u.user_id=a.uid')
+            $accesses = M()->table('z_user u')
+                ->join('z_auth_group_access a on u.user_id=a.uid')
                 ->join('z_auth_group g on g.id=a.group_id')
                 ->field('a.uid,u.user_name,GROUP_CONCAT(CAST(a.group_id AS CHAR) ORDER BY a.group_id ASC) AS group_ids,GROUP_CONCAT(CAST(g.title AS CHAR) ORDER BY g.title ASC) AS group_names')
                 ->where($where)

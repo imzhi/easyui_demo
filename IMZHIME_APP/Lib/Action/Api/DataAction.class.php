@@ -6,31 +6,10 @@ class DataAction extends CommonAction {
     }
 
     public function combobox_themes() {
-        combobox_return(array(
-            'Base' => array(
-                'default' => 'Default',
-                'bootstrap' => 'Bootstrap',
-                'gray' => 'Gray',
-                'black' => 'Black',
-                'metro' => 'Metro',
-            ),
-            'Metro' => array(
-                'metro-blue'   => 'Blue',
-                'metro-gray'   => 'Gray',
-                'metro-green'  => 'Green',
-                'metro-orange' => 'Orange',
-                'metro-red'    => 'Red',
-            ),
-            'UI' => array(
-                'ui-cupertino'      => 'Cupertino',
-                'ui-dark-hive'      => 'Dark Hive',
-                'ui-pepper-grinder' => 'Pepper Grinder',
-                'ui-sunny'          => 'Sunny',
-            ),
-        ));
+        combobox_return(C('CB.THEMES'));
     }
 
     public function combobox_menu_cate() {
-        combobox_return(array(1 => '公共区域', '个人区域', '管理区域'));
+        combobox_return(C('CB.MENU_CATE'));
     }
 }

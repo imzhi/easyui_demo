@@ -1,14 +1,18 @@
 <js href="__PUBLIC__/js/admin/Cheatsheet/index.js"/>
 <table id="cheatsheet_datagrid"></table>
 <div id="cheatsheet_datagrid_toolbar" style="padding:2px">
-    <div>
-        <if condition="html_check_auth('Api/User/save')">
-        </if>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.add()">添加</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.batch_add()">批量添加</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.edit()">编辑</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.delete()">删除</a>
-    </div>
+    <if condition="html_check_auth('Api/Cheatsheet/add')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.add()">添加</a>
+    </if>
+    <if condition="html_check_auth('Api/Cheatsheet/batch_add')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.batch_add()">批量添加</a>
+    </if>
+    <if condition="html_check_auth('Api/Cheatsheet/edit')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.edit()">编辑</a>
+    </if>
+    <if condition="html_check_auth('Api/Cheatsheet/delete')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="CHEATSHEET.delete()">删除</a>
+    </if>
     <!-- <div>
         <form id="search_form">
             用户名：<input type="text" name="user_name"/>

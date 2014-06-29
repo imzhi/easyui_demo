@@ -2,7 +2,7 @@
 return array(
     'SHOW_PAGE_TRACE' => false,
 
-    'APP_STATUS' => 'company',
+    // 'APP_STATUS' => 'company',
     'DB_TYPE' => 'pdo',
     'DB_USER' => 'root',
     'DB_PWD' => '1234',
@@ -19,7 +19,9 @@ return array(
     'DEFAULT_GROUP' => 'Admin',
 
     'LOAD_EXT_CONFIG' => array(
-        'ACTION' => 'action,status',
+        // 'ACTION' => 'action',
+        'CB' => 'combobox_data',
+        'ABANDON' => 'abandon'
     ),
 
     'TMPL_PARSE_STRING' => array(

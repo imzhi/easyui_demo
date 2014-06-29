@@ -1,68 +1,31 @@
 <js href="__PUBLIC__/js/admin/Menu/index.js"/>
 <div class="easyui-layout" data-options="fit:true">
-    <div data-options="region:'center',border:false,title:'菜单列表',iconCls:'icon-help'" style="border-width:0 1px 1px 0;">
-        <div class="easyui-accordion" data-options="selected:0,fit:true,border:false">
-            <div data-options="iconCls:'icon-help',title:'公共区域'" style="overflow:auto;">
-                <table id="menu_treegrid_1"></table>
-                <div id="menu_treegrid_toolbar_1" style="padding:2px;height:26px;">
-                    <div>
-                        <if condition="html_check_auth('Api/Menu/add')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add(1)">添加</a>
-                        </if>
-                        <if condition="html_check_auth('Api/Menu/edit')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit(1)">编辑</a>
-                        </if>
-                        <if condition="html_check_auth('Api/Menu/delete')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete(1)">删除</a>
-                        </if>
-                    </div>
-                </div>
-            </div>
-            <div data-options="iconCls:'icon-help',title:'个人区域'" style="overflow:auto;">
-                <table id="menu_treegrid_2"></table>
-                <div id="menu_treegrid_toolbar_2" style="padding:2px;height:26px;">
-                    <div>
-                        <if condition="html_check_auth('Api/Menu/add')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add(2)">添加</a>
-                        </if>
-                        <if condition="html_check_auth('Api/Menu/edit')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit(2)">编辑</a>
-                        </if>
-                        <if condition="html_check_auth('Api/Menu/delete')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete(2)">删除</a>
-                        </if>
-                    </div>
-                </div>
-            </div>
-            <div data-options="iconCls:'icon-help',title:'管理区域'" style="overflow:auto;">
-                <table id="menu_treegrid_3"></table>
-                <div id="menu_treegrid_toolbar_3" style="padding:2px;height:26px;">
-                    <div>
-                        <if condition="html_check_auth('Api/Menu/add')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add(3)">添加</a>
-                        </if>
-                        <if condition="html_check_auth('Api/Menu/edit')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit(3)">编辑</a>
-                        </if>
-                        <if condition="html_check_auth('Api/Menu/delete')">
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete(3)">删除</a>
-                        </if>
-                    </div>
-                </div>
-            </div>
+    <div data-options="region:'center',border:false" style="border-width:0 1px 1px 0;">
+        <table id="menu_treegrid"></table>
+        <div id="menu_treegrid_toolbar" style="padding:2px;height:26px;">
+            <if condition="html_check_auth('Api/Menu/add')">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.add()">添加</a>
+            </if>
+            <if condition="html_check_auth('Api/Menu/edit')">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.edit()">编辑</a>
+            </if>
+            <if condition="html_check_auth('Api/Menu/delete')">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU.delete()">删除</a>
+            </if>
+            <span class="color_mark">公共<span class="color_square" style="background-color:#008000;"></span></span>
+            <span class="color_mark">个人<span class="color_square" style="background-color:#C0B317;"></span></span>
+            <span class="color_mark">管理<span class="color_square" style="background-color:#F00;"></span></span>
         </div>
     </div>
     <div data-options="region:'south',split:true,collapsible:false,border:false" style="border-right-width:1px;height:200px;">
         <table id="menu_auth_datagrid"></table>
         <div id="menu_auth_datagrid_toolbar" style="padding:2px;height:26px;">
-            <div>
-                <if condition="html_check_auth('Api/Menu/add_menu_auth')">
-                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.add()">添加</a>
-                </if>
-                <if condition="html_check_auth('Api/Menu/del_menu_auth')">
-                <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.delete()">删除</a>
-                </if>
-            </div>
+            <if condition="html_check_auth('Api/Menu/add_menu_auth')">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.add()">添加</a>
+            </if>
+            <if condition="html_check_auth('Api/Menu/del_menu_auth')">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="MENU_AUTH.delete()">删除</a>
+            </if>
         </div>
     </div>
 </div>

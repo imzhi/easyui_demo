@@ -58,4 +58,5 @@ $(function() {
             }
         ]]
     });
+    whetherRemoveToolbar(AUTH_RULE.TB_ID);
 });

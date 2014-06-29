@@ -36,10 +36,13 @@ $(function() {
     });
 
     $(USER.USER_TYPE_CB_ID).Combobox({ url: 'Api/Status/combobox_user_type' });
+
     $(USER.USER_STATUS_CB_ID).Combobox({ url: 'Api/Status/combobox_user_status' });
 
     $(USER.BTN_ID).bind('click', function(e) {
         var params = $('#search_form').serializeJSON();
         $(USER.DG_ID).datagrid('load', params);
     });
+
+    whetherRemoveToolbar(USER.TB_ID);
 });

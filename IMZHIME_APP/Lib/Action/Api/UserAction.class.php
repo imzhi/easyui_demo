@@ -94,8 +94,9 @@ class UserAction extends CommonAction {
     }
 
     public function user_name_not_exists($user_name = '') {
-        $user_name = $user_name ? $user_name : I('post.user_name', '');
-        $exists = M('User')->where('user_name="%s"', $user_name)->count() ? false : true;
+        $user_name = $user_name ? $user_name : I('post.user_name', '', 'trim');
+        $exists = in_array(strtolower($user_name), C('ABANDON.USER_NAME')) ||
+            M('User')->where('user_name="%s"', $user_name)->count() ? false : true;
         json_return($exists);
     }
 }

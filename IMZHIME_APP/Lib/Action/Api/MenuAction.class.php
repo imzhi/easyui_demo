@@ -67,9 +67,10 @@ class MenuAction extends CommonAction {
 
     public function get_treegrid_menus() {
         $where = array();
-        $where['cate_id'] = I('post.cate_id', 0, 'intval');
+        $cate_id = I('post.cate_id', 0, 'intval');
+        $cate_id > 0 && $where['cate_id'] = $cate_id;
         $data = M('Menu')->where($where)
-            ->order('`parent_id` ASC,`order` ASC,`menu_id` ASC')
+            ->order('`cate_id` ASC,`parent_id` ASC,`order` ASC,`menu_id` ASC')
             ->select();
         list($data, $children) = $this->get_parents_children($data);
         foreach ($children as $c) {

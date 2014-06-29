@@ -9,6 +9,11 @@ String.prototype.append = function(str) {
     return after;
 };
 
+// 工具栏若无可用按钮，则去除此工具栏
+function whetherRemoveToolbar(id) {
+    if (!$(id).find('a').length) { $(id).remove(); }
+}
+
 ;(function($) {
 
     /**
@@ -78,7 +83,7 @@ String.prototype.append = function(str) {
     });
 
     window.CONSTANTS = {
-        PAGELIST: [10,20,50],
-        PAGESIZE: 20,
+        PAGELIST: [20,50,100],
+        PAGESIZE: 20
     };
 })(jQuery);

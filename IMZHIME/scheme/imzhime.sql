@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2014-06-27 08:19:39
+Date: 2014-06-29 04:46:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `z_auth_group` (
 INSERT INTO `z_auth_group` VALUES ('1', '管理员', '1', '2,3,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,55,56,57,58,59,60,11,12,13,14,15,16,18,19,20,21,22,52,53,54,7,8,9,10,17,51', '1,2,3,4,5,6,7,8,9,10,13,14,20,21,22,24');
 INSERT INTO `z_auth_group` VALUES ('3', '版主', '1', '2,3,7', '1,2,3,4,5,6');
 INSERT INTO `z_auth_group` VALUES ('5', '会员', '1', '', '');
-INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '', '20,21,22');
+INSERT INTO `z_auth_group` VALUES ('6', '贱民', '1', '', '20,21,22,24');
 
 -- ----------------------------
 -- Table structure for `z_auth_group_access`
@@ -52,11 +52,6 @@ CREATE TABLE `z_auth_group_access` (
 -- Records of z_auth_group_access
 -- ----------------------------
 INSERT INTO `z_auth_group_access` VALUES ('1', '1');
-INSERT INTO `z_auth_group_access` VALUES ('1', '3');
-INSERT INTO `z_auth_group_access` VALUES ('1', '5');
-INSERT INTO `z_auth_group_access` VALUES ('6', '1');
-INSERT INTO `z_auth_group_access` VALUES ('6', '3');
-INSERT INTO `z_auth_group_access` VALUES ('6', '5');
 INSERT INTO `z_auth_group_access` VALUES ('8', '5');
 
 -- ----------------------------
@@ -228,22 +223,22 @@ CREATE TABLE `z_menu` (
 -- ----------------------------
 -- Records of z_menu
 -- ----------------------------
-INSERT INTO `z_menu` VALUES ('1', '0', '0', '', '', '基本设置', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('2', '1', '0', '', 'site_info', '站点信息', 'js/admin/Site/info.js', '0', 'dialog', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('3', '1', '0', '', 'menu_list', '菜单列表', 'Menu/index', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('4', '1', '0', '', 'close_site', '关闭站点', 'js/admin/Site/close.js', '0', 'dialog', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('5', '0', '0', '', '', '权限管理', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('6', '5', '0', '', '', '权限规则', 'Auth/auth_rule', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('7', '5', '0', '', '', '用户组', 'Auth/auth_group', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('8', '5', '0', '', '', '用户组明细', 'Auth/auth_group_access', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('9', '0', '0', '', '', '用户管理', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('10', '9', '0', '', '', '用户列表', 'User/index', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('13', '0', '0', '', '', '缓存管理', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('14', '13', '0', '', '', '缓存列表', '', '0', 'tab', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('20', '0', '0', '', 'common_site', '常用站点', '', '0', 'null', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('21', '20', '0', '', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', '0', 'iframe', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('22', '20', '0', '', 'baidu', '百度', 'http://www.baidu.com/', '0', 'iframe', 'open', '0', '1');
-INSERT INTO `z_menu` VALUES ('24', '20', '0', '', 'cheatsheet', '各种快捷键', 'Cheatsheet/index', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('1', '0', '3', '管理区域', '', '基本设置', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('2', '1', '3', '管理区域', 'site_info', '站点信息', 'js/admin/Site/info.js', '0', 'dialog', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('3', '1', '3', '管理区域', 'menu_list', '菜单列表', 'Menu/index', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('4', '1', '3', '管理区域', 'close_site', '关闭站点', 'js/admin/Site/close.js', '0', 'dialog', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('5', '0', '3', '管理区域', '', '权限管理', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('6', '5', '3', '管理区域', '', '权限规则', 'Auth/auth_rule', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('7', '5', '3', '管理区域', '', '用户组', 'Auth/auth_group', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('8', '5', '3', '管理区域', '', '用户组明细', 'Auth/auth_group_access', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('9', '0', '3', '管理区域', '', '用户管理', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('10', '9', '3', '管理区域', '', '用户列表', 'User/index', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('13', '0', '3', '管理区域', '', '缓存管理', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('14', '13', '3', '管理区域', '', '缓存列表', '', '0', 'tab', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('20', '0', '1', '公共区域', 'common_site', '常用站点', '', '0', 'null', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('21', '20', '1', '公共区域', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', '0', 'iframe', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('22', '20', '1', '公共区域', 'baidu', '百度', 'http://www.baidu.com/', '0', 'iframe', 'open', '0', '1');
+INSERT INTO `z_menu` VALUES ('24', '20', '1', '公共区域', 'cheatsheet', '各种快捷键', 'Cheatsheet/index', '0', 'tab', 'open', '0', '1');
 
 -- ----------------------------
 -- Table structure for `z_menu_auth`
@@ -324,7 +319,7 @@ CREATE TABLE `z_user` (
 -- ----------------------------
 -- Records of z_user
 -- ----------------------------
-INSERT INTO `z_user` VALUES ('1', 'tt', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', 'tt@tt.com', '2014-06-25', '80', '1403405245', '2130706433', 'metro-gray', 'user', 'pass');
-INSERT INTO `z_user` VALUES ('6', 'yy', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '', null, '2', '1400940410', '2130706433', 'black', 'user', 'pass');
-INSERT INTO `z_user` VALUES ('7', 'xx', '81dc9bdb52d04dc20036dbd8313ed055', '1402893403', '2130706433', '', null, '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
-INSERT INTO `z_user` VALUES ('8', 'uu', '81dc9bdb52d04dc20036dbd8313ed055', '1402989520', '2130706433', 'tt@tt.com', '2014-05-27', '3', '1403403331', '2130706433', 'metro-orange', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('1', 'tt', '8aa5077bed42925158af0dc3afbe1ddb', '0', '0', 'tt@tt.com', '2014-06-25', '83', '1403987263', '2130706433', 'bootstrap', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('6', 'yy', '8aa5077bed42925158af0dc3afbe1ddb', '0', '0', '', null, '2', '1400940410', '2130706433', 'black', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('7', 'xx', '8aa5077bed42925158af0dc3afbe1ddb', '1402893403', '2130706433', '', null, '4', '1402899752', '2130706433', 'bootstrap', 'user', 'pass');
+INSERT INTO `z_user` VALUES ('8', 'uu', '8aa5077bed42925158af0dc3afbe1ddb', '1402989520', '2130706433', 'tt@tt.com', '2014-05-27', '3', '1403403331', '2130706433', 'metro-orange', 'user', 'pass');

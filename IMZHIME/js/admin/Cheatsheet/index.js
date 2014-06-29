@@ -51,8 +51,8 @@ var CHEATSHEET = {
 
 $(function() {
     $(CHEATSHEET.DG_ID).Datagrid({
-        toolbar: CHEATSHEET.TB_ID, url: 'Api/Cheatsheet/get_cheatsheets',
-        title: '各种快捷键', groupField: 'cate_name', view: groupview,
+        title: '各种快捷键',  url: 'Api/Cheatsheet/get_cheatsheets', pageSize: 100,
+        toolbar: CHEATSHEET.TB_ID, groupField: 'cate_name', view: groupview,
         groupFormatter: function(value, row) { return value + ' - ' + row.length + ' 项'; },
         columns: [[
             // {field: 'id', title: 'ID', sortable: true, width: 40, align: 'center'},
@@ -60,4 +60,6 @@ $(function() {
             {field: 'describe', title: '解释/描述', sortable: true, width: 500},
         ]]
     });
+
+    whetherRemoveToolbar(CHEATSHEET.TB_ID);
 });

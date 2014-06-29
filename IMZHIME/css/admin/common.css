@@ -67,3 +67,17 @@
 .portal_inner_div .portal_ul li {
     margin: 0 0 2px 0;
 }
+
+/* 菜单三大区域颜色区分标识，后台使用 */
+.color_mark {
+    display: inline-block;
+    height: 22px;
+    padding: 1px;
+    vertical-align: middle;
+    line-height: 22px;
+}
+.color_square {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}

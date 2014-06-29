@@ -2,55 +2,34 @@
 class StatusAction extends CommonAction {
     public function _initialize() {
         parent::_initialize();
-        if (!$this->isAjax()) {
-            exit('not access');
-        }
+        must_ajax();
     }
 
     public function combobox_user_status() {
-        combobox_return(array(
-            '' => '请选择',
-            'check' => 'check',
-            'pass' => 'pass',
-            'fail' => 'fail',
-            'del' => 'del',
-            'noaccess' => 'noaccess',
-            'nopost' => 'nopost',
-            'lock' => 'lock',
-        ));
+        combobox_return(C('CB.USER_STATUS'));
     }
 
     public function combobox_user_type() {
-        combobox_return(array(
-            '' => '请选择',
-            'admin' => 'admin',
-            'user' => 'user',
-            'moderator' => 'moderator',
-        ));
+        combobox_return(C('CB.USER_TYPE'));
     }
 
     public function combobox_auth_group_status() {
-        combobox_return(array('禁用', '启用'));
+        combobox_return(C('CB.COMMON_STATUS'));
     }
 
     public function combobox_menu_status() {
-        combobox_return(array('禁用', '启用'));
+        combobox_return(C('CB.COMMON_STATUS'));
     }
 
     public function combobox_menu_state() {
-        combobox_return(array('open' => '展开', 'closed' => '折叠'));
+        combobox_return(C('CB.MENU_STATE'));
     }
 
     public function combobox_menu_type() {
-        combobox_return(array(
-            'null' => 'null',
-            'iframe' => 'iframe',
-            'tab' => 'tab',
-            'dialog' => 'dialog'
-        ));
+        combobox_return(C('CB.MENU_TYPE'));
     }
 
     public function combobox_menu_auth_status() {
-        combobox_return(array('禁用', '启用'));
+        combobox_return(C('CB.COMMON_STATUS'));
     }
 }

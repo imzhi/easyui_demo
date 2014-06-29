@@ -82,7 +82,7 @@ function action_check_auth() {
 }
 
 function html_check_auth($auth_name) {
-    $uesr = session('user');
+    $user = session('user');
     $user_id = $user ? $user['user_id'] : 6;
 
     import('ORG.Util.Auth');
@@ -97,7 +97,8 @@ function get_own_auths($id = 1) {
 }
 
 function is_user_name($value) {
-    return preg_match('#[a-z0-9]{2,20}#i', $value);
+    return preg_match('#[a-z0-9]{2,20}#i', $value)
+        && !in_array(strtolower($value), C('ABANDON.USER_NAME'));
 }
 
 function is_password($value) {
@@ -107,6 +108,5 @@ function is_password($value) {
 }
 
 function must_ajax() {
-    if (!IS_AJAX)
-        exit('not access');
+    if (!IS_AJAX) exit('not access');
 }

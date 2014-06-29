@@ -2,32 +2,28 @@ var MENU = {
     DLG_ID: '#menu_dialog',
     TG_ID: '#menu_treegrid',
     TB_ID: '#menu_treegrid_toolbar',
-    add: function(number) {
+    add: function() {
         var self = this;
         $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
             title: '添加菜单项', width: 300, href: 'Menu/edit',
-            buttonUrl: 'Api/Menu/add', cate_id: number,
-            submitSuccessCallback: function() {
-                $('table[id^=' + self.TG_ID.substring(1) + ']').Reload_Treegrid();
-            }
+            buttonUrl: 'Api/Menu/add',
+            submitSuccessCallback: function() { $(self.TG_ID).Reload_Treegrid(); }
         });
     },
-    edit: function(number) {
+    edit: function() {
         var self = this;
-        var selected = $(self.TG_ID.append(number)).Get_Selected_Treegrid();
+        var selected = $(self.TG_ID).Get_Selected_Treegrid();
         if (selected) {
             $('<div/>').attr('id', self.DLG_ID.substring(1)).Dialog({
                 title: '编辑菜单项', width: 300, href: 'Menu/edit',
-                selected: selected, buttonUrl: 'Api/Menu/edit', cate_id: number,
-                submitSuccessCallback: function() {
-                    $('table[id^=' + self.TG_ID.substring(1) + ']').Reload_Treegrid();
-                }
+                selected: selected, buttonUrl: 'Api/Menu/edit',
+                submitSuccessCallback: function() { $(self.TG_ID).Reload_Treegrid(); }
             });
         } else { $.Show_Warning('请先选择一项'); }
     },
-    delete: function(number) {
+    delete: function() {
         var self = this;
-        var selected = $(self.TG_ID.append(number)).Get_Selected_Treegrid();
+        var selected = $(self.TG_ID).Get_Selected_Treegrid();
         if (selected) {
             // 简化逻辑。必须先删除下级元素
             if (selected.children) { $.Show_Warning('请先删除下级元素'); }
@@ -40,8 +36,8 @@ var MENU = {
                             $.Close_Progress();
                             if (result.status === 1) {
                                 $.Show_Warning(result.info);
-                                $(self.TG_ID.append(number)).Unselect_All_Treegrid(); // 取消选择
-                                $(self.TG_ID.append(number)).Reload_Treegrid();
+                                $(self.TG_ID).Unselect_All_Treegrid(); // 取消选择
+                                $(self.TG_ID).Reload_Treegrid();
                             } else { $.Show_Error(result.info); }
                         }, 'json');
                     }
@@ -90,10 +86,17 @@ var MENU_AUTH = {
 
 $(function() {
     var treegrid_columns = [[
-        {field: 'menu_id', title: 'ID', width: 40, align: 'center'},
-        {field: 'title', title: '菜单中文名', width: 200},
-        {field: 'name', title: '菜单英文名', width: 150},
-        {field: 'url', title: 'URL', width: 300},
+        { field: 'menu_id', title: 'ID', width: 40, align: 'center' },
+        {
+            field: 'title', title: '菜单中文名', width: 200,
+            styler: function(value, row) {
+                if ('1' === row.cate_id) { return 'color:#008000'; }
+                else if ('2' === row.cate_id) { return 'color:#C0B317'; }
+                else if ('3' === row.cate_id) { return 'color:#F00'; }
+            }
+        },
+        { field: 'name', title: '菜单英文名', width: 150 },
+        { field: 'url', title: 'URL', width: 300 },
         {
             field: 'type', title: '类型', width: 50, align: 'center',
             styler: function(value, row) {
@@ -114,7 +117,7 @@ $(function() {
                 return val;
             }
         },
-        {field: 'order', title: '排序', width: 40, align: 'center'},
+        { field: 'order', title: '排序', width: 40, align: 'center' },
         {
             field: 'state', title: '节点状态', width: 60, align: 'center',
             formatter: function(value, row) {
@@ -133,46 +136,31 @@ $(function() {
             }
         }
     ]];
-    function treegrid_click_row(row) {
+    function treegrid_click_row(row, self) {
         // 选择了子节点并且不为iframe类型，则载入数据
         if (!row.children && !/^https?:\/\//.test(row.url)) {
             $(MENU_AUTH.DG_ID).datagrid('load', {menu_id: row.menu_id});
         } else {
+            $(MENU_AUTH.DG_ID).Unselect_All_Datagrid();
             $(MENU_AUTH.DG_ID).datagrid('loadData', {total: 0, rows: []});
         }
     }
 
-    $(MENU.TG_ID.append(1)).Treegrid({
-        toolbar: MENU.TB_ID.append(1), url: 'Api/Menu/get_treegrid_menus',
+    $(MENU.TG_ID).Treegrid({
+        title: '菜单列表', url: 'Api/Menu/get_treegrid_menus', toolbar: MENU.TB_ID,
         idField: 'menu_id', treeField: 'title', columns: treegrid_columns,
-        onBeforeLoad: function(node, params) { params.cate_id = 1; },
         // onLoadSuccess: function(row, data) { $(MENU.TG_ID).treegrid('collapseAll'); },
-        rowStyler: function(row) {},
-        onClickRow: function(row) { treegrid_click_row(row); }
-    });
-    $(MENU.TG_ID.append(2)).Treegrid({
-        toolbar: MENU.TB_ID.append(2), url: 'Api/Menu/get_treegrid_menus',
-        idField: 'menu_id', treeField: 'title', columns: treegrid_columns,
-        onBeforeLoad: function(node, params) { params.cate_id = 2; },
-        // onLoadSuccess: function(row, data) { $(MENU.TG_ID).treegrid('collapseAll'); },
-        rowStyler: function(row) {},
-        onClickRow: function(row) { treegrid_click_row(row); }
-    });
-    $(MENU.TG_ID.append(3)).Treegrid({
-        toolbar: MENU.TB_ID.append(3), url: 'Api/Menu/get_treegrid_menus',
-        idField: 'menu_id', treeField: 'title', columns: treegrid_columns,
-        onBeforeLoad: function(node, params) { params.cate_id = 3; },
-        // onLoadSuccess: function(row, data) { $(MENU.TG_ID).treegrid('collapseAll'); },
-        rowStyler: function(row) {},
-        onClickRow: function(row) { treegrid_click_row(row); }
+        onClickRow: function(row) { treegrid_click_row(row, this); }
     });
 
     $(MENU_AUTH.DG_ID).Datagrid({
-        toolbar: MENU_AUTH.TB_ID, url: 'Api/Menu/get_menu_auth',
-        title:'拥有的权限', pagination: false,
+        title:'拥有的权限', toolbar: MENU_AUTH.TB_ID, url: 'Api/Menu/get_menu_auth',
+        pagination: false,
         columns: [[
             { field: 'name', title: '规则名称', sortable: true, width: 200 },
             { field: 'title', title: '规则描述', sortable: true, width: 150 }
         ]]
     });
+
+    whetherRemoveToolbar(MENU.TB_ID);
 });

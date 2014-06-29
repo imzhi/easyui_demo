@@ -53,4 +53,5 @@ $(function() {
             {field: 'group_names', title: '所属用户组', sortable: true, width: 250}
         ]]
     });
+    whetherRemoveToolbar(AUTH_GROUP_ACCESS.TB_ID);
 });
