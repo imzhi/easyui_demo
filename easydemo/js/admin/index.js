@@ -5,7 +5,7 @@ var INDEX = {
     CB_THEMES_ID: '#combobox_themes',
     PORTAL_ID: '#center_portal',
     refresh_nav_tree: function(serial) {
-        $(INDEX.LEFT_NAV_TREE_ID + serial).Reload_Tree();
+        $(INDEX.LEFT_NAV_TREE_ID + '_' + serial).Reload_Tree();
     },
     full_screen_view: function() {
         $('body').requestFullScreen();
@@ -62,7 +62,6 @@ var INDEX = {
         $(INDEX.TABS_ID).tabs('add', {
             title: title,
             href: url,
-            iconCls: 'icon-help',
             closable: true,
             tools: [{
                 iconCls: 'icon-mini-refresh',
@@ -73,7 +72,7 @@ var INDEX = {
     add_iframe_tab: function(title, url) {
         var content = '<iframe scrolling="auto" frameborder="0" marginwidth="0" marginheight="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
         $(INDEX.TABS_ID).tabs('add', {
-            title: title, iconCls: 'icon-help', closable: true, content: content,
+            title: title, closable: true, content: content,
             tools: [{
                 iconCls: 'icon-mini-refresh',
                 handler: function() { INDEX.refresh_tab(title, url); }

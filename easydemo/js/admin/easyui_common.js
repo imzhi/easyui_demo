@@ -23,7 +23,7 @@
     $.extend({
         Show_Warning: function(msg, title) {
             $.messager.show({
-                title: title || '提示', iconCls: 'icon-help', msg: msg,
+                title: title || '提示', msg: msg,
                 showType: 'slide',
             });
         },
@@ -72,7 +72,7 @@
             var self = this;
             var defaults = {
                 // 默认属性
-                title: '新窗口', iconCls: 'icon-help', width: 280, modal: true,
+                title: '新窗口', width: 280, modal: true,
                 collapsible: true, cache: false,
                 // 新增属性
                 selected: null,
@@ -88,7 +88,7 @@
                 submitFailure: function(result) { $.Show_Error(result.info); },
                 submitFailureCallback: function() {},
                 buttonText: '保存',
-                buttonIconCls: 'icon-help'
+                buttonIconCls: 'icon-save'
             };
 
             defaults['buttonFormSubmit'] = function() {
@@ -183,7 +183,7 @@
         Treegrid: function(settings) {
             var self = this;
             var defaults = {
-                iconCls:'icon-help', fit: true, rownumbers: true, border: false,
+                fit: true, rownumbers: true, border: false,
                 singleSelect: true, animate: true, method: 'post',
             };
             var options = $.extend({}, defaults, settings);
@@ -192,7 +192,7 @@
         Datagrid: function(settings) {
             var self = this;
             var defaults = {
-                iconCls:'icon-help', border: false, fit: true, rownumbers: true,
+                border: false, fit: true, rownumbers: true,
                 singleSelect: true, idField: 'id', method: 'post', pagination: true,
                 pageList: window.CONSTANTS.PAGELIST,
                 pageSize: window.CONSTANTS.PAGESIZE

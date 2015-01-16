@@ -15,7 +15,6 @@ function whetherRemoveToolbar(id) {
 }
 
 ;(function($) {
-
     /**
      * 全屏API
      * 来源：http://www.2fz1.com/?p=108

@@ -2,12 +2,11 @@
 return array(
     'SHOW_PAGE_TRACE' => false,
 
-    // 'APP_STATUS' => 'company',
     'DB_TYPE' => 'pdo',
     'DB_USER' => 'root',
     'DB_PWD' => '1234',
     'DB_PREFIX' => 'z_',
-    'DB_DSN' => 'mysql:host=127.0.0.1;dbname=imzhime;charset=utf8',
+    'DB_DSN' => 'mysql:host=127.0.0.1;dbname=easyui_demo;charset=utf8',
 
     'URL_MODEL' => 2,
 

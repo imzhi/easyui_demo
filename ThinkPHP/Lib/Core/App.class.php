@@ -47,7 +47,7 @@ class App {
         define('IS_AJAX',       ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || !empty($_POST[C('VAR_AJAX_SUBMIT')]) || !empty($_GET[C('VAR_AJAX_SUBMIT')])) ? true : false);
 
         // URL调度结束标签
-        tag('url_dispatch');         
+        tag('url_dispatch');
         // 系统变量安全过滤
         if(C('VAR_FILTERS')) {
             $filters    =   explode(',',C('VAR_FILTERS'));
@@ -155,7 +155,7 @@ class App {
                 // 操作方法不是Public 抛出异常
                 throw new ReflectionException();
             }
-        } catch (ReflectionException $e) { 
+        } catch (ReflectionException $e) {
             // 方法调用发生异常后 引导到__call方法处理
             $method = new ReflectionMethod($module,'__call');
             $method->invokeArgs($module,array($action,''));
