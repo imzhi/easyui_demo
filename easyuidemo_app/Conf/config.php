@@ -3,10 +3,10 @@ return array(
     'SHOW_PAGE_TRACE' => false,
 
     'DB_TYPE' => 'pdo',
-    'DB_USER' => '2hrzVAmga6iQlw6h',
-    'DB_PWD' => 'Ioh2xBzl7dhtm3V0',
+    'DB_USER' => 'iBTvJ0SGnnKYYXks',
+    'DB_PWD' => '0IbgUsTBItrGmtSs',
     'DB_PREFIX' => 'z_',
-    'DB_DSN' => 'mysql:host=10.9.1.188;dbname=cf_2291bf4c_0b87_427b_ba16_719f1c12ad97;charset=utf8',
+    'DB_DSN' => 'mysql:host=192.168.3.5;dbname=cf_4b9b7cb6_5295_4d97_bdb8_2c886fcb0486;charset=utf8',
 
     'URL_MODEL' => 2,
 
