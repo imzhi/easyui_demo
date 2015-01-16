@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+#footer {
+    height: 60px;
+    background-color: #F5F5F5;
+}
+
+#footer .copy {
+    text-transform: uppercase;
+    color: #BEA6A6;
+    margin: 20px 0;
+}
+
+.m_b_20 {
+    margin-bottom: 20px;
+}
+
+.category_border {
+    border: 1px solid #DBDBDB;
+    margin: 0 0 20px 0;
+}

@@ -1,0 +1,13 @@
+<js href="__PUBLIC__/js/admin/Auth/auth_rule.js"/>
+<table id="auth_rule_datagrid"></table>
+<div id="auth_rule_datagrid_toolbar" style="padding:2px;">
+    <if condition="html_check_auth('Api/Auth/add_auth_rule')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_RULE.add()">添加</a>
+    </if>
+    <if condition="html_check_auth('Api/Auth/edit_auth_rule')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_RULE.edit()">编辑</a>
+    </if>
+    <if condition="html_check_auth('Api/Auth/del_auth_rule')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" onclick="AUTH_RULE.delete()">删除</a>
+    </if>
+</div>

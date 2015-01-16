@@ -1,0 +1,35 @@
+<script type="text/javascript">
+var EDIT_AUTH_GROUP_ACCESS = {
+    CT_GROUP_ID: '#combotree_group',
+    RAW_GROUP_IDS: '#raw_group_ids',
+};
+
+$(function() {
+    $(EDIT_AUTH_GROUP_ACCESS.CT_GROUP_ID).Combotree({
+        multiple: true, url: 'Api/Auth/combotree_auth_group',
+        onLoadSuccess: function() {
+            $(EDIT_AUTH_GROUP_ACCESS.CT_GROUP_ID).combotree('setValues', $(EDIT_AUTH_GROUP_ACCESS.RAW_GROUP_IDS).val().split(','));
+        },
+        onChange: function(newValue, oldValue) {
+            $(EDIT_AUTH_GROUP_ACCESS.RAW_GROUP_IDS).val(newValue.join(','));
+        }
+    });
+});
+</script>
+<div id="auth_group_access_form">
+    <form method="post">
+        <input type="hidden" name="uid">
+        <input type="hidden" name="group_ids" id="raw_group_ids">
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户名</td>
+                <td class="form_table_td"><input name="user_name" id="validatebox_username" type="text" class="easyui-validatebox" data-options="required:true,validType:['isUsername','remote[\'Api/User/user_name_exists\', \'user_name\']']"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">所属用户组</td>
+                <td class="form_table_td"><input name="group_id[]" id="combotree_group"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

@@ -1,0 +1,42 @@
+<script type="text/javascript">
+    $(function() {
+        $('#combobox_site_themes').Combobox({
+            url: 'Api/Data/combobox_themes', groupField: 'group'
+        });
+    });
+</script>
+<div id="sign_up_form">
+    <form method="post">
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">站点标题</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="site_title" data-options="required:true"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">站点描述</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="site_description" data-options="required:true"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">站点关键词</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="site_keywords" data-options="required:true"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">站点默认主题</td>
+                <td class="form_table_td"><input id="combobox_site_themes" name="site_theme"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">开启登陆验证码</td>
+                <td class="form_table_td"><input type="checkbox" name="login_vcode" value="1"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">开启注册验证码</td>
+                <td class="form_table_td"><input type="checkbox" name="register_vcode" value="1"></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">站点状态</td>
+                <td class="form_table_td"><input type="text" class="easyui-validatebox" name="site_status" data-options="required:true"></td>
+            </tr>
+        </table>
+    </form>
+</div>

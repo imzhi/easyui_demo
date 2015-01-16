@@ -1,0 +1,47 @@
+<script type="text/javascript">
+var EDIT_MENU_AUTH = {
+    CB_STATUS_ID: '#combobox_status',
+    CG_AUTH_ID: '#combogrid_auth'
+};
+
+$(function() {
+    $(EDIT_MENU_AUTH.CB_STATUS_ID).Combobox({ url: 'Api/Status/combobox_menu_auth_status' });
+    $(EDIT_MENU_AUTH.CG_AUTH_ID).Combogrid({
+        url: 'Api/Auth/get_auth_rule', panelWidth: 550, panelHeight: 250,
+        textField: 'title', pageSize: 50,
+        columns: [[
+            {field: 'id', title: 'ID', width: 30},
+            {field: 'name', title: '规则名称', width: 200},
+            {field: 'title', title: '规则描述', width: 150},
+            {field: 'condition', title: '规则表达式', width: 100},
+            {
+                field: 'status', title: '状态', width: 40,
+                formatter: function(value, row) {
+                    if (value === '1') { return '启用'; }
+                    return '禁用';
+                }
+            }
+        ]]
+    });
+});
+</script>
+<div id="auth_group_form">
+    <form method="post">
+        <input type="hidden" name="menu_id"/>
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">菜单名</td>
+                <td class="form_table_td"><input name="title" disabled/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">权限</td>
+                <td class="form_table_td"><input name="auth_ids[]" id="combogrid_auth"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">状态</td>
+                <td class="form_table_td"><input name="status" id="combobox_status"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

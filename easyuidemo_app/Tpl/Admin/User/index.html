@@ -1,0 +1,17 @@
+<js href="__PUBLIC__/js/admin/User/index.js"/>
+<table id="user_datagrid"></table>
+<div id="user_datagrid_toolbar" style="padding:2px">
+    <if condition="html_check_auth('Api/User/save')">
+    <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="USER.edit()">编辑</a>
+    </if>
+    <div>
+        <form id="search_form">
+            用户名：<input type="text" name="user_name"/>
+            用户类型：
+            <select name="user_type" id="user_type_combobox" style="width:100px"></select>
+            用户状态：
+            <select name="status" id="user_status_combobox" style="width:100px"></select>
+            <a href="javascript:;" class="easyui-linkbutton" id="search_button" data-options="iconCls:'icon-search',plain:true">搜索</a>
+        </form>
+    </div>
+</div>

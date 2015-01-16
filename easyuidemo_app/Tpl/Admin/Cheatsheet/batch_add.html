@@ -1,0 +1,26 @@
+<script type="text/javascript">
+var EDIT_CHEATSHEET = {
+};
+
+$(function() {
+});
+</script>
+<div id="cheatsheet_batch_add_form">
+    <form method="post">
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">分类</td>
+                <td class="form_table_td"><input type="text" name="cate_name" class="easyui-validatebox" data-options="required:true" style="width:200px;"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">命令/快捷键<br/><span class="tip">(一行一个)<span></td>
+                <td class="form_table_td"><textarea name="command" class="easyui-validatebox" data-options="required:true" style="width:200px;" rows="4"></textarea></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">解释/描述<br/><span class="tip">(一行一个)</span></td>
+                <td class="form_table_td"><textarea name="describe" class="easyui-validatebox" data-options="required:true" style="width:200px;" rows="4"></textarea></td>
+            </tr>
+        </table>
+    </form>
+</div>

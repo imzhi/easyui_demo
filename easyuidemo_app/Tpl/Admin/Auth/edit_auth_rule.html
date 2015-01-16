@@ -1,0 +1,31 @@
+<script type="text/javascript">
+$(function() {
+    $('#combobox_status').Combobox({
+        value: 1, url: 'Api/Status/combobox_auth_group_status'
+    });
+});
+</script>
+<div id="auth_rule_form">
+    <form method="post">
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">规则名称</td>
+                <td class="form_table_td"><input type="text" name="name" class="easyui-validatebox" data-options="required:true,validType:'length[4,80]'"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">规则描述</td>
+                <td class="form_table_td"><input type="text" name="title" class="easyui-validatebox" data-options="required:true,validType:'length[2,20]'"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">规则表达式</td>
+                <td class="form_table_td"><input type="text" name="condition" class="easyui-validatebox"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">状态</td>
+                <td class="form_table_td"><input name="status" id="combobox_status"/></td>
+            </tr>
+        </table>
+    </form>
+</div>

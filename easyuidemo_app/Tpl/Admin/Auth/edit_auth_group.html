@@ -1,0 +1,27 @@
+<script type="text/javascript">
+var EDIT_AUTH_GROUP = {
+    CB_STATUS_ID: '#combobox_status',
+};
+
+$(function() {
+    $(EDIT_AUTH_GROUP.CB_STATUS_ID).Combobox({
+        url: 'Api/Status/combobox_auth_group_status'
+    });
+});
+</script>
+<div id="auth_group_form">
+    <form method="post">
+        <input type="hidden" name="id"/>
+        <input type="hidden" name="ajax" value="1"/>
+        <table cellspacing="0" cellpadding="0" border="0" class="form_table">
+            <tr class="form_table_tr">
+                <td class="form_table_td">用户组</td>
+                <td class="form_table_td"><input type="text" name="title" class="easyui-validatebox" data-options="required:true"/></td>
+            </tr>
+            <tr class="form_table_tr">
+                <td class="form_table_td">状态</td>
+                <td class="form_table_td"><input id="combobox_status" name="status"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
