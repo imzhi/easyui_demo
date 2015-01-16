@@ -3,8 +3,8 @@ return array(
     'SHOW_PAGE_TRACE' => false,
 
     'DB_TYPE' => 'pdo',
-    'DB_USER' => 'iBTvJ0SGnnKYYXks',
-    'DB_PWD' => '0IbgUsTBItrGmtSs',
+    'DB_USER' => 'AIgZsJAL6audtOSx',
+    'DB_PWD' => '6OLtLNHEJHgCc3dK',
     'DB_PREFIX' => 'z_',
     'DB_DSN' => 'mysql:host=192.168.3.5;dbname=cf_4b9b7cb6_5295_4d97_bdb8_2c886fcb0486;charset=utf8',
 
