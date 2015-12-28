@@ -3,10 +3,10 @@ return array(
     'SHOW_PAGE_TRACE' => false,
 
     'DB_TYPE' => 'pdo',
-    'DB_USER' => 'AIgZsJAL6audtOSx',
-    'DB_PWD' => '6OLtLNHEJHgCc3dK',
+    'DB_USER' => $_SERVER['db_username'],
+    'DB_PWD' => $_SERVER['db_password'],
     'DB_PREFIX' => 'z_',
-    'DB_DSN' => 'mysql:host=192.168.3.5;dbname=cf_4b9b7cb6_5295_4d97_bdb8_2c886fcb0486;charset=utf8',
+    'DB_DSN' => 'mysql:host='.$_SERVER['db_host'].';dbname='.$_SERVER['db_database'].';charset=utf8',
 
     'URL_MODEL' => 2,
 
