@@ -185,8 +185,8 @@ INSERT INTO `z_menu` (`menu_id`, `parent_id`, `cate_id`, `cate_name`, `name`, `t
 (10, 9, 3, '管理区域', '', '用户列表', 'User/index', 0, 'tab', 'open', 0, '1'),
 (25, 0, 2, '个人区域', 'douniwan', '逗你玩', '', 0, 'null', 'open', 0, '1'),
 (20, 0, 1, '公共区域', 'common_site', '常用站点', '', 0, 'null', 'open', 0, '1'),
-(21, 27, 1, '公共区域', 'jquery_1_7_api', 'jquery1.7 API', 'http://tool.oschina.net/uploads/apidocs/jquery/', 0, 'iframe', 'open', 0, '1'),
-(22, 20, 1, '公共区域', 'baidu', '百度', 'http://www.baidu.com/', 0, 'iframe', 'open', 0, '1'),
+(21, 27, 1, '公共区域', 'jquery_1_7_api', 'jquery1.7 API', 'https://tool.oschina.net/uploads/apidocs/jquery/', 0, 'iframe', 'open', 0, '1'),
+(22, 20, 1, '公共区域', 'baidu', '百度', 'https://www.baidu.com/', 0, 'iframe', 'open', 0, '1'),
 (24, 27, 1, '公共区域', 'cheatsheet', '各种快捷键', 'Cheatsheet/index', 0, 'tab', 'open', 0, '1'),
 (26, 25, 2, '个人区域', 'douniwaner', '逗你玩儿', 'emptyaction', 0, 'tab', 'open', 0, '1'),
 (27, 0, 1, '公共区域', 'memo', '备忘', '', 0, 'null', 'open', 0, '1');
